@@ -1,0 +1,22 @@
+{% extends "base.html.twig" %}
+
+{% block styles %}
+    {{ parent() }}
+    <link href="{{ asset("styles/base.css") }}" type="text/css" rel="stylesheet" />
+    <link href="{{ asset("styles/header.css") }}" type="text/css" rel="stylesheet" />
+{% endblock %}
+
+{% block js %}
+    {{ parent() }}
+    <script src="{{ asset("js/jquery-3.7.1.min.js") }}"></script>
+{% endblock %}
+
+{% block body %}
+    <div class="header">
+        <p class="category"><a href="{{ path("app_ios_versions") }}">iOS versions</a></p>
+    </div>
+
+    <div class="content">
+        {% block content %}{% endblock %}
+    </div>
+{% endblock %}

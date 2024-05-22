@@ -1,0 +1,19 @@
+{% extends "layout.html.twig" %}
+
+{% block styles %}
+    {{ parent() }}
+    <link href="{{ asset("styles/content.css") }}" type="text/css" rel="stylesheet" />
+{% endblock %}
+
+{% block js %}
+    {{ parent() }}
+    <script src="{{ asset("js/ios_versions.js") }}"></script>
+{% endblock %}
+
+{% block content %}
+    <p class="subcategory">
+        <a class="selected" href="">All</a>
+        <a href="">iPhone</a>
+        <a href="">iPad</a>
+    </p>
+{% endblock %}

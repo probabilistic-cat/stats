@@ -1,0 +1,18 @@
+* {
+    position: relative;
+    float: left;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: /*"SF Pro Display","SF Pro Icons",*/"Helvetica Neue","Helvetica","Arial",sans-serif;
+    z-index: 1;
+}
+
+body {
+    background-color: #ffffff;
+    color: #1d1d1f;
+}
+
+a {
+    color: #1d1d1f;
+}
