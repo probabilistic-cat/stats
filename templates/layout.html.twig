@@ -4,6 +4,7 @@
     {{ parent() }}
     <link href="{{ asset("styles/base.css") }}" type="text/css" rel="stylesheet" />
     <link href="{{ asset("styles/header.css") }}" type="text/css" rel="stylesheet" />
+    <link href="{{ asset("styles/footer.css") }}" type="text/css" rel="stylesheet" />
 {% endblock %}
 
 {% block js %}
@@ -19,4 +20,6 @@
     <div class="content">
         {% block content %}{% endblock %}
     </div>
+
+    <div class="footer headfoot"></div>
 {% endblock %}

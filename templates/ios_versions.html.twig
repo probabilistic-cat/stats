@@ -16,4 +16,17 @@
         <a href="">iPhone</a>
         <a href="">iPad</a>
     </p>
+
+    <div class="data">
+    {% for date,monthData in data %}
+        <div class="month">
+            <div class="date">{{ date }}</div>
+            <div class="versions">
+            {% for version,percent in monthData %}
+                <div class="version ios_{{ version }}" data-version="{{ version }}" data-percent="{{ percent }}" title="iOS {{ version }} - {{ percent }}%"></div>
+            {% endfor %}
+            </div>
+        </div>
+    {% endfor %}
+    </div>
 {% endblock %}

@@ -4,7 +4,7 @@
 }
 
 .content p.subcategory a {
-    margin: 0 14px 0 0;
+    margin: 0 14px 30px 0;
     font-size: 17px;
     font-weight: 600;
     color: #0070c9;
@@ -13,4 +13,111 @@
 
 .content p.subcategory a.selected {
     text-decoration: underline;
+}
+
+.content div.data {
+    width: 100%;
+}
+
+.content div.data div.month {
+    margin: 0 0 15px 0;
+    width: 100%;
+    height: 35px;
+    font-size: 15px;
+    font-weight: 300;
+    vertical-align: middle;
+    line-height: 35px;
+}
+
+.content div.data div.date {
+    margin: 0 15px 0 0;
+    width: 70px;
+    text-align: left;
+}
+
+.content div.data div.month div.versions {
+    width: calc(100% - 90px);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.content div.data div.month div.versions div.version {
+    height: 35px;
+    text-align: center;
+}
+
+.ios_20 {
+    background-color: #ff6861;
+}
+
+.ios_19 {
+    background-color: #7d7aff;
+}
+
+.ios_18 {
+    background-color: #67d4cf;
+}
+
+.ios_17 {
+    background-color: #ff6482;
+}
+
+.ios_16 {
+    background-color: #ffd426;
+}
+
+.ios_15 {
+    background-color: #30db5b;
+}
+
+.ios_14 {
+    background-color: #da8fff;
+}
+
+.ios_13 {
+    background-color: #ffb33f;
+}
+
+.ios_12 {
+    background-color: #70d7ff;
+}
+
+.ios_11 {
+    background-color: #ff6861;
+}
+
+.ios_10 {
+    background-color: #7d7aff;
+}
+
+.ios_9 {
+    background-color: #67d4cf;
+}
+
+.ios_8 {
+    background-color: #ff6482;
+}
+
+.ios_7 {
+    background-color: #ffd426;
+}
+
+.ios_6 {
+    background-color: #30db5b;
+}
+
+.ios_5 {
+    background-color: #da8fff;
+}
+
+.ios_4 {
+    background-color: #ffb33f;
+}
+
+.ios_3 {
+    background-color: #70d7ff;
+}
+
+.ios_other {
+    background-color: #d8d8dc;
 }
