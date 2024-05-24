@@ -14,27 +14,29 @@ class IosVersionsController extends AbstractController
     {
         $rawData = $serializer->decode(file_get_contents(
             __DIR__.'/../Data/ios_version-ww-monthly-201706-202404.csv'),
-            'csv'
+            'csv',
+            ['csv_key_separator' => '^'], // disable grouping
         );
 
         $result = [];
         foreach ($rawData as $rawMonthData) {
             $date = $rawMonthData['Date'];
-            $monthPercentOther = $rawMonthData['Other'];
+            $monthData = [];
+            $monthPercentOther = array_key_exists('Other', $rawMonthData) ? $rawMonthData['Other'] : 0;
             unset($rawMonthData['Date'], $rawMonthData['Other']);
-            foreach ($rawMonthData as $majorVersion => $dataByMinorVersion) {
-                $majorVersion = mb_substr($majorVersion, mb_strrpos($majorVersion, ' ') + 1);
-                $majorVersionPercent = 0;
-                foreach ($dataByMinorVersion as $minorVersion => $percent) {
-                    $version = $majorVersion.'.'.$minorVersion;
-                    $percent = (float)$percent;
-//                    $result[$date][$version] = $percent;
-                    $majorVersionPercent += $percent;
+            foreach ($rawMonthData as $version => $percent) {
+                $version = mb_substr($version, mb_strrpos($version, ' ') + 1);
+                $majorVersion = mb_substr($version, 0, mb_strrpos($version, '.'));
+//                $minorVersion = mb_substr($version, mb_strrpos($version, '.') + 1);
+                $percent = (float)$percent;
+
+                if (!array_key_exists($majorVersion, $monthData)) {
+                    $monthData[$majorVersion] = 0;
                 }
-                $result[$date][$majorVersion] = $majorVersionPercent;
+                $monthData[$majorVersion] += $percent;
             }
-            ksort($result[$date]);
-            $result[$date] = ['other' => $monthPercentOther] + $result[$date];
+            ksort($monthData);
+            $result[$date] = ['other' => $monthPercentOther] + $monthData;
         }
         krsort($result);
 
