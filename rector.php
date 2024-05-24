@@ -34,6 +34,6 @@ return RectorConfig::configure()
     ])
     ->withSkip([
         Rector\CodeQuality\Rector\ClassMethod\LocallyCalledStaticMethodToNonStaticRector::class,
-//        Rector\Php81\Rector\Property\ReadOnlyPropertyRector::class,
+        Rector\DeadCode\Rector\Cast\RecastingRemovalRector::class,
     ])
 ;

@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Data;
 
 use Symfony\Component\Serializer\SerializerInterface;
 
 class DataFileDecoder
 {
-    private const string FILE_PATH = __DIR__ . '/../Data/File/';
+    private const string FILE_PATH = __DIR__.'/../Data/File/';
 
     public function __construct(
         private readonly SerializerInterface $serializer,
@@ -25,16 +27,17 @@ class DataFileDecoder
                 version: VersionDTO::VERSION_OTHER,
                 prefix: $versionPrefix,
                 percent: array_key_exists(VersionDTO::VERSION_OTHER, $rawMonthData)
-                    ? $rawMonthData[VersionDTO::VERSION_OTHER]
+                    ? (float)$rawMonthData[VersionDTO::VERSION_OTHER]
                     : 0,
             );
             unset($rawMonthData[MonthDataDTO::DATE], $rawMonthData[VersionDTO::VERSION_OTHER]);
 
             $versionsData = [];
             foreach ($rawMonthData as $fullVersion => $percent) {
+                $fullVersion = (string)$fullVersion;
                 $fullVersion = mb_substr($fullVersion, mb_strrpos($fullVersion, ' ') + 1);
                 $versionStr = mb_substr($fullVersion, 0, mb_strrpos($fullVersion, '.'));
-//                $minorVersion = mb_substr($fullVersion, mb_strrpos($fullVersion, '.') + 1);
+                // $minorVersion = mb_substr($fullVersion, mb_strrpos($fullVersion, '.') + 1);
                 $percent = (float)$percent;
 
                 if (!array_key_exists($versionStr, $versionsData)) {
@@ -45,14 +48,14 @@ class DataFileDecoder
 
             $versions = [];
             foreach ($versionsData as $versionStr => $percent) {
-                $versions[] = new VersionDTO(version: $versionStr, prefix: $versionPrefix, percent: $percent);
+                $versions[] = new VersionDTO(version: (string)$versionStr, prefix: $versionPrefix, percent: $percent);
             }
-            usort($versions, static fn (VersionDTO $a, VersionDTO $b) => $a->version <=> $b->version);
+            usort($versions, static fn (VersionDTO $a, VersionDTO $b): int => $a->version <=> $b->version);
             array_unshift($versions, $versionOther);
 
             $result[] = new MonthDataDTO(date: $date, versions: $versions);
         }
-        usort($result, static fn (MonthDataDTO $a, MonthDataDTO $b) => $b->date <=> $a->date);
+        usort($result, static fn (MonthDataDTO $a, MonthDataDTO $b): int => $b->date <=> $a->date);
 
         return $result;
     }
