@@ -10,10 +10,10 @@ class VersionDTO
 
     public function __construct(
         public string $version,
-        public string $prefix,
         public float $percent,
+        public string $prefix = '',
         public string $color = '#ffffff',
-        /** @var MinorVersionDTO[] $minorVersions */
+        /** @var VersionDTO[] $minorVersions */
         public array $minorVersions = [],
     ) {}
 }

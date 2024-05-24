@@ -17,54 +17,66 @@ class DataFileDecoder
     /**
      * @return MonthDataDTO[]
      */
-    public function decode(string $filename, string $versionPrefix = ''): array {
-        $rawData = $this->getRawData($filename);
+    public function decode(string $filename, string $versionSeparator, string $versionPrefix = ''): array {
+        /** @var array{array{string: string|array{string: string}}} $rawData */
+        $rawData = $this->getRawData($filename, $versionSeparator);
 
-        $result = [];
+        $data = [];
         foreach ($rawData as $rawMonthData) {
             $date = $rawMonthData[MonthDataDTO::DATE];
             $versionOther = new VersionDTO(
                 version: VersionDTO::VERSION_OTHER,
-                prefix: $versionPrefix,
                 percent: array_key_exists(VersionDTO::VERSION_OTHER, $rawMonthData)
                     ? (float)$rawMonthData[VersionDTO::VERSION_OTHER]
                     : 0,
+                prefix: $versionPrefix,
             );
             unset($rawMonthData[MonthDataDTO::DATE], $rawMonthData[VersionDTO::VERSION_OTHER]);
 
-            $versionsData = [];
-            foreach ($rawMonthData as $fullVersion => $percent) {
-                $fullVersion = (string)$fullVersion;
-                $fullVersion = mb_substr($fullVersion, mb_strrpos($fullVersion, ' ') + 1);
-                $versionStr = mb_substr($fullVersion, 0, mb_strrpos($fullVersion, '.'));
-                // $minorVersion = mb_substr($fullVersion, mb_strrpos($fullVersion, '.') + 1);
-                $percent = (float)$percent;
-
-                if (!array_key_exists($versionStr, $versionsData)) {
-                    $versionsData[$versionStr] = 0;
-                }
-                $versionsData[$versionStr] += $percent;
-            }
-
             $versions = [];
-            foreach ($versionsData as $versionStr => $percent) {
-                $versions[] = new VersionDTO(version: (string)$versionStr, prefix: $versionPrefix, percent: $percent);
+            foreach ($rawMonthData as $versionStr => $percentOrMinorVersionsData) {
+                $versionStr = (string)str_replace($versionPrefix, '', $versionStr);
+
+                if (is_string($percentOrMinorVersionsData)) {
+                    $percent = (float)$percentOrMinorVersionsData;
+                    $versions[] = new VersionDTO(version: $versionStr, percent: $percent, prefix: $versionPrefix);
+                    continue;
+                }
+
+                $minorVersions = [];
+                $majorPercent = 0;
+                foreach ((array)$percentOrMinorVersionsData as $minorVersionStr => $percent) {
+                    $minorVersions[] = new VersionDTO(version: (string)$minorVersionStr, percent: (float)$percent);
+                    $majorPercent += (float)$percent;
+                }
+                usort($minorVersions, static fn (VersionDTO $a, VersionDTO $b): int => $a->version <=> $b->version);
+
+                $versions[] = new VersionDTO(
+                    version: $versionStr,
+                    percent: $majorPercent,
+                    prefix: $versionPrefix,
+                    minorVersions: $minorVersions,
+                );
             }
+
             usort($versions, static fn (VersionDTO $a, VersionDTO $b): int => $a->version <=> $b->version);
             array_unshift($versions, $versionOther);
 
-            $result[] = new MonthDataDTO(date: $date, versions: $versions);
+            $data[] = new MonthDataDTO(date: $date, versions: $versions);
         }
-        usort($result, static fn (MonthDataDTO $a, MonthDataDTO $b): int => $b->date <=> $a->date);
+        usort($data, static fn (MonthDataDTO $a, MonthDataDTO $b): int => $b->date <=> $a->date);
 
-        return $result;
+        return $data;
     }
 
-    private function getRawData(string $filename): array {
+    /**
+     * @return array{array{string: string|array{string: string}}}
+     */
+    private function getRawData(string $filename, string $versionSeparator): array {
         return $this->serializer->decode(
             file_get_contents(self::FILE_PATH.$filename),
             'csv',
-            ['csv_key_separator' => '^'], // disable grouping
+            ['csv_key_separator' => $versionSeparator],
         );
     }
 }

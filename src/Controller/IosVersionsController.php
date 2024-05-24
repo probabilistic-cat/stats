@@ -13,7 +13,11 @@ class IosVersionsController extends AbstractController
 {
     #[Route('/', name: 'app_ios_versions')]
     public function ios_versions(DataFileDecoder $dataFileDecoder): Response {
-        $result = $dataFileDecoder->decode('ios_version-ww-monthly-201706-202404.csv', 'iOS ');
+        $result = $dataFileDecoder->decode(
+            filename: 'ios_version-ww-monthly-201706-202404.csv',
+            versionSeparator: '.',
+            versionPrefix: 'iOS ',
+        );
 
         return $this->render('ios_versions.html.twig', [
             'data' => $result,
