@@ -18,12 +18,12 @@
     </p>
 
     <div class="data">
-    {% for date,monthData in data %}
+    {% for monthData in data %}
         <div class="month">
-            <div class="date">{{ date }}</div>
+            <div class="date">{{ monthData.date }}</div>
             <div class="versions">
-            {% for version,percent in monthData %}
-                <div class="version ios_{{ version }}" data-version="{{ version }}" data-percent="{{ percent }}" title="iOS {{ version }} - {{ percent }}%"></div>
+            {% for version in monthData.versions %}
+                <div class="version {{ version.prefix|trim|lower }}_{{ version.version|lower }}" data-version="{{ version.version }}" data-percent="{{ version.percent }}" title="{{ version.prefix }}{{ version.version }} - {{ version.percent }}%"></div>
             {% endfor %}
             </div>
         </div>
