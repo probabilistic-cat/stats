@@ -1,3 +1,9 @@
+.DS_Store
+/.idea
+
+###> phpstan/phpstan ###
+phpstan.neon
+###< phpstan/phpstan ###
 
 ###> symfony/framework-bundle ###
 /.env.local
@@ -19,4 +25,7 @@
 /phpunit.xml
 ###< symfony/phpunit-bridge ###
 
-.idea
+###> friendsofphp/php-cs-fixer ###
+/.php-cs-fixer.php
+/.php-cs-fixer.cache
+###< friendsofphp/php-cs-fixer ###
