@@ -11,6 +11,7 @@ $finder = (new PhpCsFixer\Finder())
 return (new PhpCsFixer\Config())
     ->setRules([
         '@Symfony' => true,
+        'blank_line_before_statement' => false,
         'braces_position' => [
             'allow_single_line_anonymous_functions' => true,
             'allow_single_line_empty_anonymous_classes' => true,

@@ -2,11 +2,12 @@
 
 declare(strict_types=1);
 
-namespace App\Data;
+namespace App\Data\Decoder;
 
 class VersionDTO
 {
     public const string VERSION_OTHER = 'Other';
+    public const string PREFIX_OTHER = '';
 
     public function __construct(
         public string $version,
