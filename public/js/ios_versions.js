@@ -1,3 +1,5 @@
+let isMinorShown = false;
+
 function selectSubcategory() {
     $('.content .subcategory a').click(function() {
         $('.content p.subcategory a').each(function() {
@@ -17,7 +19,7 @@ function calcVersionDivWidth() {
         let classes = '';
         let totalWidth = 0;
         $(this).find('div.version').each(function() {
-            let version = $(this).attr('data-version');
+            // let version = $(this).attr('data-version');
             let percent = parseFloat($(this).attr('data-percent'));
             let width = Math.floor(versionsDivWidth / 100 * percent);
             totalWidth += width;
@@ -28,10 +30,22 @@ function calcVersionDivWidth() {
             }
 
             $(this).css('width', width + 'px');
-            if (110 <= width) {
-                $(this).html('iOS ' + version + ' - ' + percent + '%');
-            } else if (50 <= width || (percent < 10 && 40 <= width)) {
-                $(this).html(percent + '%');
+
+            let pTitle = $(this).find('p.version_title');
+            if (!isMinorShown) {
+                if (110 <= width) {
+                    pTitle.html($(this).attr('title'));
+                    pTitle.show();
+                } else if (50 <= width || (percent < 10 && 42 <= width)) {
+                    pTitle.html(percent + '%');
+                    pTitle.show();
+                }
+
+                $(this).find('div.minor_version').each(function() {
+                    $(this).hide();
+                });
+            } else {
+                pTitle.hide();
             }
         });
 
@@ -42,12 +56,70 @@ function calcVersionDivWidth() {
             biggestDiv.css('width', biggestDivWidth + 'px');
         }
 
-        // console.log('versionsDivWidth ' + versionsDivWidth);
+        if (!isMinorShown) {
+            return;
+        }
+
+        // minor versions divs
+        $(this).find('div.version').each(function() {
+            let width = $(this).width();
+            let percent = parseFloat($(this).attr('data-percent'));
+
+            let minorBiggestWidth = 0;
+            let minorClasses = '';
+            let minorTotalWidth = 0;
+            $(this).find('div.minor_version').each(function() {
+                let minorPercent = parseFloat($(this).attr('data-percent'));
+                let minorWidth = Math.floor(width / percent * minorPercent);
+                minorTotalWidth += minorWidth;
+                if (minorBiggestWidth < minorWidth) {
+                    let minorClasslist = $(this).attr('class').split(/\s+/);
+                    for (let i = 0; i < minorClasslist.length; i++) {
+                        minorClasslist[i] = minorClasslist[i].replace(".", "\\.");
+                    }
+                    minorClasses = '.' + minorClasslist.join('.');
+                    minorBiggestWidth = minorWidth;
+                }
+
+                $(this).css('width', minorWidth + 'px');
+                $(this).show();
+
+                let pMinorTitle = $(this).find('p.minor_version_title');
+                if (120 <= minorWidth) {
+                    pMinorTitle.html($(this).attr('title'));
+                    pMinorTitle.show();
+                } else if (50 <= minorWidth || (minorPercent < 10 && 42 <= minorWidth)) {
+                    pMinorTitle.html(minorPercent + '%');
+                    pMinorTitle.show();
+                }
+            });
+
+            if (minorTotalWidth < width) {
+                let widthDiff = width - minorTotalWidth;
+                let biggestDiv = $(this).find('div' + minorClasses);
+                let biggestDivWidth = minorBiggestWidth + widthDiff;
+                biggestDiv.css('width', biggestDivWidth + 'px');
+            }
+        });
+    });
+}
+
+function showMinorButton() {
+    $('.content p.show_minor').click(function() {
+        if (!isMinorShown) {
+            $(this).html('hide minor versions')
+            isMinorShown = true;
+        } else {
+            $(this).html('show minor versions')
+            isMinorShown = false;
+        }
+        calcVersionDivWidth();
     });
 }
 
 
 $(document).ready(function() {
+    showMinorButton();
     selectSubcategory();
     calcVersionDivWidth();
 });

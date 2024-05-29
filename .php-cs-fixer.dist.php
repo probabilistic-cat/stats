@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 $finder = (new PhpCsFixer\Finder())
     ->in(__DIR__)
     ->exclude('bin')
@@ -18,7 +20,9 @@ return (new PhpCsFixer\Config())
             'functions_opening_brace' => 'same_line',
         ],
         'cast_spaces' => ['space' => 'none'],
+        'increment_style' => ['style' => 'post'],
         'list_syntax' => ['syntax' => 'short'],
+        'phpdoc_align' => ['align' => 'left'],
         'phpdoc_separation' => false,
         'phpdoc_summary' => false,
         'single_line_empty_body' => true,

@@ -17,13 +17,34 @@
         <a href="">iPad</a>
     </p>
 
+    <p class="show_minor">show minor versions</p>
+
     <div class="data">
     {% for monthData in data.monthDatas %}
         <div class="month">
             <div class="date">{{ monthData.date }}</div>
             <div class="versions">
             {% for version in monthData.versions %}
-                <div class="version {{ version.prefix|trim|lower }}_{{ version.version|lower }}" data-version="{{ version.version }}" data-percent="{{ version.percent }}" title="{{ version.prefix }}{{ version.version }} - {{ version.percent }}%"></div>
+                <div
+                    class="version {{ version.prefix|trim|lower }}_{{ version.version|lower }}"
+                    data-version="{{ version.version }}"
+                    data-percent="{{ version.percent }}"
+                    title="{{ version.prefix }}{{ version.version }} - {{ version.percent }}%"
+                    style="background-color: {{ version.color }}"
+                >
+                {% for minorVersion in version.minorVersions %}
+                    <div
+                        class="minor_version {{ version.prefix|trim|lower }}_{{ minorVersion.version }}"
+                        data-version="{{ version.version }}.{{ minorVersion.version }}"
+                        data-percent="{{ minorVersion.percent }}"
+                        title="{{ version.prefix }}{{ minorVersion.version }} - {{ minorVersion.percent }}%"
+                        style="background-color: {{ minorVersion.color }}"
+                    >
+                        <p class="title minor_version_title"></p>
+                    </div>
+                {% endfor %}
+                    <p class="title version_title"></p>
+                </div>
             {% endfor %}
             </div>
         </div>

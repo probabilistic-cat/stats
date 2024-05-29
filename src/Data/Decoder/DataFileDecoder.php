@@ -4,48 +4,49 @@ declare(strict_types=1);
 
 namespace App\Data\Decoder;
 
+use App\Data\Profile\BaseProfile;
 use Symfony\Component\Serializer\SerializerInterface;
 
 class DataFileDecoder
 {
-    private const string FILE_PATH = __DIR__.'/../File/';
-
     public function __construct(
         private readonly SerializerInterface $serializer,
     ) {}
 
-    public function decode(string $filename, string $versionSeparator, string $versionPrefix = ''): DataDTO {
+    public function decode(BaseProfile $profile): Data {
         /** @var array{array{string: string|array{string: string}}} $rawData */
-        $rawData = $this->getRawData($filename, $versionSeparator);
+        $rawData = $this->getRawData($profile);
 
-        return self::getData(rawData: $rawData, versionPrefix: $versionPrefix);
+        return self::getData(rawData: $rawData, profile: $profile);
     }
 
     /**
      * @return array{array{string: string|array{string: string}}}
      */
-    private function getRawData(string $filename, string $versionSeparator): array {
+    private function getRawData(BaseProfile $profile): array {
         return $this->serializer->decode(
-            file_get_contents(self::FILE_PATH.$filename),
+            file_get_contents($profile->getFilePath()),
             'csv',
-            ['csv_key_separator' => $versionSeparator],
+            ['csv_key_separator' => $profile->versionSeparator],
         );
     }
 
     /**
      * @param array{array{string: string|array{string: string}}} $rawData
      */
-    private static function getData(array $rawData, string $versionPrefix): DataDTO {
-        $data = new DataDTO(false);
+    private static function getData(array $rawData, BaseProfile $profile): Data {
+        $data = new Data(profile: $profile);
         foreach ($rawData as $rawMonthData) {
-            $date = $rawMonthData[MonthDataDTO::DATE];
-            unset($rawMonthData[MonthDataDTO::DATE]);
+            $date = $rawMonthData[MonthData::DATE];
+            unset($rawMonthData[MonthData::DATE]);
 
-            $monthData = self::getMonthData(rawMonthData: $rawMonthData, date: $date, versionPrefix: $versionPrefix);
+            $monthData = self::getMonthData(rawMonthData: $rawMonthData, date: $date, profile: $profile);
             $data->monthDatas[] = $monthData;
         }
-        usort($data->monthDatas, static fn (MonthDataDTO $a, MonthDataDTO $b): int => $b->date <=> $a->date);
+        usort($data->monthDatas, static fn (MonthData $a, MonthData $b): int => $b->date <=> $a->date);
+
         $data->setMinor();
+        $data->setColors();
 
         return $data;
     }
@@ -53,76 +54,103 @@ class DataFileDecoder
     /**
      * @param array{string: string|array{string: string}} $rawMonthData
      */
-    private static function getMonthData(array $rawMonthData, string $date, string $versionPrefix): MonthDataDTO {
-        $monthData = new MonthDataDTO(date: $date);
-        foreach ($rawMonthData as $versionName => $percentOrMinorVersionsData) {
-            if ($versionName !== VersionDTO::VERSION_OTHER) {
-                $versionName = (string)str_replace($versionPrefix, '', $versionName);
-            }
+    private static function getMonthData(array $rawMonthData, string $date, BaseProfile $profile): MonthData {
+        $monthData = new MonthData(date: $date);
 
-            $monthData->versions[] = is_string($percentOrMinorVersionsData)
-                ? self::getVersion(
-                    versionName: $versionName,
-                    versionPrefix: $versionPrefix,
-                    percent: (float)$percentOrMinorVersionsData,
-                )
-                : self::getVersionWithMinorVersions(
-                    minorVersionsData: $percentOrMinorVersionsData,
-                    versionName: $versionName,
-                    versionPrefix: $versionPrefix,
-                )
-            ;
+        $versionOther = self::getVersionOther(rawMonthData: $rawMonthData);
+        unset($rawMonthData[BaseProfile::VERSION_OTHER]);
+
+        $monthData->versions = self::getVersions($rawMonthData, $profile);
+        if ($versionOther instanceof Version) {
+            $monthData->versions = array_merge([$versionOther], $monthData->versions);
         }
-
-        // version 'Other' comes first
-        usort($monthData->versions, static function (VersionDTO $a, VersionDTO $b): int {
-            if ($a->version === VersionDTO::VERSION_OTHER && $a->version !== $b->version) {
-                return -1;
-            }
-
-            if ($b->version === VersionDTO::VERSION_OTHER && $a->version !== $b->version) {
-                return 1;
-            }
-
-            return $a->version <=> $b->version;
-        });
 
         return $monthData;
     }
 
-    private static function getVersion(string $versionName, string $versionPrefix, float $percent): VersionDTO {
-        $version = new VersionDTO(version: $versionName, percent: $percent);
-        $version->prefix = ($versionName === VersionDTO::VERSION_OTHER)
-            ? VersionDTO::PREFIX_OTHER
-            : $versionPrefix
-        ;
+    /**
+     * @param array{string: string|array{string: string}} $rawMonthData
+     */
+    private static function getVersionOther(array $rawMonthData): ?Version {
+        if (array_key_exists(BaseProfile::VERSION_OTHER, $rawMonthData)) {
+            return new Version(
+                version: BaseProfile::VERSION_OTHER,
+                percent: (float)$rawMonthData[BaseProfile::VERSION_OTHER],
+            );
+        }
 
-        return $version;
+        return null;
+    }
+
+    /**
+     * @param array{string: string|array{string: string}} $rawMonthData
+     * @return array{Version}
+     */
+    private static function getVersions(array $rawMonthData, BaseProfile $profile): array {
+        $rawMonthDataAsc = self::getRawMonthDataSortedAsc(rawMonthData: $rawMonthData, profile: $profile);
+
+        $versions = [];
+        foreach ($rawMonthDataAsc as $versionName => $percentOrMinorVersionsData) {
+            if (is_string($percentOrMinorVersionsData)) {
+                if ((float)$percentOrMinorVersionsData > 0) {
+                    $versions[] = new Version(
+                        version: (string)$versionName,
+                        percent: (float)$percentOrMinorVersionsData,
+                        prefix: $profile->versionPrefix,
+                    );
+                }
+            } else {
+                $versions[] = self::getVersionsWithMinorVersions(
+                    minorVersionsData: $percentOrMinorVersionsData,
+                    versionName: (string)$versionName,
+                    profile: $profile,
+                );
+            }
+        }
+
+        usort($versions, static fn (Version $a, Version $b): int => $a->version <=> $b->version);
+
+        return $versions;
+    }
+
+    /**
+     * @param array{string: string|array{string: string}} $rawMonthData
+     * @return array{string: string|array{string: string}}
+     */
+    private static function getRawMonthDataSortedAsc(array $rawMonthData, BaseProfile $profile): array {
+        $sortedRawMonthData = [];
+        $versionNames = array_keys($rawMonthData);
+        foreach ($versionNames as $versionNameWithPrefix) {
+            $versionName = (string)str_replace($profile->versionPrefix, '', $versionNameWithPrefix);
+            $sortedRawMonthData[$versionName] = $rawMonthData[$versionNameWithPrefix];
+        }
+        krsort($sortedRawMonthData);
+
+        return $sortedRawMonthData;
     }
 
     /**
      * @param array{string: string} $minorVersionsData
      */
-    private static function getVersionWithMinorVersions(
+    private static function getVersionsWithMinorVersions(
         array $minorVersionsData,
         string $versionName,
-        string $versionPrefix,
-    ): VersionDTO {
-        $version = new VersionDTO(version: $versionName, percent: 0, prefix: $versionPrefix);
+        BaseProfile $profile,
+    ): Version {
+        $version = new Version(version: $versionName, percent: 0, prefix: $profile->versionPrefix);
         $majorPercent = 0;
-        foreach ($minorVersionsData as $minorVersionStr => $minorPercent) {
-            $version->minorVersions[] = new VersionDTO(
-                version: (string)$minorVersionStr,
-                percent: (float)$minorPercent,
-            );
-            $majorPercent += (float)$minorPercent;
+        foreach ($minorVersionsData as $minorVersionName => $minorPercent) {
+            if ((float)$minorPercent > 0) {
+                $version->minorVersions[] = new Version(
+                    version: $versionName.$profile->versionSeparator.$minorVersionName,
+                    percent: (float)$minorPercent,
+                );
+                $majorPercent += (float)$minorPercent;
+            }
         }
         $version->percent = $majorPercent;
 
-        usort(
-            $version->minorVersions,
-            static fn (VersionDTO $a, VersionDTO $b): int => $a->version <=> $b->version,
-        );
+        usort($version->minorVersions, static fn (Version $a, Version $b): int => $a->version <=> $b->version);
 
         return $version;
     }

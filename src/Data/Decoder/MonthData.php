@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace App\Data\Decoder;
 
-class MonthDataDTO
+class MonthData
 {
     public const string DATE = 'Date';
 
     public function __construct(
         public string $date,
-        /** @var VersionDTO[] $versions */
+        /** @var Version[] $versions */
         public array $versions = [],
     ) {}
 }
