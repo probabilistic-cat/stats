@@ -87,24 +87,27 @@ class DataFileDecoder
      * @return array{Version}
      */
     private static function getVersions(array $rawMonthData, BaseProfile $profile): array {
-        $rawMonthDataAsc = self::getRawMonthDataSortedAsc(rawMonthData: $rawMonthData, profile: $profile);
-
         $versions = [];
-        foreach ($rawMonthDataAsc as $versionName => $percentOrMinorVersionsData) {
+        foreach ($rawMonthData as $versionNameWithPrefix => $percentOrMinorVersionsData) {
+            $versionName = (string)str_replace($profile->versionPrefix, '', $versionNameWithPrefix);
+
             if (is_string($percentOrMinorVersionsData)) {
                 if ((float)$percentOrMinorVersionsData > 0) {
                     $versions[] = new Version(
-                        version: (string)$versionName,
+                        version: $versionName,
                         percent: (float)$percentOrMinorVersionsData,
                         prefix: $profile->versionPrefix,
                     );
                 }
             } else {
-                $versions[] = self::getVersionsWithMinorVersions(
+                $version = self::getVersionsWithMinorVersions(
                     minorVersionsData: $percentOrMinorVersionsData,
-                    versionName: (string)$versionName,
+                    versionName: $versionName,
                     profile: $profile,
                 );
+                if ($version instanceof Version) {
+                    $versions[] = $version;
+                }
             }
         }
 
@@ -114,29 +117,13 @@ class DataFileDecoder
     }
 
     /**
-     * @param array{string: string|array{string: string}} $rawMonthData
-     * @return array{string: string|array{string: string}}
-     */
-    private static function getRawMonthDataSortedAsc(array $rawMonthData, BaseProfile $profile): array {
-        $sortedRawMonthData = [];
-        $versionNames = array_keys($rawMonthData);
-        foreach ($versionNames as $versionNameWithPrefix) {
-            $versionName = (string)str_replace($profile->versionPrefix, '', $versionNameWithPrefix);
-            $sortedRawMonthData[$versionName] = $rawMonthData[$versionNameWithPrefix];
-        }
-        krsort($sortedRawMonthData);
-
-        return $sortedRawMonthData;
-    }
-
-    /**
      * @param array{string: string} $minorVersionsData
      */
     private static function getVersionsWithMinorVersions(
         array $minorVersionsData,
         string $versionName,
         BaseProfile $profile,
-    ): Version {
+    ): ?Version {
         $version = new Version(version: $versionName, percent: 0, prefix: $profile->versionPrefix);
         $majorPercent = 0;
         foreach ($minorVersionsData as $minorVersionName => $minorPercent) {
@@ -148,8 +135,12 @@ class DataFileDecoder
                 $majorPercent += (float)$minorPercent;
             }
         }
-        $version->percent = $majorPercent;
 
+        if ($majorPercent === 0) {
+            return null;
+        }
+
+        $version->percent = $majorPercent;
         usort($version->minorVersions, static fn (Version $a, Version $b): int => $a->version <=> $b->version);
 
         return $version;
