@@ -18,6 +18,7 @@ function calcVersionDivWidth() {
         let biggestWidth = 0;
         let classes = '';
         let totalWidth = 0;
+        let isFirstVersionDiv = true;
         $(this).find('div.version').each(function() {
             // let version = $(this).attr('data-version');
             let percent = parseFloat($(this).attr('data-percent'));
@@ -30,6 +31,12 @@ function calcVersionDivWidth() {
             }
 
             $(this).css('width', width + 'px');
+            if (isFirstVersionDiv) {
+                $(this).css('box-shadow', 'none');
+                if (width > 1) {
+                    isFirstVersionDiv = false;
+                }
+            }
 
             let pTitle = $(this).find('p.version_title');
             if (!isMinorShown) {
