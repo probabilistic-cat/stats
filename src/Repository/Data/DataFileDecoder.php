@@ -13,9 +13,9 @@ class DataFileDecoder
         private readonly SerializerInterface $serializer,
     ) {}
 
-    public function decode(BaseProfile $profile): Data {
+    public function decode(BaseProfile $profile, string $filepath): Data {
         /** @var array{array{string: string|array{string: string}}} $rawData */
-        $rawData = $this->getRawData($profile);
+        $rawData = $this->getRawData(profile: $profile, filepath: $filepath);
 
         return self::getData(rawData: $rawData, profile: $profile);
     }
@@ -23,9 +23,9 @@ class DataFileDecoder
     /**
      * @return array{array{string: string|array{string: string}}}
      */
-    private function getRawData(BaseProfile $profile): array {
+    private function getRawData(BaseProfile $profile, string $filepath): array {
         return $this->serializer->decode(
-            file_get_contents($profile->getFilePath()),
+            file_get_contents($filepath),
             'csv',
             ['csv_key_separator' => $profile->versionSeparator],
         );

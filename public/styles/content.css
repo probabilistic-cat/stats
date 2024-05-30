@@ -1,6 +1,12 @@
-.content {
+.content p.category {
+    margin: 15px 0 25px 0;
     width: 100%;
-    padding: 15px 40px 20px 40px;
+    font-size: 40px;
+    font-weight: 600;
+}
+
+.content p.category a {
+    text-decoration: none;
 }
 
 .content p.subcategory a {

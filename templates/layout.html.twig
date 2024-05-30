@@ -3,8 +3,8 @@
 {% block styles %}
     {{ parent() }}
     <link href="{{ asset("styles/base.css") }}" type="text/css" rel="stylesheet" />
-    <link href="{{ asset("styles/header.css") }}" type="text/css" rel="stylesheet" />
-    <link href="{{ asset("styles/footer.css") }}" type="text/css" rel="stylesheet" />
+{#    <link href="{{ asset("styles/header.css") }}" type="text/css" rel="stylesheet" />#}
+{#    <link href="{{ asset("styles/footer.css") }}" type="text/css" rel="stylesheet" />#}
 {% endblock %}
 
 {% block js %}
@@ -14,7 +14,7 @@
 
 {% block body %}
     <div class="header">
-        <p class="category"><a href="{{ path("app_ios_versions") }}">iOS versions</a></p>
+        {% block header %}{% endblock %}
     </div>
 
     <div class="content">

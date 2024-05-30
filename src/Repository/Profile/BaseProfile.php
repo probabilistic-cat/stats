@@ -11,7 +11,14 @@ abstract class BaseProfile
     public const string COLOR_OTHER = '#d8d8dc';
     public const string VERSION_OTHER = 'Other';
     public const string PREFIX_OTHER = '';
-    protected string $filename;
+
+    public string $category;
+    /** @var array{string} */
+    public array $subcategoriesLinks;
+
+    // decoder properties
+    /** @var array{string: string} */
+    protected array $filenames;
     public string $versionPrefix = '';
     public string $versionSeparator = '~';
 
@@ -23,7 +30,11 @@ abstract class BaseProfile
     /** @var array{string: string}|null */
     public ?array $colorByVersion = null;
 
-    public function getFilePath(): string {
-        return Consts::DIR.'/File/'.$this->filename;
+    public function getFilePathBySubcategory(string $subcategory): string {
+        if (!array_key_exists($subcategory, $this->subcategoriesLinks)) {
+            throw new \InvalidArgumentException('Unknown subcategory');
+        }
+
+        return Consts::DIR.'/File/'.$this->filenames[$subcategory];
     }
 }

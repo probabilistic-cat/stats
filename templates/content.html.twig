@@ -11,10 +11,19 @@
 {% endblock %}
 
 {% block content %}
+    <p class="category">
+        <a href="{{ categoryLink }}">{{ category }}</a>
+    </p>
+
     <p class="subcategory">
-        <a class="selected" href="">All</a>
-        <a href="">iPhone</a>
-        <a href="">iPad</a>
+    {% for subcategory, link in subcategories %}
+        <a
+            {% if subcategory == subcategoryCurrent %}class="selected"{% endif %}
+            href="{{ link }}"
+        >
+            {{ subcategory }}
+        </a>
+    {% endfor %}
     </p>
 
     <p class="show_minor">show minor versions</p>

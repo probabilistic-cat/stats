@@ -1,15 +1,15 @@
 let isMinorShown = false;
 
-function selectSubcategory() {
-    $('.content .subcategory a').click(function() {
-        $('.content p.subcategory a').each(function() {
-            $(this).removeClass('selected');
-        });
-        $(this).addClass('selected');
-
-        return false;
-    });
-}
+// function selectSubcategory() {
+//     $('.content .subcategory a').click(function() {
+//         $('.content p.subcategory a').each(function() {
+//             $(this).removeClass('selected');
+//         });
+//         $(this).addClass('selected');
+//
+//         return false;
+//     });
+// }
 
 function calcVersionDivWidth() {
     $('.content div.data div.month div.versions').each(function() {
@@ -127,7 +127,7 @@ function showMinorButton() {
 
 $(document).ready(function() {
     showMinorButton();
-    selectSubcategory();
+    // selectSubcategory();
     calcVersionDivWidth();
 });
 
