@@ -10,19 +10,19 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-class IosVersionsController extends AbstractController
+class IosVersionController extends AbstractController
 {
-    #[Route('/ios_versions_all', name: 'app_ios_versions_all')]
+    #[Route('/ios_version_all', name: 'app_ios_version_all')]
     public function iosVersionsAll(DataFileDecoder $decoder): Response {
         return $this->getResponse(decoder: $decoder, subcategory: IosVersionProfile::SUBCATEGORY_ALL);
     }
 
-    #[Route('/ios_versions_iphone', name: 'app_ios_versions_iphone')]
+    #[Route('/ios_version_iphone', name: 'app_ios_version_iphone')]
     public function iosVersionsIphone(DataFileDecoder $decoder): Response {
         return $this->getResponse(decoder: $decoder, subcategory: IosVersionProfile::SUBCATEGORY_IPHONE);
     }
 
-    #[Route('/ios_versions_ipad', name: 'app_ios_versions_ipad')]
+    #[Route('/ios_version_ipad', name: 'app_ios_version_ipad')]
     public function iosVersionsIpad(DataFileDecoder $decoder): Response {
         return $this->getResponse(decoder: $decoder, subcategory: IosVersionProfile::SUBCATEGORY_IPAD);
     }
@@ -34,7 +34,7 @@ class IosVersionsController extends AbstractController
 
         return $this->render('content.html.twig', [
             'category' => $profile->category,
-            'categoryLink' => $this->generateUrl('app_ios_versions_all'),
+            'categoryLink' => $this->generateUrl('app_ios_version_all'),
             'subcategories' => array_map(
                 fn (string $pathName): string => $this->generateUrl($pathName),
                 $profile->subcategoriesLinks,

@@ -12,6 +12,6 @@ class IndexController extends AbstractController
 {
     #[Route('/', name: 'index')]
     public function index(): Response {
-        return $this->redirectToRoute('app_ios_versions_all');
+        return $this->redirectToRoute('app_ios_version_all');
     }
 }

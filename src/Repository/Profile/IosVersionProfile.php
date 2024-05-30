@@ -12,9 +12,9 @@ class IosVersionProfile extends BaseProfile
 
     public string $category = 'iOS versions';
     public array $subcategoriesLinks = [
-        self::SUBCATEGORY_ALL => 'app_ios_versions_all',
-        self::SUBCATEGORY_IPHONE => 'app_ios_versions_iphone',
-        self::SUBCATEGORY_IPAD => 'app_ios_versions_ipad',
+        self::SUBCATEGORY_ALL => 'app_ios_version_all',
+        self::SUBCATEGORY_IPHONE => 'app_ios_version_iphone',
+        self::SUBCATEGORY_IPAD => 'app_ios_version_ipad',
     ];
 
     protected array $filenames = [
