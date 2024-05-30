@@ -35,7 +35,7 @@
             <div class="versions">
             {% for version in monthData.versions %}
                 <div
-                    class="version {{ version.prefix|trim|lower }}_{{ version.version|lower }}"
+                    class="version {{ version.prefix|trim|lower }}_{{ version.version|lower|replace({' ': '_'}) }}"
                     data-version="{{ version.version }}"
                     data-percent="{{ version.percent }}"
                     title="{{ version.prefix }}{{ version.version }} - {{ version.percent }}%"
