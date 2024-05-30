@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Data\Decoder;
+namespace App\Repository\Data;
 
-use App\Data\Profile\BaseProfile;
+use App\Repository\Profile\BaseProfile;
 use Symfony\Component\Serializer\SerializerInterface;
 
 class DataFileDecoder

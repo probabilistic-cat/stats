@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Data\Profile;
+namespace App\Repository\Profile;
 
-use App\Consts;
+use App\Repository\Consts;
 
 abstract class BaseProfile
 {
@@ -24,6 +24,6 @@ abstract class BaseProfile
     public ?array $colorByVersion = null;
 
     public function getFilePath(): string {
-        return Consts::DIR_SRC.'/Data/File/'.$this->filename;
+        return Consts::DIR.'/File/'.$this->filename;
     }
 }

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Data\Profile;
+namespace App\Repository\Profile;
 
 class IosVersionProfile extends BaseProfile
 {
