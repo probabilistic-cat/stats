@@ -26,7 +26,9 @@
     {% endfor %}
     </p>
 
+{% if hasMinor %}
     <p class="show_minor">show minor versions</p>
+{% endif %}
 
     <div class="data">
     {% for monthData in data.monthDatas %}

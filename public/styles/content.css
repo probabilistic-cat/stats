@@ -22,10 +22,10 @@
 }
 
 .content p.show_minor {
+    float: right;
     margin: 1px 0 0 100px;
     font-size: 16px;
     font-weight: 300;
-    /*color: #0070c9;*/
     text-decoration: none;
 }
 
@@ -54,7 +54,7 @@
 }
 
 .content div.data div.month div.versions {
-    width: calc(100% - 90px);
+    width: calc(100% - 85px);
     border-radius: 10px;
     overflow: hidden;
 }

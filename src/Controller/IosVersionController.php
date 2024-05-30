@@ -41,6 +41,7 @@ class IosVersionController extends AbstractController
             ),
             'subcategoryCurrent' => $subcategory,
             'data' => $data,
+            'hasMinor' => $data->hasMinor,
         ]);
     }
 }

@@ -51,6 +51,7 @@ class BrowserController extends AbstractController
             ),
             'subcategoryCurrent' => $subcategory,
             'data' => $data,
+            'hasMinor' => $data->hasMinor,
         ]);
     }
 }

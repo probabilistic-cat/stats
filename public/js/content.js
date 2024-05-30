@@ -23,6 +23,10 @@ function calcVersionDivWidth() {
             // let version = $(this).attr('data-version');
             let percent = parseFloat($(this).attr('data-percent'));
             let width = Math.floor(versionsDivWidth / 100 * percent);
+            if (width === 1) {
+                width = 0;
+            }
+
             totalWidth += width;
             if (biggestWidth < width) {
                 let classlist = $(this).attr('class').split(/\s+/);
@@ -78,6 +82,10 @@ function calcVersionDivWidth() {
             $(this).find('div.minor_version').each(function() {
                 let minorPercent = parseFloat($(this).attr('data-percent'));
                 let minorWidth = Math.floor(width / percent * minorPercent);
+                if (minorWidth === 1) {
+                    minorWidth = 0;
+                }
+
                 minorTotalWidth += minorWidth;
                 if (minorBiggestWidth < minorWidth) {
                     let minorClasslist = $(this).attr('class').split(/\s+/);
