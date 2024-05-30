@@ -89,7 +89,7 @@ class DataFileDecoder
     private static function getVersions(array $rawMonthData, BaseProfile $profile): array {
         $versions = [];
         foreach ($rawMonthData as $versionNameWithPrefix => $percentOrMinorVersionsData) {
-            $versionName = (string)str_replace($profile->versionPrefix, '', $versionNameWithPrefix);
+            $versionName = (string)str_replace($profile->versionPrefix, '', (string)$versionNameWithPrefix);
 
             if (is_string($percentOrMinorVersionsData)) {
                 if ((float)$percentOrMinorVersionsData > 0) {

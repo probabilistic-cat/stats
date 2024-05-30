@@ -46,7 +46,7 @@
                 {% for minorVersion in version.minorVersions %}
                     <div
                         class="minor_version {{ version.prefix|trim|lower }}_{{ minorVersion.version }}"
-                        data-version="{{ version.version }}.{{ minorVersion.version }}"
+                        data-version="{{ minorVersion.version }}"
                         data-percent="{{ minorVersion.percent }}"
                         title="{{ version.prefix }}{{ minorVersion.version }} - {{ minorVersion.percent }}%"
                         style="background-color: {{ minorVersion.color }}"

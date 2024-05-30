@@ -14,7 +14,7 @@ class ColorHelper
      * @param string $color - hex color
      * @return array{string} - array of hex colors
      */
-    public static function getPalette(string $color, int $colorsCount): array {
+    public static function getGradient(string $color, int $colorsCount): array {
         $colorRgb = self::stringColorToRgb(color: $color);
         $shadesRgb = self::getShadesRgb(colorRgb: $colorRgb, colorsCount: $colorsCount);
 
@@ -31,8 +31,8 @@ class ColorHelper
      * @return array{array{int}}
      */
     private static function getShadesRgb(array $colorRgb, int $colorsCount): array {
-        $lightCount = (int)floor($colorsCount / 2);
-        $darkCount = ($colorsCount % 2 === 0) ? $lightCount - 1 : $lightCount;
+        $darkCount = (int)floor($colorsCount / 2);
+        $lightCount = ($colorsCount % 2 === 0) ? $darkCount - 1 : $darkCount;
 
         $shadesRgb = [];
         for ($i = $lightCount; $i >= -1 * $darkCount; $i--) {

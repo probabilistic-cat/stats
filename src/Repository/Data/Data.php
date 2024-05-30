@@ -53,7 +53,7 @@ class Data
         }
 
         foreach ($minorColors as $majorVersion => $minorVersions) {
-            $minorVersionsColors = ColorHelper::getPalette($colorsByVersions[$majorVersion], count($minorVersions));
+            $minorVersionsColors = ColorHelper::getGradient($colorsByVersions[$majorVersion], count($minorVersions));
             foreach ($minorVersionsColors as $index => $color) {
                 $colorsByVersions[$minorVersions[$index]] = $color;
             }
@@ -82,7 +82,7 @@ class Data
                 }
             }
         }
-        ksort($allVersions);
+        ksort($allVersions, SORT_NATURAL);
 
         return $allVersions;
     }
