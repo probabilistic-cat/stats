@@ -1,15 +1,15 @@
 let isMinorShown = false;
 
-// function selectSubcategory() {
-//     $('.content .subcategory a').click(function() {
-//         $('.content p.subcategory a').each(function() {
-//             $(this).removeClass('selected');
-//         });
-//         $(this).addClass('selected');
+//function selectSubcategory() {
+//    $('.content .subcategory a').click(function() {
+//        $('.content p.subcategory a').each(function() {
+//            $(this).removeClass('selected');
+//        });
+//        $(this).addClass('selected');
 //
-//         return false;
-//     });
-// }
+//        return false;
+//    });
+//}
 
 function calcVersionDivWidth() {
     $('.content div.data div.month div.versions').each(function() {
@@ -120,22 +120,30 @@ function calcVersionDivWidth() {
 }
 
 function showMinorButton() {
-    $('.content p.show_minor').click(function() {
-        if (!isMinorShown) {
-            $(this).html('hide minor versions')
-            isMinorShown = true;
-        } else {
-            $(this).html('show minor versions')
-            isMinorShown = false;
-        }
+    let aShowMinor = $('.content div.show_minor a.show');
+    let aHideMinor = $('.content div.show_minor a.hide');
+
+    aShowMinor.click(function() {
+        aShowMinor.hide();
+        aHideMinor.show();
+        isMinorShown = true;
         calcVersionDivWidth();
+        return false;
+    });
+
+    aHideMinor.click(function() {
+        aHideMinor.hide();
+        aShowMinor.show();
+        isMinorShown = false;
+        calcVersionDivWidth();
+        return false;
     });
 }
 
 
 $(document).ready(function() {
     showMinorButton();
-    // selectSubcategory();
+    //selectSubcategory();
     calcVersionDivWidth();
 });
 

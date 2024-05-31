@@ -1,35 +1,51 @@
-.content p.category {
+.content {
+    width: 100%;
+    padding: 15px 40px 20px 40px;
+}
+
+.content div.category {
     margin: 15px 0 25px 0;
     width: 100%;
     font-size: 40px;
     font-weight: 600;
 }
 
-.content p.category a {
+.content div.category a {
     text-decoration: none;
 }
 
-.content p.subcategory a {
-    margin: 0 14px 30px 0;
+.content div.subcategories {
+    margin: 0 0 30px 0;
+}
+
+.content div.subcategories a {
+    margin: 0 14px 0 0;
     font-size: 17px;
     font-weight: 600;
     color: #0070c9;
     text-decoration: none;
 }
 
-.content p.subcategory a.selected {
+.content div.subcategories a.selected {
     text-decoration: underline;
 }
 
-.content p.show_minor {
+.content div.show_minor {
     float: right;
-    margin: 1px 0 0 100px;
+    margin: 1px 0 0 0;
+}
+
+.content div.show_minor a {
     font-size: 16px;
     font-weight: 300;
     text-decoration: none;
 }
 
-.content p.show_minor:hover {
+.content div.show_minor a.hide {
+    display: none;
+}
+
+.content a.show_minor:hover {
     cursor: pointer;
 }
 

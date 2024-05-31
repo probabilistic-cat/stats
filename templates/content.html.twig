@@ -1,4 +1,5 @@
 {% extends "layout.html.twig" %}
+{% use "header.html.twig" %}
 
 {% block styles %}
     {{ parent() }}
@@ -11,11 +12,11 @@
 {% endblock %}
 
 {% block content %}
-    <p class="category">
+    <div class="category">
         <a href="{{ categoryLink }}">{{ category }}</a>
-    </p>
+    </div>
 
-    <p class="subcategory">
+    <div class="subcategories">
     {% for subcategory, link in subcategories %}
         <a
             {% if subcategory == subcategoryCurrent %}class="selected"{% endif %}
@@ -24,10 +25,13 @@
             {{ subcategory }}
         </a>
     {% endfor %}
-    </p>
+    </div>
 
 {% if hasMinor %}
-    <p class="show_minor">show minor versions</p>
+    <div class="show_minor">
+        <a class="show" href="">show minor versions</a>
+        <a class="hide" href="">hide minor versions</a>
+    </div>
 {% endif %}
 
     <div class="data">

@@ -30,7 +30,7 @@ class AndroidVersionController extends BaseController
         return $this->getResponse(
             profile: new AndroidVersionProfile(),
             subcategory: $subcategory,
-            categoryLink: $this->generateUrl('app_ios_version_all'),
+            categoryLink: $this->generateUrl('app_android_version_all'),
         );
     }
 }

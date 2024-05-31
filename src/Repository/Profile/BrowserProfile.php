@@ -12,7 +12,7 @@ class BrowserProfile extends BaseProfile
     public const string SUBCATEGORY_TABLET = 'Tablet';
     public const string SUBCATEGORY_CONSOLE = 'Console';
 
-    public string $category = 'Browser';
+    public string $category = 'Browsers';
     public array $subcategoriesLinks = [
         self::SUBCATEGORY_ALL => 'app_browser_all',
         self::SUBCATEGORY_DESKTOP => 'app_browser_desktop',
