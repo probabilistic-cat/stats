@@ -44,11 +44,13 @@ function calcVersionDivWidth() {
 
             let pTitle = $(this).find('p.version_title');
             if (!isMinorShown) {
-                if (110 <= width) {
-                    pTitle.html($(this).attr('title'));
+                let fullTitle = $(this).attr('title');
+                let shortTitle = percent + '%';
+                if (fullTitle.length * 8 < width) {
+                    pTitle.html(fullTitle);
                     pTitle.show();
-                } else if (50 <= width || (percent < 10 && 42 <= width)) {
-                    pTitle.html(percent + '%');
+                } else if (shortTitle.length * 9 < width) {
+                    pTitle.html(shortTitle);
                     pTitle.show();
                 }
 
@@ -100,11 +102,13 @@ function calcVersionDivWidth() {
                 $(this).show();
 
                 let pMinorTitle = $(this).find('p.minor_version_title');
-                if (120 <= minorWidth) {
-                    pMinorTitle.html($(this).attr('title'));
+                let fullTitle = $(this).attr('title');
+                let shortTitle = minorPercent + '%';
+                if (fullTitle.length * 8 < minorWidth) {
+                    pMinorTitle.html(fullTitle);
                     pMinorTitle.show();
-                } else if (50 <= minorWidth || (minorPercent < 10 && 42 <= minorWidth)) {
-                    pMinorTitle.html(minorPercent + '%');
+                } else if (shortTitle.length * 9 < minorWidth) {
+                    pMinorTitle.html(shortTitle);
                     pMinorTitle.show();
                 }
             });
