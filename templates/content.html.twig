@@ -37,7 +37,7 @@
     <div class="data">
     {% for monthData in data.monthDatas %}
         <div class="month">
-            <div class="date">{{ monthData.date }}</div>
+            <div class="date">{{ monthData.date|date('Y M') }}</div>
             <div class="versions">
             {% for version in monthData.versions %}
                 <div

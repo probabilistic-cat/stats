@@ -9,6 +9,8 @@ use Symfony\Component\Serializer\SerializerInterface;
 
 class DataFileDecoder
 {
+    private const string COLUMN_DATE = 'Date';
+
     public function __construct(
         private readonly SerializerInterface $serializer,
     ) {}
@@ -37,8 +39,8 @@ class DataFileDecoder
     private static function getData(array $rawData, BaseProfile $profile): Data {
         $data = new Data(profile: $profile);
         foreach ($rawData as $rawMonthData) {
-            $date = $rawMonthData[MonthData::DATE];
-            unset($rawMonthData[MonthData::DATE]);
+            $date = $rawMonthData[self::COLUMN_DATE];
+            unset($rawMonthData[self::COLUMN_DATE]);
 
             $monthData = self::getMonthData(rawMonthData: $rawMonthData, date: $date, profile: $profile);
             $data->monthDatas[] = $monthData;
@@ -64,7 +66,7 @@ class DataFileDecoder
             }
         }
 
-        $monthData = new MonthData(date: $date);
+        $monthData = new MonthData(date: \DateTime::createFromFormat('Y-m-d H:i', $date.'-15 00:00'));
         $monthData->versions = [...$versionsOther, ...self::getVersions($rawMonthData, $profile)];
 
         return $monthData;
