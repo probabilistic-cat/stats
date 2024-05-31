@@ -55,29 +55,33 @@ class DataFileDecoder
     private static function getMonthData(array $rawMonthData, string $date, BaseProfile $profile): MonthData {
         $monthData = new MonthData(date: $date);
 
-        $versionOther = self::getVersionOther(rawMonthData: $rawMonthData);
-        unset($rawMonthData[BaseProfile::VERSION_OTHER]);
-
-        $monthData->versions = self::getVersions($rawMonthData, $profile);
-        if ($versionOther instanceof Version) {
-            $monthData->versions = [$versionOther, ...$monthData->versions];
+        $versionsOther = self::getVersionsOther(rawMonthData: $rawMonthData);
+        foreach (BaseProfile::VERSIONS_OTHER as $versionName) {
+            unset($rawMonthData[$versionName]);
         }
+
+        $monthData->versions = [...$versionsOther, ...self::getVersions($rawMonthData, $profile)];
 
         return $monthData;
     }
 
     /**
      * @param array{string: string|array{string: string}} $rawMonthData
+     * @return array{Version}
      */
-    private static function getVersionOther(array $rawMonthData): ?Version {
-        if (array_key_exists(BaseProfile::VERSION_OTHER, $rawMonthData)) {
-            return new Version(
-                version: BaseProfile::VERSION_OTHER,
-                percent: (float)$rawMonthData[BaseProfile::VERSION_OTHER],
-            );
+    private static function getVersionsOther(array $rawMonthData): array {
+        $versionsOther = [];
+
+        foreach (BaseProfile::VERSIONS_OTHER as $versionName) {
+            if (array_key_exists($versionName, $rawMonthData)) {
+                $versionsOther[] = new Version(
+                    version: $versionName,
+                    percent: (float)$rawMonthData[$versionName],
+                );
+            }
         }
 
-        return null;
+        return $versionsOther;
     }
 
     /**

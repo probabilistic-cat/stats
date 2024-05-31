@@ -56,21 +56,43 @@ class Data
     }
 
     public function setColors(): void {
-        $colorsByVersions = $this->getAllVersions();
+        $colorsByVersion = $this->getColorsByVersion();
+
+        foreach ($this->monthDatas as $monthData) {
+            foreach ($monthData->versions as $version) {
+                $version->color = $colorsByVersion[$version->version];
+                foreach ($version->minorVersions as $minorVersion) {
+                    $minorVersion->color = $colorsByVersion[$minorVersion->version];
+                }
+            }
+        }
+    }
+
+    /**
+     * @return array{string: string}
+     */
+    private function getColorsByVersion(): array {
+        $colorsByVersion = $this->getAllVersions();
+        $colorsByVersion = array_replace($colorsByVersion, $this->profile->customColorsByVersion);
+
         $colorIndex = 0;
         $lastMajorVersion = '';
         $minorColors = [];
-        foreach ($colorsByVersions as $version => $_) {
-            if ($version === BaseProfile::VERSION_OTHER) {
-                $colorsByVersions[$version] = BaseProfile::COLOR_OTHER;
+        foreach ($colorsByVersion as $version => $_) {
+            $version = (string)$version;
+
+            if (in_array($version, BaseProfile::VERSIONS_OTHER, true)) {
+                $colorsByVersion[$version] = BaseProfile::COLOR_OTHER;
                 continue;
             }
 
-            if ($this->isVersionNameMajor((string)$version)) {
-                $colorsByVersions[$version] = $this->profile->colors[$colorIndex];
-                $colorIndex++;
-                if ($colorIndex >= count($this->profile->colors)) {
-                    $colorIndex = 0;
+            if ($this->isVersionNameMajor($version)) {
+                if ($colorsByVersion[$version] === null) {
+                    $colorsByVersion[$version] = $this->profile->colors[$colorIndex];
+                    $colorIndex++;
+                    if ($colorIndex >= count($this->profile->colors)) {
+                        $colorIndex = 0;
+                    }
                 }
                 $lastMajorVersion = $version;
             } else {
@@ -79,20 +101,13 @@ class Data
         }
 
         foreach ($minorColors as $majorVersion => $minorVersions) {
-            $minorVersionsColors = ColorHelper::getGradient($colorsByVersions[$majorVersion], count($minorVersions));
+            $minorVersionsColors = ColorHelper::getGradient($colorsByVersion[$majorVersion], count($minorVersions));
             foreach ($minorVersionsColors as $index => $color) {
-                $colorsByVersions[$minorVersions[$index]] = $color;
+                $colorsByVersion[$minorVersions[$index]] = $color;
             }
         }
 
-        foreach ($this->monthDatas as $monthData) {
-            foreach ($monthData->versions as $version) {
-                $version->color = $colorsByVersions[$version->version];
-                foreach ($version->minorVersions as $minorVersion) {
-                    $minorVersion->color = $colorsByVersions[$minorVersion->version];
-                }
-            }
-        }
+        return $colorsByVersion;
     }
 
     /**
@@ -118,10 +133,10 @@ class Data
     }
 
     private function sortVersions(Version $a, Version $b): int {
-        if ($a->version === BaseProfile::VERSION_OTHER) {
+        if (in_array($a->version, BaseProfile::VERSIONS_OTHER, true)) {
             return -1;
         }
-        if ($b->version === BaseProfile::VERSION_OTHER) {
+        if (in_array($b->version, BaseProfile::VERSIONS_OTHER, true)) {
             return 1;
         }
 
