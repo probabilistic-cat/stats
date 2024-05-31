@@ -23,4 +23,6 @@ class AndroidVersionProfile extends BaseProfile
         self::SUBCATEGORY_TABLET => 'android_version_tablet-ww-monthly-201706-202404.csv',
     ];
     public string $versionSeparator = '.';
+
+    public string $sort = BaseProfile::SORT_VERSION_ASC;
 }

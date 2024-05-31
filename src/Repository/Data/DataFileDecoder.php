@@ -43,10 +43,8 @@ class DataFileDecoder
             $monthData = self::getMonthData(rawMonthData: $rawMonthData, date: $date, profile: $profile);
             $data->monthDatas[] = $monthData;
         }
-        usort($data->monthDatas, static fn (MonthData $a, MonthData $b): int => $b->date <=> $a->date);
 
         $data->setMinor();
-        $data->setColors();
 
         return $data;
     }
@@ -62,7 +60,7 @@ class DataFileDecoder
 
         $monthData->versions = self::getVersions($rawMonthData, $profile);
         if ($versionOther instanceof Version) {
-            $monthData->versions = array_merge([$versionOther], $monthData->versions);
+            $monthData->versions = [$versionOther, ...$monthData->versions];
         }
 
         return $monthData;
@@ -111,8 +109,6 @@ class DataFileDecoder
             }
         }
 
-        usort($versions, static fn (Version $a, Version $b): int => $a->version <=> $b->version);
-
         return $versions;
     }
 
@@ -141,7 +137,6 @@ class DataFileDecoder
         }
 
         $version->percent = $majorPercent;
-        usort($version->minorVersions, static fn (Version $a, Version $b): int => $a->version <=> $b->version);
 
         return $version;
     }

@@ -9,9 +9,10 @@ use App\Repository\Profile\BaseProfile;
 
 class Data
 {
+    private bool $hasMinor = false;
+
     public function __construct(
         public BaseProfile $profile,
-        public bool $hasMinor = false,
         /** @var MonthData[] $monthDatas */
         public array $monthDatas = [],
     ) {}
@@ -27,6 +28,31 @@ class Data
         }
 
         $this->hasMinor = false;
+    }
+
+    public function hasMinor(): bool {
+        return $this->hasMinor;
+    }
+
+    public function sort(): void {
+        foreach ($this->monthDatas as $monthIndex => $monthData) {
+            if ($this->hasMinor()) {
+                foreach ($monthData->versions as $versionIndex => $version) {
+                    if (count($version->minorVersions) > 0) {
+                        usort(
+                            $this->monthDatas[$monthIndex]->versions[$versionIndex]->minorVersions,
+                            fn (Version $a, Version $b): int => $this->sortVersions($a, $b),
+                        );
+                    }
+                }
+            }
+            usort(
+                $this->monthDatas[$monthIndex]->versions,
+                fn (Version $a, Version $b): int => $this->sortVersions($a, $b),
+            );
+        }
+
+        usort($this->monthDatas, static fn (MonthData $a, MonthData $b): int => $b->date <=> $a->date);
     }
 
     public function setColors(): void {
@@ -89,5 +115,24 @@ class Data
 
     private function isVersionNameMajor(string $versionName): bool {
         return mb_strpos($versionName, $this->profile->versionSeparator) === false;
+    }
+
+    private function sortVersions(Version $a, Version $b): int {
+        if ($a->version === BaseProfile::VERSION_OTHER) {
+            return -1;
+        }
+        if ($b->version === BaseProfile::VERSION_OTHER) {
+            return 1;
+        }
+
+        if ($this->profile->sort === BaseProfile::SORT_PERCENT_ASC) {
+            return $a->percent <=> $b->percent;
+        }
+
+        if ($this->profile->sort === BaseProfile::SORT_VERSION_ASC) {
+            return $a->version <=> $b->version;
+        }
+
+        return $a->version <=> $b->version;
     }
 }

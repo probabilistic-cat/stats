@@ -12,6 +12,9 @@ abstract class BaseProfile
     public const string VERSION_OTHER = 'Other';
     public const string PREFIX_OTHER = '';
 
+    public const string SORT_PERCENT_ASC = 'sort_percent_asc';
+    public const string SORT_VERSION_ASC = 'sort_version_asc';
+
     public string $category;
     /** @var array{string} */
     public array $subcategoriesLinks;
@@ -29,6 +32,8 @@ abstract class BaseProfile
 
     /** @var array{string: string}|null */
     public ?array $colorByVersion = null;
+
+    public string $sort;
 
     public function getFilePathBySubcategory(string $subcategory): string {
         if (!array_key_exists($subcategory, $this->subcategoriesLinks)) {

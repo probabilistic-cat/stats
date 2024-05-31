@@ -24,4 +24,6 @@ class IosVersionProfile extends BaseProfile
     ];
     public string $versionPrefix = 'iOS ';
     public string $versionSeparator = '.';
+
+    public string $sort = BaseProfile::SORT_VERSION_ASC;
 }

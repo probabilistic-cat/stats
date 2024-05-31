@@ -28,4 +28,6 @@ class BrowserProfile extends BaseProfile
         self::SUBCATEGORY_TABLET => 'browser_tablet-ww-monthly-201208-202404.csv',
         self::SUBCATEGORY_CONSOLE => 'browser_console-ww-monthly-201208-202404.csv',
     ];
+
+    public string $sort = BaseProfile::SORT_PERCENT_ASC;
 }
