@@ -12,7 +12,15 @@ let isMinorShown = false;
 //}
 
 function calcVersionDivWidth() {
+    let prevYear = 0;
     $('.content div.data div.month div.versions').each(function() {
+        let divMonth = $(this).parent();
+        let curYear = divMonth.attr('data-year');
+        if (curYear !== prevYear && prevYear !== 0) {
+            divMonth.css('margin-top', '20px');
+        }
+        prevYear = curYear;
+
         let versionsDivWidth = parseInt($(this).first().width());
 
         let biggestWidth = 0;
