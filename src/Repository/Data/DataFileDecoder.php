@@ -27,7 +27,7 @@ class DataFileDecoder
         return $this->serializer->decode(
             file_get_contents($filepath),
             'csv',
-            ['csv_key_separator' => $profile->versionSeparator],
+            ['csv_key_separator' => $profile->nameSeparator],
         );
     }
 
@@ -53,13 +53,18 @@ class DataFileDecoder
      * @param array{string: string|array{string: string}} $rawMonthData
      */
     private static function getMonthData(array $rawMonthData, string $date, BaseProfile $profile): MonthData {
-        $monthData = new MonthData(date: $date);
-
-        $versionsOther = self::getVersionsOther(rawMonthData: $rawMonthData);
-        foreach (BaseProfile::VERSIONS_OTHER as $versionName) {
-            unset($rawMonthData[$versionName]);
+        $versionsOther = [];
+        foreach (BaseProfile::NAMES_OTHER as $name) {
+            if (array_key_exists($name, $rawMonthData)) {
+                $versionsOther[] = new Version(
+                    name: $name,
+                    percent: (float)$rawMonthData[$name],
+                );
+                unset($rawMonthData[$name]);
+            }
         }
 
+        $monthData = new MonthData(date: $date);
         $monthData->versions = [...$versionsOther, ...self::getVersions($rawMonthData, $profile)];
 
         return $monthData;
@@ -69,42 +74,24 @@ class DataFileDecoder
      * @param array{string: string|array{string: string}} $rawMonthData
      * @return array{Version}
      */
-    private static function getVersionsOther(array $rawMonthData): array {
-        $versionsOther = [];
-
-        foreach (BaseProfile::VERSIONS_OTHER as $versionName) {
-            if (array_key_exists($versionName, $rawMonthData)) {
-                $versionsOther[] = new Version(
-                    version: $versionName,
-                    percent: (float)$rawMonthData[$versionName],
-                );
-            }
-        }
-
-        return $versionsOther;
-    }
-
-    /**
-     * @param array{string: string|array{string: string}} $rawMonthData
-     * @return array{Version}
-     */
     private static function getVersions(array $rawMonthData, BaseProfile $profile): array {
         $versions = [];
-        foreach ($rawMonthData as $versionNameWithPrefix => $percentOrMinorVersionsData) {
-            $versionName = (string)str_replace($profile->versionPrefix, '', (string)$versionNameWithPrefix);
+        foreach ($rawMonthData as $nameWithPrefix => $percentOrMinorVersionsData) {
+            $name = (string)str_replace($profile->prefix, '', (string)$nameWithPrefix);
 
             if (is_string($percentOrMinorVersionsData)) {
-                if ((float)$percentOrMinorVersionsData > 0) {
+                $percent = (float)$percentOrMinorVersionsData;
+                if ($percent > 0) {
                     $versions[] = new Version(
-                        version: $versionName,
-                        percent: (float)$percentOrMinorVersionsData,
-                        prefix: $profile->versionPrefix,
+                        name: $name,
+                        percent: $percent,
+                        prefix: $profile->prefix,
                     );
                 }
             } else {
                 $version = self::getVersionsWithMinorVersions(
                     minorVersionsData: $percentOrMinorVersionsData,
-                    versionName: $versionName,
+                    name: $name,
                     profile: $profile,
                 );
                 if ($version instanceof Version) {
@@ -121,15 +108,15 @@ class DataFileDecoder
      */
     private static function getVersionsWithMinorVersions(
         array $minorVersionsData,
-        string $versionName,
+        string $name,
         BaseProfile $profile,
     ): ?Version {
-        $version = new Version(version: $versionName, percent: 0, prefix: $profile->versionPrefix);
+        $version = new Version(name: $name, percent: 0, prefix: $profile->prefix);
         $majorPercent = 0;
-        foreach ($minorVersionsData as $minorVersionName => $minorPercent) {
+        foreach ($minorVersionsData as $minorName => $minorPercent) {
             if ((float)$minorPercent > 0) {
                 $version->minorVersions[] = new Version(
-                    version: $versionName.$profile->versionSeparator.$minorVersionName,
+                    name: $name.$profile->nameSeparator.$minorName,
                     percent: (float)$minorPercent,
                 );
                 $majorPercent += (float)$minorPercent;

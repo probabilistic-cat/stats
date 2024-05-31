@@ -22,7 +22,5 @@ class AndroidVersionProfile extends BaseProfile
         self::SUBCATEGORY_MOBILE => 'android_version_mobile-ww-monthly-201706-202404.csv',
         self::SUBCATEGORY_TABLET => 'android_version_tablet-ww-monthly-201706-202404.csv',
     ];
-    public string $versionSeparator = '.';
-
-    public string $sort = BaseProfile::SORT_VERSION_ASC;
+    public string $nameSeparator = '.';
 }

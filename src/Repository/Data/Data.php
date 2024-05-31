@@ -10,11 +10,11 @@ use App\Repository\Profile\BaseProfile;
 class Data
 {
     private bool $hasMinor = false;
+    /** @var array{MonthData} */
+    public array $monthDatas = [];
 
     public function __construct(
         public BaseProfile $profile,
-        /** @var MonthData[] $monthDatas */
-        public array $monthDatas = [],
     ) {}
 
     public function setMinor(): void {
@@ -39,33 +39,70 @@ class Data
 
         $reference = $this->getSortVersionsReference($this->monthDatas[0]);
 
-        foreach ($this->monthDatas as $monthIndex => $monthData) {
+        foreach ($this->monthDatas as $monthData) {
             if ($this->hasMinor()) {
-                foreach ($monthData->versions as $versionIndex => $version) {
+                foreach ($monthData->versions as $version) {
                     if (count($version->minorVersions) > 0) {
                         usort(
-                            $this->monthDatas[$monthIndex]->versions[$versionIndex]->minorVersions,
-                            static fn (Version $a, Version $b): int => $a->version <=> $b->version,
+                            $version->minorVersions,
+                            static fn (Version $a, Version $b): int => $a->name <=> $b->name,
                         );
                     }
                 }
             }
 
             usort(
-                $this->monthDatas[$monthIndex]->versions,
-                static fn (Version $a, Version $b): int => $reference[$a->version] <=> $reference[$b->version],
+                $monthData->versions,
+                static fn (Version $a, Version $b): int => $reference[$a->name] <=> $reference[$b->name],
             );
         }
     }
 
+    /**
+     * @return array{string: int}
+     */
+    private function getSortVersionsReference(MonthData $lastMontData): array {
+        $reference = [];
+        $allVersions = $this->getAllNamesSortedAsc();
+        $priority = 0;
+
+        $versionsOther = BaseProfile::NAMES_OTHER;
+        rsort($versionsOther);
+        foreach (BaseProfile::NAMES_OTHER as $name) {
+            $reference[$name] = $priority;
+            $priority++;
+        }
+
+        if ($this->profile->sort === BaseProfile::SORT_PERCENT_ASC) {
+            $lastMonthVersions = $lastMontData->versions;
+            usort($lastMonthVersions, static fn (Version $a, Version $b): int => $b->percent <=> $a->percent);
+            $percentPriority = count($allVersions) + count(BaseProfile::NAMES_OTHER);
+            foreach ($lastMonthVersions as $version) {
+                if (!in_array($version->name, BaseProfile::NAMES_OTHER, true)) {
+                    $reference[$version->name] = $percentPriority;
+                    $percentPriority--;
+                }
+            }
+        }
+
+        foreach ($allVersions as $name) {
+            if (!array_key_exists($name, $reference)) {
+                $reference[$name] = $priority;
+                $priority++;
+            }
+        }
+
+        return $reference;
+    }
+
     public function setColors(): void {
-        $colorsByVersion = $this->getColorsByVersion();
+        $colorsByVersion = $this->getColorsByName();
 
         foreach ($this->monthDatas as $monthData) {
             foreach ($monthData->versions as $version) {
-                $version->color = $colorsByVersion[$version->version];
+                $version->color = $colorsByVersion[$version->name];
                 foreach ($version->minorVersions as $minorVersion) {
-                    $minorVersion->color = $colorsByVersion[$minorVersion->version];
+                    $minorVersion->color = $colorsByVersion[$minorVersion->name];
                 }
             }
         }
@@ -74,101 +111,64 @@ class Data
     /**
      * @return array{string: string}
      */
-    private function getColorsByVersion(): array {
-        $colorsByVersion = array_fill_keys($this->getAllVersionsSortedAsc(), null);
-        $colorsByVersion = array_replace($colorsByVersion, $this->profile->customColorsByVersion);
+    private function getColorsByName(): array {
+        $colorsByName = array_fill_keys($this->getAllNamesSortedAsc(), null);
+        $colorsByName = array_replace($colorsByName, $this->profile->customColorsByName);
 
         $colorIndex = 0;
-        $lastMajorVersion = '';
+        $lastMajorName = '';
         $minorColors = [];
-        foreach ($colorsByVersion as $version => $_) {
-            $version = (string)$version;
+        foreach ($colorsByName as $name => $_) {
+            $name = (string)$name;
 
-            if (in_array($version, BaseProfile::VERSIONS_OTHER, true)) {
-                $colorsByVersion[$version] = BaseProfile::COLOR_OTHER;
+            if (in_array($name, BaseProfile::NAMES_OTHER, true)) {
+                $colorsByName[$name] = BaseProfile::COLOR_OTHER;
                 continue;
             }
 
-            if ($this->isVersionNameMajor($version)) {
-                if ($colorsByVersion[$version] === null) {
-                    $colorsByVersion[$version] = $this->profile->colors[$colorIndex];
+            if ($this->isNameMajor($name)) {
+                if ($colorsByName[$name] === null) {
+                    $colorsByName[$name] = $this->profile->colors[$colorIndex];
                     $colorIndex++;
                     if ($colorIndex >= count($this->profile->colors)) {
                         $colorIndex = 0;
                     }
                 }
-                $lastMajorVersion = $version;
+                $lastMajorName = $name;
             } else {
-                $minorColors[$lastMajorVersion][] = $version;
+                $minorColors[$lastMajorName][] = $name;
             }
         }
 
-        foreach ($minorColors as $majorVersion => $minorVersions) {
-            $minorVersionsColors = ColorHelper::getGradient($colorsByVersion[$majorVersion], count($minorVersions));
-            foreach ($minorVersionsColors as $index => $color) {
-                $colorsByVersion[$minorVersions[$index]] = $color;
+        foreach ($minorColors as $majorName => $minorNames) {
+            $minorNamesColors = ColorHelper::getGradient($colorsByName[$majorName], count($minorNames));
+            foreach ($minorNamesColors as $index => $color) {
+                $colorsByName[$minorNames[$index]] = $color;
             }
         }
 
-        return $colorsByVersion;
+        return $colorsByName;
     }
 
     /**
      * @return array{int|string: null}
      */
-    private function getAllVersionsSortedAsc(): array {
-        $allVersions = [];
+    private function getAllNamesSortedAsc(): array {
+        $allNames = [];
         foreach ($this->monthDatas as $monthData) {
             foreach ($monthData->versions as $version) {
-                $allVersions[$version->version] = null;
+                $allNames[$version->name] = null;
                 foreach ($version->minorVersions as $minorVersion) {
-                    $allVersions[$minorVersion->version] = null;
+                    $allNames[$minorVersion->name] = null;
                 }
             }
         }
-        ksort($allVersions, SORT_NATURAL);
+        ksort($allNames, SORT_NATURAL);
 
-        return array_keys($allVersions);
+        return array_keys($allNames);
     }
 
-    private function isVersionNameMajor(string $versionName): bool {
-        return mb_strpos($versionName, $this->profile->versionSeparator) === false;
-    }
-
-    /**
-     * @return array{string: int}
-     */
-    private function getSortVersionsReference(MonthData $lastMontData): array {
-        $reference = [];
-        $allVersions = $this->getAllVersionsSortedAsc();
-        $priority = 0;
-
-        $versionsOther = BaseProfile::VERSIONS_OTHER;
-        rsort($versionsOther);
-        foreach (BaseProfile::VERSIONS_OTHER as $versionName) {
-            $reference[$versionName] = $priority;
-            $priority++;
-        }
-
-        if ($this->profile->sort === BaseProfile::SORT_PERCENT_ASC) {
-            $lastMonthVersions = $lastMontData->versions;
-            usort($lastMonthVersions, static fn (Version $a, Version $b): int => $b->percent <=> $a->percent);
-            $percentPriority = count($allVersions) + count(BaseProfile::VERSIONS_OTHER);
-            foreach ($lastMonthVersions as $version) {
-                if (!in_array($version->version, BaseProfile::VERSIONS_OTHER, true)) {
-                    $reference[$version->version] = $percentPriority;
-                    $percentPriority--;
-                }
-            }
-        }
-
-        foreach ($allVersions as $versionName) {
-            if (!array_key_exists($versionName, $reference)) {
-                $reference[$versionName] = $priority;
-                $priority++;
-            }
-        }
-
-        return $reference;
+    private function isNameMajor(string $name): bool {
+        return mb_strpos($name, $this->profile->nameSeparator) === false;
     }
 }

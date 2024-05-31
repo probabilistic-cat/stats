@@ -41,18 +41,18 @@
             <div class="versions">
             {% for version in monthData.versions %}
                 <div
-                    class="version {{ version.prefix|trim|lower }}_{{ version.version|lower|replace({' ': '_'}) }}"
-                    data-version="{{ version.version }}"
+                    class="version {{ version.prefix|trim|lower }}_{{ version.name|lower|replace({' ': '_'}) }}"
+                    data-name="{{ version.name }}"
                     data-percent="{{ version.percent }}"
-                    title="{{ version.prefix }}{{ version.version }} - {{ version.percent }}%"
+                    title="{{ version.prefix }}{{ version.name }} - {{ version.percent }}%"
                     style="background-color: {{ version.color }}"
                 >
                 {% for minorVersion in version.minorVersions %}
                     <div
-                        class="minor_version {{ version.prefix|trim|lower }}_{{ minorVersion.version }}"
-                        data-version="{{ minorVersion.version }}"
+                        class="minor_version {{ version.prefix|trim|lower }}_{{ minorVersion.name }}"
+                        data-name="{{ minorVersion.name }}"
                         data-percent="{{ minorVersion.percent }}"
-                        title="{{ version.prefix }}{{ minorVersion.version }} - {{ minorVersion.percent }}%"
+                        title="{{ version.prefix }}{{ minorVersion.name }} - {{ minorVersion.percent }}%"
                         style="background-color: {{ minorVersion.color }}"
                     >
                         <p class="title minor_version_title"></p>

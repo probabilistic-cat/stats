@@ -31,7 +31,7 @@ class BrowserProfile extends BaseProfile
 
     public string $sort = BaseProfile::SORT_PERCENT_ASC;
 
-    public array $customColorsByVersion = [
+    public array $customColorsByName = [
         '360 Safe Browser' => '#30db5b',
         'Android' => '#7d7aff',
         'BlackBerry' => '#afafaf',

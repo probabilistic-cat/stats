@@ -20,7 +20,7 @@ function calcVersionDivWidth() {
         let totalWidth = 0;
         let isFirstVersionDiv = true;
         $(this).find('div.version').each(function() {
-            // let version = $(this).attr('data-version');
+            // let name = $(this).attr('data-name');
             let percent = parseFloat($(this).attr('data-percent'));
             let width = Math.floor(versionsDivWidth / 100 * percent);
             if (width === 1) {

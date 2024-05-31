@@ -22,8 +22,6 @@ class IosVersionProfile extends BaseProfile
         self::SUBCATEGORY_IPHONE => 'ios_version_iphone-ww-monthly-201706-202404.csv',
         self::SUBCATEGORY_IPAD => 'ios_version_ipad-ww-monthly-201706-202404.csv',
     ];
-    public string $versionPrefix = 'iOS ';
-    public string $versionSeparator = '.';
-
-    public string $sort = BaseProfile::SORT_VERSION_ASC;
+    public string $prefix = 'iOS ';
+    public string $nameSeparator = '.';
 }
