@@ -1,21 +1,21 @@
 .content {
     width: 100%;
-    padding: 15px 40px 20px 40px;
+    padding: 30px 40px 20px 40px;
 }
 
 .content div.category {
-    margin: 15px 0 25px 0;
+    margin: 0 0 0 0;
     width: 100%;
-    font-size: 40px;
-    font-weight: 600;
 }
 
 .content div.category a {
+    font-size: 40px;
+    font-weight: 600;
     text-decoration: none;
 }
 
 .content div.subcategories {
-    margin: 0 0 30px 0;
+    margin: 25px 0 0 0;
 }
 
 .content div.subcategories a {
@@ -45,11 +45,8 @@
     display: none;
 }
 
-.content a.show_minor:hover {
-    cursor: pointer;
-}
-
 .content div.data {
+    margin: 30px 0 0 0;
     width: 100%;
 }
 
@@ -73,6 +70,7 @@
     width: calc(100% - 85px);
     border-radius: 10px;
     overflow: hidden;
+    cursor: pointer;
 }
 
 .content div.data div.month div.versions div.version {

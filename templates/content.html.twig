@@ -1,17 +1,8 @@
 {% extends "layout.html.twig" %}
-{% use "header.html.twig" %}
-
-{% block styles %}
-    {{ parent() }}
-    <link href="{{ asset("styles/content.css") }}" type="text/css" rel="stylesheet" />
-{% endblock %}
-
-{% block js %}
-    {{ parent() }}
-    <script src="{{ asset("js/content.js") }}"></script>
-{% endblock %}
+{% use "content_month.html.twig" %}
 
 {% block content %}
+<div class="content">
     <div class="category">
         <a href="{{ categoryLink }}">{{ category }}</a>
     </div>
@@ -36,7 +27,7 @@
 
     <div class="data">
     {% for monthData in data.monthDatas %}
-        <div class="month" data-year="{{ monthData.date|date('Y') }}">
+        <div class="month" data-year="{{ monthData.date|date('Y') }}" data-month_name="{{ monthData.date|date('M') }}">
             <div class="date">{{ monthData.date|date('Y M') }}</div>
             <div class="versions">
             {% for version in monthData.versions %}
@@ -65,4 +56,7 @@
         </div>
     {% endfor %}
     </div>
+</div>
+
+{{ block('content_month') }}
 {% endblock %}

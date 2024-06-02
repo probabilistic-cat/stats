@@ -131,7 +131,7 @@ function calcVersionDivWidth() {
     });
 }
 
-function showMinorButton() {
+function minorButton() {
     let aShowMinor = $('.content div.show_minor a.show');
     let aHideMinor = $('.content div.show_minor a.hide');
 
@@ -152,11 +152,97 @@ function showMinorButton() {
     });
 }
 
+function dataMonthOpen(year, monthName) {
+    $('div.overlay_body').show();
+    $('div.data_month').show();
+}
+
+function dataMonthClose() {
+    $('div.data_month').hide();
+    $('div.overlay_body').hide();
+}
+
+function dataMonthOpenFields() {
+    $('.content div.data div.month div.versions').click(function() {
+        let divMonth = $(this).parent();
+        let year = divMonth.attr('data-year');
+        let monthName = divMonth.attr('data-month_name');
+        let date = year + ' ' + monthName;
+
+        let versionsData = [];
+
+        $(this).find('div.version').each(function () {
+            if (!isMinorShown) {
+                versionsData.push({
+                    'name': $(this).attr('data-name'),
+                    'percent': parseFloat($(this).attr('data-percent')),
+                    'color': $(this).css("background-color"),
+                });
+            } else {
+                let minorVersionsCount = $(this).find('div.minor_version').length;
+                if (minorVersionsCount > 0) {
+                    $(this).find('div.minor_version').each(function() {
+                        versionsData.push({
+                            'name': $(this).attr('data-name'),
+                            'percent': parseFloat($(this).attr('data-percent')),
+                            'color': $(this).css("background-color"),
+                        });
+                    });
+                } else {
+                    versionsData.push({
+                        'name': $(this).attr('data-name'),
+                        'percent': parseFloat($(this).attr('data-percent')),
+                        'color': $(this).css("background-color"),
+                    });
+                }
+            }
+        });
+
+        dataMonthFill(date, versionsData)
+        dataMonthOpen();
+    });
+}
+
+function dataMonthCloseFields() {
+    $('div.overlay_body').click(function() {
+        dataMonthClose();
+    });
+
+    $('div.data_month div.close').click(function() {
+        dataMonthClose();
+    });
+}
+
+function dataMonthFill(date, versionsData) {
+    versionsData.sort((a, b) => (a.percent < b.percent) ? 1 : -1)
+    let maxPercent = (versionsData.length > 0) ? versionsData[0]['percent'] : 100;
+
+    let divMonthHtml = '';
+    versionsData.forEach(function(version) {
+        divMonthHtml = divMonthHtml
+            + '<div class="version">\n'
+                + '<div class="name">' + version.name + '</div>\n'
+                + '<div class="percent_visual" style="width: calc((100% - 200px) / ' + maxPercent + ' * ' + version.percent + ');background-color: ' + version.color + '"></div>\n'
+                + '<div class="percent_number">' + version.percent + '%</div>\n'
+            + '</div>'
+        ;
+    });
+
+    let divDataMonth = $('div.data_month');
+    let divMonth = divDataMonth.find('div.month');
+    divDataMonth.find('div.date').html(date);
+    divMonth.html(divMonthHtml);
+
+    divMonth.animate({scrollTop: divMonth.offset().top});
+}
+
 
 $(document).ready(function() {
-    showMinorButton();
+    minorButton();
     //selectSubcategory();
     calcVersionDivWidth();
+    dataMonthCloseFields();
+    dataMonthOpenFields();
 });
 
 $(window).resize(function() {

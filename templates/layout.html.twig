@@ -1,27 +1,27 @@
 {% extends "base.html.twig" %}
+{% use "header.html.twig" %}
+{% use "footer.html.twig" %}
 
 {% block styles %}
     {{ parent() }}
     <link href="{{ asset("styles/base.css") }}" type="text/css" rel="stylesheet" />
     <link href="{{ asset("styles/header.css") }}" type="text/css" rel="stylesheet" />
+    <link href="{{ asset("styles/content.css") }}" type="text/css" rel="stylesheet" />
+    <link href="{{ asset("styles/content_month.css") }}" type="text/css" rel="stylesheet" />
     <link href="{{ asset("styles/footer.css") }}" type="text/css" rel="stylesheet" />
 {% endblock %}
 
 {% block js %}
     {{ parent() }}
     <script src="{{ asset("js/jquery-3.7.1.min.js") }}"></script>
+    <script src="{{ asset("js/content.js") }}"></script>
 {% endblock %}
 
 {% block body %}
-    <div class="header">
-        {% block header %}{% endblock %}
-    </div>
+    {{ block('header') }}
 
-    <div class="content">
-        {% block content %}{% endblock %}
-    </div>
+    {% block content %}{% endblock %}
 
-    <div class="footer">
-        {% block footer %}{% endblock %}
-    </div>
+    {{ block('footer') }}
+
 {% endblock %}
