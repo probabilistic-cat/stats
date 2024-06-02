@@ -222,7 +222,7 @@ function dataMonthFill(date, versionsData) {
         divMonthHtml = divMonthHtml
             + '<div class="version">\n'
                 + '<div class="name">' + version.name + '</div>\n'
-                + '<div class="percent_visual" style="width: calc((100% - 200px) / ' + maxPercent + ' * ' + version.percent + ');background-color: ' + version.color + '"></div>\n'
+                + '<div class="percent_visual" style="width: calc((100% - 200px) / ' + maxPercent + ' * ' + version.percent + '); background-color: ' + version.color + '"></div>\n'
                 + '<div class="percent_number">' + version.percent + '%</div>\n'
             + '</div>'
         ;
