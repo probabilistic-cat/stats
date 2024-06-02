@@ -12,7 +12,7 @@ class ColorHelper
 
     /**
      * @param string $color - hex color
-     * @return array{string} - array of hex colors
+     * @return array<string> - array of hex colors
      */
     public static function getGradient(string $color, int $colorsCount): array {
         $colorRgb = self::stringColorToRgb(color: $color);
@@ -27,8 +27,8 @@ class ColorHelper
     }
 
     /**
-     * @param array{int} $colorRgb
-     * @return array{array{int}}
+     * @param array<int> $colorRgb
+     * @return array<array<int>>
      */
     private static function getShadesRgb(array $colorRgb, int $colorsCount): array {
         $darkCount = (int)floor($colorsCount / 2);
@@ -55,7 +55,7 @@ class ColorHelper
     }
 
     /**
-     * @return array{int}
+     * @return array<int>
      */
     private static function stringColorToRgb(string $color): array {
         $matches = [];
@@ -69,7 +69,7 @@ class ColorHelper
     }
 
     /**
-     * @param array{int} $colorRgb
+     * @param array<int> $colorRgb
      */
     private static function colorRgbToStringColor(array $colorRgb): string {
         $stringComponents = array_map(

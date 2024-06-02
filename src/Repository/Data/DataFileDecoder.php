@@ -16,14 +16,14 @@ class DataFileDecoder
     ) {}
 
     public function decode(BaseProfile $profile, string $filepath): Data {
-        /** @var array{array{string: string|array{string: string}}} $rawData */
+        /** @var array<array<string, string|array<string, string>>> $rawData */
         $rawData = $this->getRawData(profile: $profile, filepath: $filepath);
 
         return self::getData(rawData: $rawData, profile: $profile);
     }
 
     /**
-     * @return array{array{string: string|array{string: string}}}
+     * @return array<array<string, string|array<string, string>>>
      */
     private function getRawData(BaseProfile $profile, string $filepath): array {
         return $this->serializer->decode(
@@ -34,7 +34,7 @@ class DataFileDecoder
     }
 
     /**
-     * @param array{array{string: string|array{string: string}}} $rawData
+     * @param array<array<string, string|array<string, string>>> $rawData
      */
     private static function getData(array $rawData, BaseProfile $profile): Data {
         $data = new Data(profile: $profile);
@@ -52,7 +52,7 @@ class DataFileDecoder
     }
 
     /**
-     * @param array{string: string|array{string: string}} $rawMonthData
+     * @param array<string, string|array<string, string>> $rawMonthData
      */
     private static function getMonthData(array $rawMonthData, string $date, BaseProfile $profile): MonthData {
         $versionsOther = [];
@@ -73,8 +73,8 @@ class DataFileDecoder
     }
 
     /**
-     * @param array{string: string|array{string: string}} $rawMonthData
-     * @return array{Version}
+     * @param array<string, string|array<string, string>> $rawMonthData
+     * @return array<Version>
      */
     private static function getVersions(array $rawMonthData, BaseProfile $profile): array {
         $versions = [];
@@ -106,7 +106,7 @@ class DataFileDecoder
     }
 
     /**
-     * @param array{string: string} $minorVersionsData
+     * @param array<string, string> $minorVersionsData
      */
     private static function getVersionsWithMinorVersions(
         array $minorVersionsData,

@@ -16,20 +16,20 @@ abstract class BaseProfile
     public const string SORT_NAME_ASC = 'sort_name_asc';
 
     public string $category;
-    /** @var array{string} */
+    /** @var array<string> */
     public array $subcategoriesLinks;
 
     // decoder properties
-    /** @var array{string: string} */
+    /** @var array<string, string> */
     protected array $filenames;
     public string $prefix = '';
     public string $nameSeparator = '~';
 
-    /** @var array{string} */
+    /** @var array<string> */
     public array $colors = [
         '#70d7ff', '#ffb33f', '#da8fff', '#30db5b', '#ffd426', '#ff6482', '#67d4cf', '#7d7aff', '#ff6861',
     ];
-    /** @var array{string: string} */
+    /** @var array<string, string> */
     public array $customColorsByName = [];
 
     public string $sort = self::SORT_NAME_ASC;

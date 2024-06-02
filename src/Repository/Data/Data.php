@@ -10,7 +10,7 @@ use App\Repository\Profile\BaseProfile;
 class Data
 {
     private bool $hasMinor = false;
-    /** @var array{MonthData} */
+    /** @var array<MonthData> */
     public array $monthDatas = [];
 
     public function __construct(
@@ -59,7 +59,7 @@ class Data
     }
 
     /**
-     * @return array{string: int}
+     * @return array<string, int>
      */
     private function getSortVersionsReference(MonthData $lastMontData): array {
         $reference = [];
@@ -109,7 +109,7 @@ class Data
     }
 
     /**
-     * @return array{string: string}
+     * @return array<string, string>
      */
     private function getColorsByName(): array {
         $colorsByName = array_fill_keys($this->getAllNamesSortedAsc(), null);
@@ -151,7 +151,7 @@ class Data
     }
 
     /**
-     * @return array{int|string: null}
+     * @return array<int|string, null>
      */
     private function getAllNamesSortedAsc(): array {
         $allNames = [];
