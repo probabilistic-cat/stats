@@ -34,6 +34,22 @@ class Data
         return $this->hasMinor;
     }
 
+    public function filterOutZeroPercentVersions(): void {
+        foreach ($this->monthDatas as $monthData) {
+            foreach ($monthData->versions as $versionIndex => $version) {
+                if ($version->percent === 0.0) {
+                    unset($monthData->versions[$versionIndex]);
+                } else {
+                    foreach ($version->minorVersions as $minorVersionIndex => $minorVersion) {
+                        if ($minorVersion->percent === 0.0) {
+                            unset($version->minorVersions[$minorVersionIndex]);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     public function sort(): void {
         usort($this->monthDatas, static fn (MonthData $a, MonthData $b): int => $b->date <=> $a->date);
 

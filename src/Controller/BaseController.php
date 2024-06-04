@@ -18,6 +18,7 @@ class BaseController extends AbstractController
     protected function getResponse(BaseProfile $profile, string $subcategory, string $categoryLink): Response {
         $filepath = $profile->getFilePathBySubcategory($subcategory);
         $data = $this->decoder->decode(profile: $profile, filepath: $filepath);
+        $data->filterOutZeroPercentVersions();
         $data->sort();
         $data->setColors();
 
