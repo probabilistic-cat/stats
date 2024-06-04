@@ -40,13 +40,13 @@
                 >
                 {% for minorVersion in version.minorVersions %}
                     <div
-                        class="minor_version {{ version.prefix|trim|lower }}_{{ minorVersion.name }}"
+                        class="version_minor {{ version.prefix|trim|lower }}_{{ minorVersion.name }}"
                         data-name="{{ minorVersion.name }}"
                         data-percent="{{ minorVersion.percent }}"
                         title="{{ version.prefix }}{{ minorVersion.name }} - {{ minorVersion.percent }}%"
                         style="background-color: {{ minorVersion.color }}"
                     >
-                        <p class="title minor_version_title"></p>
+                        <p class="title version_minor_title"></p>
                     </div>
                 {% endfor %}
                     <p class="title version_title"></p>

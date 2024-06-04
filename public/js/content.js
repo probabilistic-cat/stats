@@ -62,7 +62,7 @@ function calcVersionDivWidth() {
                     pTitle.show();
                 }
 
-                $(this).find('div.minor_version').each(function() {
+                $(this).find('div.version_minor').each(function() {
                     $(this).hide();
                 });
             } else {
@@ -89,7 +89,7 @@ function calcVersionDivWidth() {
             let minorBiggestWidth = 0;
             let minorClasses = '';
             let minorTotalWidth = 0;
-            $(this).find('div.minor_version').each(function() {
+            $(this).find('div.version_minor').each(function() {
                 let minorPercent = parseFloat($(this).attr('data-percent'));
                 let minorWidth = Math.floor(width / percent * minorPercent);
                 if (minorWidth === 1) {
@@ -109,7 +109,7 @@ function calcVersionDivWidth() {
                 $(this).css('width', minorWidth + 'px');
                 $(this).show();
 
-                let pMinorTitle = $(this).find('p.minor_version_title');
+                let pMinorTitle = $(this).find('p.version_minor_title');
                 let fullTitle = $(this).attr('title');
                 let shortTitle = minorPercent + '%';
                 if (fullTitle.length * 8 < minorWidth) {
@@ -179,9 +179,9 @@ function dataMonthOpenFields() {
                     'color': $(this).css("background-color"),
                 });
             } else {
-                let minorVersionsCount = $(this).find('div.minor_version').length;
+                let minorVersionsCount = $(this).find('div.version_minor').length;
                 if (minorVersionsCount > 0) {
-                    $(this).find('div.minor_version').each(function() {
+                    $(this).find('div.version_minor').each(function() {
                         versionsData.push({
                             'name': $(this).attr('data-name'),
                             'percent': parseFloat($(this).attr('data-percent')),
