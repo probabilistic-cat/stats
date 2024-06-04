@@ -1,4 +1,8 @@
-let isMinorShown = false;
+let classDataMonthVersionMajor = 'version_major';
+let classDataMonthVersionMinor = 'version_minor';
+
+let isMajorShown = true;
+let hasMinor = false;
 
 //function selectSubcategory() {
 //    $('.content .subcategory a').click(function() {
@@ -51,7 +55,7 @@ function calcVersionDivWidth() {
             }
 
             let pTitle = $(this).find('p.version_title');
-            if (!isMinorShown) {
+            if (isMajorShown) {
                 let fullTitle = $(this).attr('title');
                 let shortTitle = percent + '%';
                 if (fullTitle.length * 8 < width) {
@@ -77,7 +81,7 @@ function calcVersionDivWidth() {
             biggestDiv.css('width', biggestDivWidth + 'px');
         }
 
-        if (!isMinorShown) {
+        if (isMajorShown) {
             return;
         }
 
@@ -131,23 +135,55 @@ function calcVersionDivWidth() {
     });
 }
 
-function minorButton() {
-    let aShowMinor = $('.content div.show_minor a.show');
-    let aHideMinor = $('.content div.show_minor a.hide');
+function setMinor() {
+    hasMinor = (parseInt($('.content div.category').attr('data-has_minor')) === 1);
+}
+
+function majorMinorButton() {
+    let aShowMinor = $('.content div.show_major_minor a.show_minor');
+    let aShowMajor = $('.content div.show_major_minor a.show_major');
 
     aShowMinor.click(function() {
         aShowMinor.hide();
-        aHideMinor.show();
-        isMinorShown = true;
+        aShowMajor.show();
+        isMajorShown = false;
         calcVersionDivWidth();
         return false;
     });
 
-    aHideMinor.click(function() {
-        aHideMinor.hide();
+    aShowMajor.click(function() {
+        aShowMajor.hide();
         aShowMinor.show();
-        isMinorShown = false;
+        isMajorShown = true;
         calcVersionDivWidth();
+        return false;
+    });
+}
+
+function dataMonthMajorMinorButton() {
+    let divDataMonth = $('div.data_month');
+    let aShowMinor = divDataMonth.find('div.show_major_minor a.show_minor');
+    let aShowMajor = divDataMonth.find('div.show_major_minor a.show_major');
+
+    if (!hasMinor) {
+        aShowMinor.hide();
+        aShowMajor.hide();
+        return;
+    }
+
+    aShowMinor.click(function() {
+        divDataMonth.find('div.month div.version.' + classDataMonthVersionMajor).hide();
+        divDataMonth.find('div.month div.version.' + classDataMonthVersionMinor).show();
+        aShowMinor.hide();
+        aShowMajor.show();
+        return false;
+    });
+
+    aShowMajor.click(function() {
+        divDataMonth.find('div.month div.version.' + classDataMonthVersionMinor).hide();
+        divDataMonth.find('div.month div.version.' + classDataMonthVersionMajor).show();
+        aShowMajor.hide();
+        aShowMinor.show();
         return false;
     });
 }
@@ -169,38 +205,33 @@ function dataMonthOpenFields() {
         let monthName = divMonth.attr('data-month_name');
         let date = year + ' ' + monthName;
 
-        let versionsData = [];
+        let versionsMajor = [];
+        let versionsMinor = [];
 
         $(this).find('div.version').each(function () {
-            if (!isMinorShown) {
-                versionsData.push({
-                    'name': $(this).attr('data-name'),
-                    'percent': parseFloat($(this).attr('data-percent')),
-                    'color': $(this).css("background-color"),
-                });
-            } else {
-                let minorVersionsCount = $(this).find('div.version_minor').length;
-                if (minorVersionsCount > 0) {
-                    $(this).find('div.version_minor').each(function() {
-                        versionsData.push({
-                            'name': $(this).attr('data-name'),
-                            'percent': parseFloat($(this).attr('data-percent')),
-                            'color': $(this).css("background-color"),
-                        });
-                    });
-                } else {
-                    versionsData.push({
-                        'name': $(this).attr('data-name'),
-                        'percent': parseFloat($(this).attr('data-percent')),
-                        'color': $(this).css("background-color"),
-                    });
-                }
+            versionsMajor.push(getVersionAttrs($(this)));
+
+            let minorVersionsCount = 0;
+            $(this).find('div.version_minor').each(function() {
+                versionsMinor.push(getVersionAttrs($(this)));
+                minorVersionsCount++;
+            });
+            if (minorVersionsCount === 0) {
+                versionsMinor.push(getVersionAttrs($(this)));
             }
         });
 
-        dataMonthFill(date, versionsData)
+        dataMonthFill(date, versionsMajor, versionsMinor)
         dataMonthOpen();
     });
+}
+
+function getVersionAttrs(divVersion) {
+    return {
+        'name': divVersion.attr('data-name'),
+        'percent': parseFloat(divVersion.attr('data-percent')),
+        'color': divVersion.css("background-color"),
+    };
 }
 
 function dataMonthCloseFields() {
@@ -213,32 +244,55 @@ function dataMonthCloseFields() {
     });
 }
 
-function dataMonthFill(date, versionsData) {
-    versionsData.sort((a, b) => (a.percent < b.percent) ? 1 : -1)
-    let maxPercent = (versionsData.length > 0) ? versionsData[0]['percent'] : 100;
+function dataMonthFill(date, versionsMajor, versionsMinor) {
+    let versionsMajorHtml = getDataMonthVersionsHtml(versionsMajor, true);
+    let versionsMinorHtml = hasMinor ? getDataMonthVersionsHtml(versionsMinor, false) : '';
+
+    let divDataMonth = $('div.data_month');
+    divDataMonth.find('div.date').html(date);
+
+    let divMonth = divDataMonth.find('div.month');
+    divMonth.html(versionsMajorHtml + versionsMinorHtml);
+    divMonth.animate({scrollTop: divMonth.offset().top});
+
+    if (hasMinor) {
+        let aShowMinor = divDataMonth.find('div.show_major_minor a.show_minor');
+        let aShowMajor = divDataMonth.find('div.show_major_minor a.show_major');
+        if (isMajorShown) {
+            aShowMajor.hide();
+            aShowMinor.show();
+        } else {
+            aShowMinor.hide();
+            aShowMajor.show();
+        }
+    }
+}
+
+function getDataMonthVersionsHtml(versions, isMajor) {
+    versions.sort((a, b) => (a.percent < b.percent) ? 1 : -1)
+    let maxPercent = (versions.length > 0) ? versions[0]['percent'] : 100;
 
     let divMonthHtml = '';
-    versionsData.forEach(function(version) {
-        divMonthHtml = divMonthHtml
-            + '<div class="version">\n'
+    let classMajorMinor = isMajor ? classDataMonthVersionMajor : classDataMonthVersionMinor;
+    let styleDisplay = (isMajorShown && isMajor || !isMajorShown && !isMajor) ? 'block' : 'none';
+    versions.forEach(function(version) {
+        divMonthHtml = divMonthHtml + '\n'
+            + '<div class="version ' + classMajorMinor + '" style="display: ' + styleDisplay + '">\n'
                 + '<div class="name">' + version.name + '</div>\n'
-                + '<div class="percent_visual" style="width: calc((100% - 200px) / ' + maxPercent + ' * ' + version.percent + '); background-color: ' + version.color + '"></div>\n'
+                + '<div class="percent_visual" style="width: calc((100% - 200px) / ' + maxPercent + ' * ' + version.percent + '); background-color: ' + version.color + ';"></div>\n'
                 + '<div class="percent_number">' + version.percent + '%</div>\n'
             + '</div>'
         ;
     });
 
-    let divDataMonth = $('div.data_month');
-    let divMonth = divDataMonth.find('div.month');
-    divDataMonth.find('div.date').html(date);
-    divMonth.html(divMonthHtml);
-
-    divMonth.animate({scrollTop: divMonth.offset().top});
+    return divMonthHtml;
 }
 
 
 $(document).ready(function() {
-    minorButton();
+    setMinor();
+    majorMinorButton();
+    dataMonthMajorMinorButton();
     //selectSubcategory();
     calcVersionDivWidth();
     dataMonthCloseFields();

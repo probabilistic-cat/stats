@@ -3,7 +3,7 @@
 
 {% block content %}
 <div class="content">
-    <div class="category">
+    <div class="category" data-has_minor="{{ hasMinor ? 1 : 0 }}">
         <a href="{{ categoryLink }}">{{ category }}</a>
     </div>
 
@@ -19,9 +19,9 @@
     </div>
 
 {% if hasMinor %}
-    <div class="show_minor">
-        <a class="show" href="">show minor versions</a>
-        <a class="hide" href="">hide minor versions</a>
+    <div class="show_major_minor">
+        <a class="show_minor" href="">show minor versions</a>
+        <a class="show_major" href="">show major versions</a>
     </div>
 {% endif %}
 

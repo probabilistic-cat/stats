@@ -29,6 +29,21 @@ div.data_month div.date {
     font-weight: 600;
 }
 
+div.data_month div.show_major_minor {
+    float: left;
+    margin: 23px 0 0 70px;
+}
+
+div.data_month div.show_major_minor a {
+    font-size: 16px;
+    font-weight: 300;
+    text-decoration: none;
+}
+
+div.data_month div.show_major_minor a.show_major {
+    display: none;
+}
+
 div.data_month div.close {
     margin: -20px 0 0 0;
     float: right;
