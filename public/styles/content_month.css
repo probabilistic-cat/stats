@@ -70,13 +70,19 @@ div.data_month div.month div.version {
     height: 35px;
     font-size: 15px;
     font-weight: 300;
-    display: flex;
-    align-items: center;
 }
 
 div.data_month div.month div.version div.name {
     margin: 0 15px 0 0;
-    width: 70px;
+    width: 85px;
+    height: 35px;
+    display: table;
+}
+
+div.data_month div.month div.version div.name span.name {
+    float: none;
+    display: table-cell;
+    vertical-align: middle;
     text-align: right;
 }
 
@@ -89,4 +95,6 @@ div.data_month div.month div.version div.percent_visual {
 div.data_month div.month div.version div.percent_number {
     width: 70px;
     text-align: left;
+    vertical-align: middle;
+    line-height: 35px;
 }

@@ -278,7 +278,7 @@ function getDataMonthVersionsHtml(versions, isMajor) {
     versions.forEach(function(version) {
         divMonthHtml = divMonthHtml + '\n'
             + '<div class="version ' + classMajorMinor + '" style="display: ' + styleDisplay + '">\n'
-                + '<div class="name">' + version.name + '</div>\n'
+                + '<div class="name"><span class="name">' + version.name + '</span></div>\n'
                 + '<div class="percent_visual" style="width: calc((100% - 200px) / ' + maxPercent + ' * ' + version.percent + '); background-color: ' + version.color + ';"></div>\n'
                 + '<div class="percent_number">' + version.percent + '%</div>\n'
             + '</div>'
