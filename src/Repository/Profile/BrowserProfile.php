@@ -34,7 +34,7 @@ class BrowserProfile extends BaseProfile
     public array $customColorsByName = [
         '360 Safe Browser' => '#30db5b',
         'Android' => '#7d7aff',
-        'BlackBerry' => '#afafaf',
+        'BlackBerry' => '#aeaeb2',
         'Bolt' => '#70d7ff',
         'Chrome' => '#30db5b',
         'Coc Coc' => '#a2d34b',

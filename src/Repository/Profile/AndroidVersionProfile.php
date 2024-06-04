@@ -23,4 +23,8 @@ class AndroidVersionProfile extends BaseProfile
         self::SUBCATEGORY_TABLET => 'android_version_tablet-ww-monthly-201706-202404.csv',
     ];
     public string $nameSeparator = '.';
+
+    public function __construct() {
+        $this->customColorsByName = self::getCustomColorsByNumberName();
+    }
 }

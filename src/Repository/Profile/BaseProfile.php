@@ -41,4 +41,33 @@ abstract class BaseProfile
 
         return Consts::DIR.'/File/'.$this->filenames[$subcategory];
     }
+
+    /**
+     * @return array<string, string>
+     */
+    protected static function getCustomColorsByNumberName(): array {
+        $customColors0to10 = [
+            0 => '#aeaeb2',
+            1 => '#ff6861',
+            2 => '#ffb33f',
+            3 => '#70d7ff',
+            4 => '#30db5b',
+            5 => '#da8fff',
+            6 => '#ffd426',
+            7 => '#ff6482',
+            8 => '#67d4cf',
+            9 => '#7d7aff',
+        ];
+
+        $customColors = [];
+        $tens = 3;
+        for ($indexTens = 0; $indexTens < $tens; $indexTens++) {
+            foreach ($customColors0to10 as $index0to10 => $color) {
+                $index = $indexTens * 10 + $index0to10;
+                $customColors[(string)$index] = $color;
+            }
+        }
+
+        return $customColors;
+    }
 }

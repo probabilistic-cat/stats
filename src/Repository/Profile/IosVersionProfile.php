@@ -24,4 +24,8 @@ class IosVersionProfile extends BaseProfile
     ];
     public string $prefix = 'iOS ';
     public string $nameSeparator = '.';
+
+    public function __construct() {
+        $this->customColorsByName = self::getCustomColorsByNumberName();
+    }
 }

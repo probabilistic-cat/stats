@@ -167,7 +167,7 @@ class Data
     }
 
     /**
-     * @return array<int|string, null>
+     * @return array<string, null>
      */
     private function getAllNamesSortedAsc(): array {
         $allNames = [];
