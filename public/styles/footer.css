@@ -1,5 +1,18 @@
 .footer {
-    padding: 20px 40px 20px 40px;
+    margin: 50px 0 0 0;
+    padding: 30px 40px 30px 40px;
     width: 100%;
-    height: 90px;
+    height: 110px;
+    background-color: #f9f9fa;
+}
+
+.footer div.source {
+    font-size: 16px;
+    font-weight: 300;
+    color: #323232;
+}
+
+.footer div.source a {
+    margin: 0 0 0 5px;
+    text-decoration: underline;
 }
