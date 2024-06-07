@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Repository\Data;
+namespace App\Data;
 
-use App\Repository\Helper\ColorHelper;
-use App\Repository\Profile\BaseProfile;
+use App\Helper\ColorHelper;
+use App\Profile\BaseProfile;
 
 class Data
 {

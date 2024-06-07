@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Repository\Helper;
+namespace App\Helper;
 
 class ColorHelper
 {

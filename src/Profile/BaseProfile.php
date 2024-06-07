@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Repository\Profile;
+namespace App\Profile;
 
-use App\Repository\Consts;
+use App\Consts;
 
 abstract class BaseProfile
 {

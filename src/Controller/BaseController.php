@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Repository\Consts;
-use App\Repository\Data\Data;
-use App\Repository\Data\DataFileDecoder;
-use App\Repository\Profile\BaseProfile;
+use App\Consts;
+use App\Data\Data;
+use App\Profile\BaseProfile;
+use App\Service\DataFileDecoder;
 use Psr\Cache\CacheItemInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;

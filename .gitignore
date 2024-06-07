@@ -30,4 +30,4 @@ phpstan.neon
 /.php-cs-fixer.cache
 ###< friendsofphp/php-cs-fixer ###
 
-/src/Repository/File/*
+/src/File/*
