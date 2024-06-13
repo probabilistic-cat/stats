@@ -36,10 +36,15 @@ class BrowserController extends BaseController
     }
 
     private function getBrowserResponse(string $subcategory): Response {
+        $extraContext = [
+            'categoryName' => 'Browsers',
+            'categoryLink' => $this->generateUrl('app_browser_all'),
+        ];
+
         return $this->getResponse(
             profile: new BrowserProfile(),
             subcategory: $subcategory,
-            categoryLink: $this->generateUrl('app_browser_all'),
+            extraContext: $extraContext,
         );
     }
 }

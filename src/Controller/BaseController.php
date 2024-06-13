@@ -22,7 +22,10 @@ class BaseController extends AbstractController
         private readonly CacheInterface $cache,
     ) {}
 
-    protected function getResponse(BaseProfile $profile, string $subcategory, string $categoryLink): Response {
+    /**
+     * @param array $extraContext<string, string>
+     */
+    protected function getResponse(BaseProfile $profile, string $subcategory, array $extraContext): Response {
         $cacheKey = self::getDataCacheKey(profile: $profile, subcategory: $subcategory);
 
         $data = $this->cache->get($cacheKey, function (CacheItemInterface $cacheItem) use ($profile, $subcategory) {
@@ -37,9 +40,7 @@ class BaseController extends AbstractController
         });
         assert($data instanceof Data);
 
-        return $this->render('content.html.twig', [
-            'category' => $profile->category,
-            'categoryLink' => $categoryLink,
+        $context = [
             'subcategories' => array_map(
                 fn (string $pathName): string => $this->generateUrl($pathName),
                 $profile->subcategoriesLinks,
@@ -47,7 +48,9 @@ class BaseController extends AbstractController
             'subcategoryCurrent' => $subcategory,
             'data' => $data,
             'hasMinor' => $data->hasMinor(),
-        ]);
+        ];
+
+        return $this->render('content.html.twig', [...$context, ...$extraContext]);
     }
 
     private static function getDataCacheKey(BaseProfile $profile, string $subcategory): string {

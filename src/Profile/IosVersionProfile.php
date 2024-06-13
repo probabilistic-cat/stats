@@ -10,7 +10,7 @@ class IosVersionProfile extends BaseProfile
     public const string SUBCATEGORY_IPHONE = 'iPhone';
     public const string SUBCATEGORY_IPAD = 'iPad';
 
-    public string $category = 'iOS versions';
+    public string $category = 'ios_version';
     public array $subcategoriesLinks = [
         self::SUBCATEGORY_ALL => 'app_ios_version_all',
         self::SUBCATEGORY_IPHONE => 'app_ios_version_iphone',

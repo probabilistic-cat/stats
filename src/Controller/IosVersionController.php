@@ -26,10 +26,15 @@ class IosVersionController extends BaseController
     }
 
     private function getIosVersionResponse(string $subcategory): Response {
+        $extraContext = [
+            'categoryName' => 'iOS versions',
+            'categoryLink' => $this->generateUrl('app_ios_version_all'),
+        ];
+
         return $this->getResponse(
             profile: new IosVersionProfile(),
             subcategory: $subcategory,
-            categoryLink: $this->generateUrl('app_ios_version_all'),
+            extraContext: $extraContext,
         );
     }
 }

@@ -10,7 +10,7 @@ class AndroidVersionProfile extends BaseProfile
     public const string SUBCATEGORY_MOBILE = 'Mobile';
     public const string SUBCATEGORY_TABLET = 'Tablet';
 
-    public string $category = 'Android versions';
+    public string $category = 'android_version';
     public array $subcategoriesLinks = [
         self::SUBCATEGORY_ALL => 'app_android_version_all',
         self::SUBCATEGORY_MOBILE => 'app_android_version_mobile',

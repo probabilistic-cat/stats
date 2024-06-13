@@ -26,10 +26,15 @@ class AndroidVersionController extends BaseController
     }
 
     private function getIosVersionResponse(string $subcategory): Response {
+        $extraContext = [
+            'categoryName' => 'Android versions',
+            'categoryLink' => $this->generateUrl('app_android_version_all'),
+        ];
+
         return $this->getResponse(
             profile: new AndroidVersionProfile(),
             subcategory: $subcategory,
-            categoryLink: $this->generateUrl('app_android_version_all'),
+            extraContext: $extraContext,
         );
     }
 }
