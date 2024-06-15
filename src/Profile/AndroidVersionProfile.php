@@ -6,15 +6,15 @@ namespace App\Profile;
 
 class AndroidVersionProfile extends BaseProfile
 {
-    public const string SUBCATEGORY_ALL = 'All';
-    public const string SUBCATEGORY_MOBILE = 'Mobile';
-    public const string SUBCATEGORY_TABLET = 'Tablet';
+    public const string SUBCATEGORY_ALL = 'all';
+    public const string SUBCATEGORY_MOBILE = 'mobile';
+    public const string SUBCATEGORY_TABLET = 'tablet';
 
     public string $category = 'android_version';
-    public array $subcategoriesLinks = [
-        self::SUBCATEGORY_ALL => 'app_android_version_all',
-        self::SUBCATEGORY_MOBILE => 'app_android_version_mobile',
-        self::SUBCATEGORY_TABLET => 'app_android_version_tablet',
+    public array $subcategories = [
+        self::SUBCATEGORY_ALL,
+        self::SUBCATEGORY_MOBILE,
+        self::SUBCATEGORY_TABLET,
     ];
 
     protected array $filenames = [

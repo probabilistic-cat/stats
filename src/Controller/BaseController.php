@@ -23,7 +23,7 @@ class BaseController extends AbstractController
     ) {}
 
     /**
-     * @param array $extraContext<string, string>
+     * @param array<string, string> $extraContext
      */
     protected function getResponse(BaseProfile $profile, string $subcategory, array $extraContext): Response {
         $cacheKey = self::getDataCacheKey(profile: $profile, subcategory: $subcategory);
@@ -41,10 +41,6 @@ class BaseController extends AbstractController
         assert($data instanceof Data);
 
         $context = [
-            'subcategories' => array_map(
-                fn (string $pathName): string => $this->generateUrl($pathName),
-                $profile->subcategoriesLinks,
-            ),
             'subcategoryCurrent' => $subcategory,
             'data' => $data,
             'hasMinor' => $data->hasMinor(),

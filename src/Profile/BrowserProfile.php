@@ -6,19 +6,19 @@ namespace App\Profile;
 
 class BrowserProfile extends BaseProfile
 {
-    public const string SUBCATEGORY_ALL = 'All';
-    public const string SUBCATEGORY_DESKTOP = 'Desktop';
-    public const string SUBCATEGORY_MOBILE = 'Mobile';
-    public const string SUBCATEGORY_TABLET = 'Tablet';
-    public const string SUBCATEGORY_CONSOLE = 'Console';
+    public const string SUBCATEGORY_ALL = 'all';
+    public const string SUBCATEGORY_DESKTOP = 'desktop';
+    public const string SUBCATEGORY_MOBILE = 'mobile';
+    public const string SUBCATEGORY_TABLET = 'tablet';
+    public const string SUBCATEGORY_CONSOLE = 'console';
 
     public string $category = 'browser';
-    public array $subcategoriesLinks = [
-        self::SUBCATEGORY_ALL => 'app_browser_all',
-        self::SUBCATEGORY_DESKTOP => 'app_browser_desktop',
-        self::SUBCATEGORY_MOBILE => 'app_browser_mobile',
-        self::SUBCATEGORY_TABLET => 'app_browser_tablet',
-        self::SUBCATEGORY_CONSOLE => 'app_browser_console',
+    public array $subcategories = [
+        self::SUBCATEGORY_ALL,
+        self::SUBCATEGORY_DESKTOP,
+        self::SUBCATEGORY_MOBILE,
+        self::SUBCATEGORY_TABLET,
+        self::SUBCATEGORY_CONSOLE,
     ];
 
     protected array $filenames = [

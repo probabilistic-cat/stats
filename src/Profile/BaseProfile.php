@@ -17,7 +17,7 @@ abstract class BaseProfile
 
     public string $category;
     /** @var array<string> */
-    public array $subcategoriesLinks;
+    public array $subcategories;
 
     // decoder properties
     /** @var array<string, string> */
@@ -35,7 +35,7 @@ abstract class BaseProfile
     public string $sort = self::SORT_NAME_ASC;
 
     public function getFilePathBySubcategory(string $subcategory): string {
-        if (!array_key_exists($subcategory, $this->subcategoriesLinks)) {
+        if (!in_array($subcategory, $this->subcategories, true)) {
             throw new \InvalidArgumentException('Unknown subcategory');
         }
 

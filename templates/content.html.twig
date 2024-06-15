@@ -4,16 +4,16 @@
 {% block content %}
 <div class="content">
     <div class="category" data-has_minor="{{ hasMinor ? 1 : 0 }}">
-        <a href="{{ categoryLink }}">{{ categoryName }}</a>
+        <a href="{{ categoryRoute }}">{{ categoryName }}</a>
     </div>
 
     <div class="subcategories">
-    {% for subcategory, link in subcategories %}
+    {% for subcategory, subcategoryName in subcategoriesNames %}
         <a
             {% if subcategory == subcategoryCurrent %}class="selected"{% endif %}
-            href="{{ link }}"
+            href="{{ subcategoriesRoutes[subcategory] }}"
         >
-            {{ subcategory }}
+            {{ subcategoryName }}
         </a>
     {% endfor %}
     </div>

@@ -6,15 +6,15 @@ namespace App\Profile;
 
 class IosVersionProfile extends BaseProfile
 {
-    public const string SUBCATEGORY_ALL = 'All';
-    public const string SUBCATEGORY_IPHONE = 'iPhone';
-    public const string SUBCATEGORY_IPAD = 'iPad';
+    public const string SUBCATEGORY_ALL = 'all';
+    public const string SUBCATEGORY_IPHONE = 'iphone';
+    public const string SUBCATEGORY_IPAD = 'ipad';
 
     public string $category = 'ios_version';
-    public array $subcategoriesLinks = [
-        self::SUBCATEGORY_ALL => 'app_ios_version_all',
-        self::SUBCATEGORY_IPHONE => 'app_ios_version_iphone',
-        self::SUBCATEGORY_IPAD => 'app_ios_version_ipad',
+    public array $subcategories = [
+        self::SUBCATEGORY_ALL,
+        self::SUBCATEGORY_IPHONE,
+        self::SUBCATEGORY_IPAD,
     ];
 
     protected array $filenames = [
