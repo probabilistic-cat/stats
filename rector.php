@@ -39,7 +39,10 @@ return RectorConfig::configure()
         __DIR__.'/src/Kernel.php',
         __DIR__.'/tests/bootstrap.php',
         Rector\CodeQuality\Rector\ClassMethod\LocallyCalledStaticMethodToNonStaticRector::class,
+        Rector\CodeQuality\Rector\Concat\JoinStringConcatRector::class,
         Rector\CodeQuality\Rector\Foreach_\UnusedForeachValueToArrayKeysRector::class,
+        Rector\CodingStyle\Rector\FuncCall\CountArrayToEmptyArrayComparisonRector::class,
         Rector\DeadCode\Rector\Cast\RecastingRemovalRector::class,
+        Rector\Php70\Rector\FuncCall\RandomFunctionRector::class,
     ])
 ;

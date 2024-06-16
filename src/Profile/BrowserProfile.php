@@ -21,12 +21,40 @@ class BrowserProfile extends BaseProfile
         self::SUBCATEGORY_CONSOLE,
     ];
 
-    protected array $filenames = [
-        self::SUBCATEGORY_ALL => 'browser-ww-monthly-200901-202404.csv',
-        self::SUBCATEGORY_DESKTOP => 'browser_desktop-ww-monthly-200901-202404.csv',
-        self::SUBCATEGORY_MOBILE => 'browser_mobile-ww-monthly-200901-202404.csv',
-        self::SUBCATEGORY_TABLET => 'browser_tablet-ww-monthly-201208-202404.csv',
-        self::SUBCATEGORY_CONSOLE => 'browser_console-ww-monthly-201208-202404.csv',
+    protected array $fileUrls = [
+        self::SUBCATEGORY_ALL => 'https://gs.statcounter.com/'
+            .'chart.php?device=Desktop%20%26%20Mobile%20%26%20Tablet%20%26%20Console'
+            .'&device_hidden=desktop%2Bmobile%2Btablet%2Bconsole&multi-device=true&statType_hidden=browser'
+            .'&region_hidden=ww&granularity=monthly&statType=Browser&region=Worldwide'
+            .'&fromInt=200901&toInt='.self::DUMMY_YEAR.self::DUMMY_MONTH
+            .'&fromMonthYear=2009-01&toMonthYear='.self::DUMMY_YEAR.'-'.self::DUMMY_MONTH.'&csv=1',
+        self::SUBCATEGORY_DESKTOP => 'https://gs.statcounter.com/browser-market-share/desktop/worldwide/'
+            .'chart.php?device=Desktop&device_hidden=desktop&statType_hidden=browser'
+            .'&region_hidden=ww&granularity=monthly&statType=Browser&region=Worldwide'
+            .'&fromInt=200901&toInt='.self::DUMMY_YEAR.self::DUMMY_MONTH
+            .'&fromMonthYear=2009-01&toMonthYear='.self::DUMMY_YEAR.'-'.self::DUMMY_MONTH.'&csv=1',
+        self::SUBCATEGORY_MOBILE => 'https://gs.statcounter.com/browser-market-share/mobile/worldwide/'
+            .'chart.php?device=Mobile&device_hidden=mobile&statType_hidden=browser'
+            .'&region_hidden=ww&granularity=monthly&statType=Browser&region=Worldwide'
+            .'&fromInt=200901&toInt='.self::DUMMY_YEAR.self::DUMMY_MONTH
+            .'&fromMonthYear=2009-01&toMonthYear='.self::DUMMY_YEAR.'-'.self::DUMMY_MONTH.'&csv=1',
+        self::SUBCATEGORY_TABLET => 'https://gs.statcounter.com/browser-market-share/tablet/worldwide/'
+            .'chart.php?device=Tablet&device_hidden=tablet&statType_hidden=browser'
+            .'&region_hidden=ww&granularity=monthly&statType=Browser&region=Worldwide'
+            .'&fromInt=201208&toInt='.self::DUMMY_YEAR.self::DUMMY_MONTH
+            .'&fromMonthYear=2012-08&toMonthYear='.self::DUMMY_YEAR.'-'.self::DUMMY_MONTH.'&csv=1',
+        self::SUBCATEGORY_CONSOLE => 'https://gs.statcounter.com/browser-market-share/console/worldwide/'
+            .'chart.php?device=Console&device_hidden=console&statType_hidden=browser'
+            .'&region_hidden=ww&granularity=monthly&statType=Browser&region=Worldwide'
+            .'&fromInt=201208&toInt='.self::DUMMY_YEAR.self::DUMMY_MONTH
+            .'&fromMonthYear=2012-08&toMonthYear='.self::DUMMY_YEAR.'-'.self::DUMMY_MONTH.'&csv=1',
+    ];
+    protected array $fileNames = [
+        self::SUBCATEGORY_ALL => 'browser-ww-monthly-200901-'.self::DUMMY_YEAR.self::DUMMY_MONTH.'.csv',
+        self::SUBCATEGORY_DESKTOP => 'browser_desktop-ww-monthly-200901-'.self::DUMMY_YEAR.self::DUMMY_MONTH.'.csv',
+        self::SUBCATEGORY_MOBILE => 'browser_mobile-ww-monthly-200901-'.self::DUMMY_YEAR.self::DUMMY_MONTH.'.csv',
+        self::SUBCATEGORY_TABLET => 'browser_tablet-ww-monthly-201208-'.self::DUMMY_YEAR.self::DUMMY_MONTH.'.csv',
+        self::SUBCATEGORY_CONSOLE => 'browser_console-ww-monthly-201208-'.self::DUMMY_YEAR.self::DUMMY_MONTH.'.csv',
     ];
 
     public string $sort = BaseProfile::SORT_PERCENT_ASC;

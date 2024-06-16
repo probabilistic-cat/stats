@@ -26,6 +26,7 @@ return (new PhpCsFixer\Config())
         'phpdoc_separation' => false,
         'phpdoc_summary' => false,
         'single_line_empty_body' => true,
+        'single_line_throw' => false,
         'trailing_comma_in_multiline' => ['elements' => ['arguments', 'arrays', 'parameters']],
         'yoda_style' => false,
     ])

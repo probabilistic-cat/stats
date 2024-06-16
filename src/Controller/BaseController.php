@@ -8,6 +8,7 @@ use App\Consts;
 use App\Data\Data;
 use App\Profile\BaseProfile;
 use App\Service\DataFileDecoder;
+use App\Service\DataFileManager;
 use Psr\Cache\CacheItemInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -26,13 +27,13 @@ class BaseController extends AbstractController
      * @param array<string, string> $extraContext
      */
     protected function getResponse(BaseProfile $profile, string $subcategory, array $extraContext): Response {
-        $cacheKey = self::getDataCacheKey(profile: $profile, subcategory: $subcategory);
+        $cacheKey = $profile->getDataCacheKey(subcategory: $subcategory);
 
         $data = $this->cache->get($cacheKey, function (CacheItemInterface $cacheItem) use ($profile, $subcategory) {
             $cacheItem->expiresAfter(self::DATA_CACHE_EXPIRATION_TIME);
 
-            $filepath = $profile->getFilePathBySubcategory($subcategory);
-            $data = $this->decoder->decode(profile: $profile, filepath: $filepath);
+            $filePath = DataFileManager::getLastAvailableFilePath(profile: $profile, subcategory: $subcategory);
+            $data = $this->decoder->decode(profile: $profile, filepath: $filePath);
             $data->filterOutZeroPercentVersions();
             $data->sort();
             $data->setColors();
@@ -47,9 +48,5 @@ class BaseController extends AbstractController
         ];
 
         return $this->render('content.html.twig', [...$context, ...$extraContext]);
-    }
-
-    private static function getDataCacheKey(BaseProfile $profile, string $subcategory): string {
-        return mb_strtolower(str_replace(' ', '_', 'data_'.$profile->category.'_'.$subcategory));
     }
 }
