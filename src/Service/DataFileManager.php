@@ -21,7 +21,7 @@ readonly class DataFileManager
 
     private const int PREV_MONTH_DATA_AVAILABLE_FROM_DAY = 2;
     private const int CHECK_LAST_MONTHS = 12;
-    private const int KEEP_FILES_LAST_MONTHS = 3;
+    private const int KEEP_LAST_FILES = 3;
     private const string FILE_LOCK_POSTFIX = '.lock';
 
     public function __construct(
@@ -106,41 +106,47 @@ readonly class DataFileManager
     public function deleteOldFiles(BaseProfile $profile, string $subcategory): array {
         $result = [];
 
-        $yearMonth = self::getPreviousYearMonth(
-            yearMonth: self::getLastYearMonth(),
-            monthsAgo: self::KEEP_FILES_LAST_MONTHS,
-        );
+        $yearMonth = self::getLastYearMonth();
 
-        for ($i = self::KEEP_FILES_LAST_MONTHS; $i < self::CHECK_LAST_MONTHS; $i++) {
+        $filesExists = 0;
+        for ($i = 0; $i < self::CHECK_LAST_MONTHS; $i++) {
             $filePath = self::getFilePath(profile: $profile, subcategory: $subcategory, yearMonth: $yearMonth);
             if (file_exists($filePath)) {
-                self::lockFile(filePath: $filePath);
-                $deleteResult = unlink($filePath);
-                if ($deleteResult) {
-                    $message = 'Data file deleted.';
-                    $this->logger->info($message, ['file_path' => $filePath]);
-
-                    $result[] = new DataFileResultDTO(
-                        status: DataFileResultDTO::STATUS_SUCCESS,
-                        filePath: $filePath,
-                        message: $message,
-                    );
-                } else {
-                    $message = 'Data file not deleted.';
-                    $this->logger->warning('Data file not deleted.', ['file_path' => $filePath]);
-
-                    $result[] = new DataFileResultDTO(
-                        status: DataFileResultDTO::STATUS_FAILURE,
-                        filePath: $filePath,
-                        message: $message,
-                    );
+                $filesExists++;
+                if ($filesExists > self::KEEP_LAST_FILES) {
+                    $result[] = $this->deleteFile(filePath: $filePath);
                 }
-                self::unlockFile(filePath: $filePath);
             }
             $yearMonth = self::getPreviousYearMonth(yearMonth: $yearMonth);
         }
 
         return $result;
+    }
+
+    private function deleteFile(string $filePath): DataFileResultDTO {
+        self::lockFile(filePath: $filePath);
+        $deleteResult = unlink($filePath);
+        self::unlockFile(filePath: $filePath);
+
+        if ($deleteResult) {
+            $message = 'Data file deleted.';
+            $this->logger->info($message, ['file_path' => $filePath]);
+
+            return new DataFileResultDTO(
+                status: DataFileResultDTO::STATUS_SUCCESS,
+                filePath: $filePath,
+                message: $message,
+            );
+        }
+
+        $message = 'Data file not deleted.';
+        $this->logger->warning('Data file not deleted.', ['file_path' => $filePath]);
+
+        return new DataFileResultDTO(
+            status: DataFileResultDTO::STATUS_FAILURE,
+            filePath: $filePath,
+            message: $message,
+        );
     }
 
     public static function getLastAvailableFilePath(BaseProfile $profile, string $subcategory): string {
@@ -174,9 +180,9 @@ readonly class DataFileManager
         ;
     }
 
-    private static function getPreviousYearMonth(YearMonthDTO $yearMonth, int $monthsAgo = 1): YearMonthDTO {
+    private static function getPreviousYearMonth(YearMonthDTO $yearMonth): YearMonthDTO {
         $year = $yearMonth->year;
-        $month = $yearMonth->month - $monthsAgo;
+        $month = $yearMonth->month - 1;
         if ($month < 1) {
             $month += 12;
             $year--;
