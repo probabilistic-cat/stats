@@ -41,6 +41,7 @@ return RectorConfig::configure()
         Rector\CodeQuality\Rector\ClassMethod\LocallyCalledStaticMethodToNonStaticRector::class,
         Rector\CodeQuality\Rector\Concat\JoinStringConcatRector::class,
         Rector\CodeQuality\Rector\Foreach_\UnusedForeachValueToArrayKeysRector::class,
+        Rector\CodeQuality\Rector\FunctionLike\SimplifyUselessVariableRector::class,
         Rector\CodingStyle\Rector\FuncCall\CountArrayToEmptyArrayComparisonRector::class,
         Rector\DeadCode\Rector\Cast\RecastingRemovalRector::class,
         Rector\Php70\Rector\FuncCall\RandomFunctionRector::class,

@@ -40,7 +40,7 @@ readonly class DataFileManager
         $filePath = $profile->getFilePath(subcategory: $subcategory, year: $yearMonth->year, month: $yearMonth->month);
         if (!file_exists($filePath)) {
             self::lockFile(filePath: $filePath);
-            $fileUrl = $profile->getFileUrl(
+            $fileUrl = $profile->getUrl(
                 subcategory: $subcategory,
                 year: $yearMonth->year,
                 month: $yearMonth->month,
