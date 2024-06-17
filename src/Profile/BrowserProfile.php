@@ -38,14 +38,6 @@ class BrowserProfile extends BaseProfile
         self::SUBCATEGORY_CONSOLE => 8,
     ];
 
-    protected array $fileNames = [
-        self::SUBCATEGORY_ALL => 'browser-ww-monthly-200901-'.self::DUMMY_YEAR.self::DUMMY_MONTH.'.csv',
-        self::SUBCATEGORY_DESKTOP => 'browser_desktop-ww-monthly-200901-'.self::DUMMY_YEAR.self::DUMMY_MONTH.'.csv',
-        self::SUBCATEGORY_MOBILE => 'browser_mobile-ww-monthly-200901-'.self::DUMMY_YEAR.self::DUMMY_MONTH.'.csv',
-        self::SUBCATEGORY_TABLET => 'browser_tablet-ww-monthly-201208-'.self::DUMMY_YEAR.self::DUMMY_MONTH.'.csv',
-        self::SUBCATEGORY_CONSOLE => 'browser_console-ww-monthly-201208-'.self::DUMMY_YEAR.self::DUMMY_MONTH.'.csv',
-    ];
-
     public string $sort = BaseProfile::SORT_PERCENT_ASC;
 
     public array $customColorsByName = [

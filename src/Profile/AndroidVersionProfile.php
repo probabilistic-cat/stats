@@ -30,12 +30,6 @@ class AndroidVersionProfile extends BaseProfile
         self::SUBCATEGORY_TABLET => 6,
     ];
 
-    protected array $fileNames = [
-        self::SUBCATEGORY_ALL => 'android_version-ww-monthly-201706-'.self::DUMMY_YEAR.self::DUMMY_MONTH.'.csv',
-        self::SUBCATEGORY_MOBILE => 'android_version_mobile-ww-monthly-201706-'.self::DUMMY_YEAR.self::DUMMY_MONTH.'.csv',
-        self::SUBCATEGORY_TABLET => 'android_version_tablet-ww-monthly-201706-'.self::DUMMY_YEAR.self::DUMMY_MONTH.'.csv',
-    ];
-
     public string $nameSeparator = '.';
 
     public function __construct() {

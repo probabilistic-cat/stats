@@ -30,12 +30,6 @@ class IosVersionProfile extends BaseProfile
         self::SUBCATEGORY_IPAD => 6,
     ];
 
-    protected array $fileNames = [
-        self::SUBCATEGORY_ALL => 'ios_version-ww-monthly-201706-'.self::DUMMY_YEAR.self::DUMMY_MONTH.'.csv',
-        self::SUBCATEGORY_IPHONE => 'ios_version_iphone-ww-monthly-201706-'.self::DUMMY_YEAR.self::DUMMY_MONTH.'.csv',
-        self::SUBCATEGORY_IPAD => 'ios_version_ipad-ww-monthly-201706-'.self::DUMMY_YEAR.self::DUMMY_MONTH.'.csv',
-    ];
-
     public string $prefix = 'iOS ';
     public string $nameSeparator = '.';
 

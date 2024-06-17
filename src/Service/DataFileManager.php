@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Service;
 
+use App\Consts;
 use App\Profile\BaseProfile;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,6 +17,8 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 readonly class DataFileManager
 {
+    private const string DATA_FILE_DIR = Consts::DIR.'/File/';
+
     private const int PREV_MONTH_DATA_AVAILABLE_FROM_DAY = 2;
     private const int CHECK_LAST_MONTHS = 12;
     private const int KEEP_FILES_LAST_MONTHS = 3;
@@ -37,7 +40,7 @@ readonly class DataFileManager
         $result = null;
         $yearMonth = self::getLastYearMonth();
 
-        $filePath = $profile->getFilePath(subcategory: $subcategory, year: $yearMonth->year, month: $yearMonth->month);
+        $filePath = self::getFilePath(profile: $profile, subcategory: $subcategory, yearMonth: $yearMonth);
         if (!file_exists($filePath)) {
             self::lockFile(filePath: $filePath);
             $fileUrl = $profile->getUrl(
@@ -109,11 +112,7 @@ readonly class DataFileManager
         );
 
         for ($i = self::KEEP_FILES_LAST_MONTHS; $i < self::CHECK_LAST_MONTHS; $i++) {
-            $filePath = $profile->getFilePath(
-                subcategory: $subcategory,
-                year: $yearMonth->year,
-                month: $yearMonth->month,
-            );
+            $filePath = self::getFilePath(profile: $profile, subcategory: $subcategory, yearMonth: $yearMonth);
             if (file_exists($filePath)) {
                 self::lockFile(filePath: $filePath);
                 $deleteResult = unlink($filePath);
@@ -147,11 +146,7 @@ readonly class DataFileManager
     public static function getLastAvailableFilePath(BaseProfile $profile, string $subcategory): string {
         $yearMonth = self::getLastYearMonth();
         for ($i = 0; $i < self::CHECK_LAST_MONTHS; $i++) {
-            $filePath = $profile->getFilePath(
-                subcategory: $subcategory,
-                year: $yearMonth->year,
-                month: $yearMonth->month,
-            );
+            $filePath = self::getFilePath(profile: $profile, subcategory: $subcategory, yearMonth: $yearMonth);
             if (file_exists($filePath) && !self::isFileLocked(filePath: $filePath)) {
                 return $filePath;
             }
@@ -161,6 +156,11 @@ readonly class DataFileManager
         throw new \UnexpectedValueException(
             "Not found data file for category $profile->category, subcategory $subcategory.",
         );
+    }
+
+    private static function getFilePath(BaseProfile $profile, string $subcategory, YearMonthDTO $yearMonth): string {
+        $fileName = $profile->getFileName(subcategory: $subcategory, year: $yearMonth->year, month: $yearMonth->month);
+        return self::DATA_FILE_DIR.$fileName;
     }
 
     private static function getLastYearMonth(): YearMonthDTO {

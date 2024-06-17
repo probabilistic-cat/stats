@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace App\Profile;
 
-use App\Consts;
-
 abstract class BaseProfile
 {
     protected const string SUBCATEGORY_ALL = 'all';
@@ -16,9 +14,6 @@ abstract class BaseProfile
 
     public const string SORT_PERCENT_ASC = 'sort_percent_asc';
     public const string SORT_NAME_ASC = 'sort_name_asc';
-
-    protected const string DUMMY_YEAR = 'YYYY';
-    protected const string DUMMY_MONTH = 'MM';
 
     public string $category;
     /** @var array<string> */
@@ -35,9 +30,6 @@ abstract class BaseProfile
     /** @var array<string, int> */
     protected array $fromMonthBySubcategory;
 
-    /** @var array<string, string> */
-    protected array $fileNames;
-
     public string $prefix = '';
     public string $nameSeparator = '~';
 
@@ -50,24 +42,19 @@ abstract class BaseProfile
 
     public string $sort = self::SORT_NAME_ASC;
 
-    public function getFilePath(string $subcategory, int $year, int $month): string {
-        if (!in_array($subcategory, $this->subcategories, true)) {
-            throw new \InvalidArgumentException("Unknown subcategory: $subcategory");
-        }
+    public function getFileName(string $subcategory, int $year, int $month): string {
+        $this->checkSubcategory(subcategory: $subcategory);
 
-        $filePath = Consts::DIR.'/File/'.$this->fileNames[$subcategory];
-
-        return str_replace(
-            [self::DUMMY_YEAR, self::DUMMY_MONTH],
-            [(string)$year, mb_str_pad((string)$month, 2, '0', STR_PAD_LEFT)],
-            $filePath,
-        );
+        return "{$this->category}_{$subcategory}-{$this->regionHidden}-{$this->granularity}-"
+            .$this->fromYearBySubcategory[$subcategory]
+            .mb_str_pad((string)$this->fromMonthBySubcategory[$subcategory], 2, '0', STR_PAD_LEFT)
+            .'-'.$year.mb_str_pad((string)$month, 2, '0', STR_PAD_LEFT)
+            .'.csv'
+        ;
     }
 
     public function getUrl(string $subcategory, int $year, int $month): string {
-        if (!in_array($subcategory, $this->subcategories, true)) {
-            throw new \InvalidArgumentException("Unknown subcategory: $subcategory");
-        }
+        $this->checkSubcategory(subcategory: $subcategory);
 
         $multiDevicePart = ($subcategory === self::SUBCATEGORY_ALL) ? '&multi-device=true' : '';
 
@@ -146,5 +133,11 @@ abstract class BaseProfile
         }
 
         return $customColors;
+    }
+
+    private function checkSubcategory(string $subcategory): void {
+        if (!in_array($subcategory, $this->subcategories, true)) {
+            throw new \InvalidArgumentException("Unknown subcategory: $subcategory");
+        }
     }
 }
