@@ -128,7 +128,9 @@ class Data
      * @return array<string, string>
      */
     private function getColorsByName(): array {
-        $colorsByName = array_fill_keys($this->getAllNamesSortedAsc(), null);
+        $colorsByName = $this->getSortVersionsReference($this->monthDatas[0]);
+        asort($colorsByName);
+        $colorsByName = array_fill_keys(array_keys($colorsByName), null);
         $colorsByName = array_replace($colorsByName, $this->profile->customColorsByName);
 
         $colorIndex = 0;

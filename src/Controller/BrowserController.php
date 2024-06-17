@@ -44,7 +44,7 @@ class BrowserController extends BaseController
     private function getBrowserResponse(string $subcategory): Response {
         $extraContext = [
             'categoryName' => 'Browsers',
-            'categoryRoute' => $this->generateUrl('app_browser_all'),
+            'categoryRoute' => $this->generateUrl(self::ROUTE_NAME_ALL),
             'subcategoriesNames' => [
                 BrowserProfile::SUBCATEGORY_ALL => 'All',
                 BrowserProfile::SUBCATEGORY_DESKTOP => 'Desktop',

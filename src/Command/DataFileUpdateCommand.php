@@ -8,6 +8,7 @@ use App\Profile\AndroidVersionProfile;
 use App\Profile\BaseProfile;
 use App\Profile\BrowserProfile;
 use App\Profile\IosVersionProfile;
+use App\Profile\OsProfile;
 use App\Service\DataFileManager;
 use App\Service\DataFileResultDTO;
 use Symfony\Component\Console\Attribute\AsCommand;
@@ -35,7 +36,12 @@ class DataFileUpdateCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int {
         /** @var array<BaseProfile> $profiles */
-        $profiles = [new IosVersionProfile(), new AndroidVersionProfile(), new BrowserProfile()];
+        $profiles = [
+            new IosVersionProfile(),
+            new AndroidVersionProfile(),
+            new BrowserProfile(),
+            new OsProfile(),
+        ];
         $stepsCount = 0;
         foreach ($profiles as $profile) {
             $stepsCount += count($profile->subcategories) * self::OPERATIONS_PER_SUBCATEGORY;
@@ -54,6 +60,7 @@ class DataFileUpdateCommand extends Command
         foreach ($profiles as $profile) {
             foreach ($profile->subcategories as $subcategory) {
                 $io->section("$profile->category - $subcategory");
+                $cursor->moveUp();
 
                 $io->text('UPDATE');
                 self::outputBeforeOperation(progressBar: $progressBar, io: $io);
@@ -76,7 +83,6 @@ class DataFileUpdateCommand extends Command
                     $io->text('No file update required.');
                     $fileDownloaded = false;
                 }
-                $io->newLine();
 
                 $io->text('DELETE');
                 self::outputBeforeOperation(progressBar: $progressBar, io: $io);

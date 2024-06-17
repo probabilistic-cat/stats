@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Profile;
 
-class BrowserProfile extends BaseProfile
+class OsProfile extends BaseProfile
 {
     public const string SUBCATEGORY_ALL = 'all';
     public const string SUBCATEGORY_DESKTOP = 'desktop';
@@ -12,7 +12,7 @@ class BrowserProfile extends BaseProfile
     public const string SUBCATEGORY_TABLET = 'tablet';
     public const string SUBCATEGORY_CONSOLE = 'console';
 
-    public string $category = 'browser';
+    public string $category = 'os_combined';
     public array $subcategories = [
         self::SUBCATEGORY_ALL,
         self::SUBCATEGORY_DESKTOP,
@@ -21,8 +21,8 @@ class BrowserProfile extends BaseProfile
         self::SUBCATEGORY_CONSOLE,
     ];
 
-    protected string $marketShareUrlPart = 'browser-market-share';
-    protected string $statType = 'Browser';
+    protected string $marketShareUrlPart = 'os-market-share';
+    protected string $statType = 'Operating System';
     protected array $fromYearBySubcategory = [
         self::SUBCATEGORY_ALL => 2009,
         self::SUBCATEGORY_DESKTOP => 2009,
@@ -41,39 +41,22 @@ class BrowserProfile extends BaseProfile
     public string $sort = BaseProfile::SORT_PERCENT_ASC;
 
     public array $customColorsByName = [
-        '360 Safe Browser' => '#30db5b',
-        'Android' => '#7d7aff',
-        'BlackBerry' => '#aeaeb2',
-        'Bolt' => '#70d7ff',
-        'Chrome' => '#30db5b',
-        'Coc Coc' => '#a2d34b',
-        'Dolfin' => '#30db5b',
-        'Edge Legacy' => '#5fa3e6',
-        'Edge' => '#70d7ff',
-        'Firefox' => '#ffb33f',
-        'IE' => '#67d4cf',
-        'IEMobile' => '#3f7aff',
-        'Instabridge' => '#f7aa6e',
-        'Jasmine' => '#c28dbc',
-        'Mozilla' => '#ffb33f',
-        'NetFront NX' => '#acdc5a',
-        'NetFront' => '#acdc5a',
-        'Nokia' => '#2fbacd',
-        'Obigo' => '#70d7ff',
-        'Openwave' => '#ba94c8',
-        'Opera' => '#ff6861',
-        'QQ Browser' => '#70d7ff',
-        'Safari' => '#d8d8dc',
-        'Samsung Internet' => '#da8fff',
+        'Android' => '#30db5b',
+        'BlackBerry OS' => '#aeaeb2',
+        'Chrome OS' => '#ff6861',
+        'KaiOS' => '#7d7aff',
+        'Linux' => '#ffd426',
+        'Nintendo' => '#ff6861',
+        'OS X' => '#2dd4bf',
+        'Playstation' => '#7d7aff',
         'Samsung' => '#da8fff',
-        'Silk' => '#ffb33f',
-        'Sony PS3' => '#7d7aff',
-        'Sony PS4' => '#ff6482',
-        'Sony PSP Vita' => '#70d7ff',
-        'SonyEricsson' => '#30db5b',
-        'UC Browser' => '#ffd426',
-        'Whale Browser' => '#01d3ae',
-        'Yandex Browser' => '#ffd426',
+        'Series 40' => '#2fbacd',
+        'Sony Ericsson' => '#30db5b',
+        'SymbianOS' => '#ffb33f',
+        'Windows' => '#70d7ff',
+        'Xbox' => '#30db5b',
+        'iOS' => '#ff6482',
+        'webOS' => '#ff6861',
     ];
 
     protected function getUrlWithoutParams(string $subcategory): string {
