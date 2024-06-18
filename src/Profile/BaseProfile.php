@@ -18,6 +18,7 @@ abstract class BaseProfile
 
     public const string SORT_PERCENT_ASC = 'sort_percent_asc';
     public const string SORT_NAME_ASC = 'sort_name_asc';
+    public const string SORT_CUSTOM = 'sort_custom';
 
     public string $category;
     /** @var array<string> */
@@ -35,6 +36,8 @@ abstract class BaseProfile
     protected array $fromMonthBySubcategory;
 
     public string $prefix = '';
+    public bool $keepPrefix = false;
+
     public string $nameSeparator = '~';
 
     /** @var array<string> */
@@ -45,6 +48,8 @@ abstract class BaseProfile
     public array $customColorsByName = [];
 
     public string $sort = self::SORT_NAME_ASC;
+    /** @var array<int, string> */
+    public array $customSortedNames;
 
     public function getFileName(string $subcategory, int $year, int $month): string {
         $this->checkSubcategory(subcategory: $subcategory);

@@ -6,6 +6,7 @@ namespace App\Data;
 
 class Version
 {
+    public string $prefix = '';
     public string $color = '#ffffff';
     /** @var array<Version> */
     public array $minorVersions = [];
@@ -13,6 +14,5 @@ class Version
     public function __construct(
         public readonly string $name,
         public float $percent,
-        public string $prefix = '',
     ) {}
 }

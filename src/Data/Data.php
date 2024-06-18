@@ -89,15 +89,22 @@ class Data
             $priority++;
         }
 
+        $customPriority = count($allVersions) + count(BaseProfile::NAMES_OTHER);
         if ($this->profile->sort === BaseProfile::SORT_PERCENT_ASC) {
             $lastMonthVersions = $lastMontData->versions;
             usort($lastMonthVersions, static fn (Version $a, Version $b): int => $b->percent <=> $a->percent);
-            $percentPriority = count($allVersions) + count(BaseProfile::NAMES_OTHER);
             foreach ($lastMonthVersions as $version) {
                 if (!in_array($version->name, BaseProfile::NAMES_OTHER, true)) {
-                    $reference[$version->name] = $percentPriority;
-                    $percentPriority--;
+                    $reference[$version->name] = $customPriority;
+                    $customPriority--;
                 }
+            }
+        } elseif ($this->profile->sort === BaseProfile::SORT_CUSTOM) {
+            $sortCustom = $this->profile->customSortedNames;
+            krsort($sortCustom);
+            foreach ($sortCustom as $name) {
+                $reference[$name] = $customPriority;
+                $customPriority--;
             }
         }
 

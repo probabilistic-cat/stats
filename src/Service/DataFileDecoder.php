@@ -86,11 +86,11 @@ class DataFileDecoder
 
             if (is_string($percentOrMinorVersionsData)) {
                 $percent = (float)$percentOrMinorVersionsData;
-                $versions[] = new Version(
-                    name: $name,
-                    percent: $percent,
-                    prefix: $profile->prefix,
-                );
+                $version = new Version(name: $name, percent: $percent);
+                if ($profile->keepPrefix) {
+                    $version->prefix = $profile->prefix;
+                }
+                $versions[] = $version;
             } else {
                 $version = self::getVersionsWithMinorVersions(
                     minorVersionsData: $percentOrMinorVersionsData,
@@ -114,7 +114,11 @@ class DataFileDecoder
         string $name,
         BaseProfile $profile,
     ): ?Version {
-        $version = new Version(name: $name, percent: 0, prefix: $profile->prefix);
+        $version = new Version(name: $name, percent: 0);
+        if ($profile->keepPrefix) {
+            $version->prefix = $profile->prefix;
+        }
+
         $majorPercent = 0;
         foreach ($minorVersionsData as $minorName => $minorPercent) {
             if ((float)$minorPercent > 0) {
