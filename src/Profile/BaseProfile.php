@@ -96,7 +96,7 @@ abstract class BaseProfile
         return "$this->site/$this->marketShareUrlPart/$devicePart/$this->region/chart.php";
     }
 
-    private function getUrlDevicePart(string $subcategory, string $separator, bool $ucfirst = false): string {
+    protected function getUrlDevicePart(string $subcategory, string $separator, bool $ucfirst = false): string {
         if ($subcategory === self::SUBCATEGORY_ALL) {
             $devices = [];
             foreach ($this->subcategories as $device) {

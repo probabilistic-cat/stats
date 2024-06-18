@@ -15,10 +15,10 @@ class WindowsVersionController extends BaseController
 
     #[Route('/windows_desktop', name: self::ROUTE_NAME_DESKTOP)]
     public function desktop(): Response {
-        return $this->getOsResponse(subcategory: BaseProfile::SUBCATEGORY_DESKTOP);
+        return $this->getWindowsResponse(subcategory: BaseProfile::SUBCATEGORY_DESKTOP);
     }
 
-    private function getOsResponse(string $subcategory): Response {
+    private function getWindowsResponse(string $subcategory): Response {
         $extraContext = [
             'categoryName' => 'Windows versions',
             'categoryRoute' => $this->generateUrl(self::ROUTE_NAME_DESKTOP),

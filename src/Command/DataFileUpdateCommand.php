@@ -9,6 +9,7 @@ use App\Profile\BaseProfile;
 use App\Profile\BrowserProfile;
 use App\Profile\IosVersionProfile;
 use App\Profile\OsProfile;
+use App\Profile\PlatformProfile;
 use App\Profile\WindowsVersionProfile;
 use App\Service\DataFileManager;
 use App\Service\DataFileResultDTO;
@@ -43,6 +44,7 @@ class DataFileUpdateCommand extends Command
             new BrowserProfile(),
             new OsProfile(),
             new WindowsVersionProfile(),
+            new PlatformProfile(),
         ];
         $stepsCount = 0;
         foreach ($profiles as $profile) {
