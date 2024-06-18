@@ -6,7 +6,11 @@ namespace App\Profile;
 
 abstract class BaseProfile
 {
-    protected const string SUBCATEGORY_ALL = 'all';
+    public const string SUBCATEGORY_ALL = 'all';
+    public const string SUBCATEGORY_DESKTOP = 'desktop';
+    public const string SUBCATEGORY_MOBILE = 'mobile';
+    public const string SUBCATEGORY_TABLET = 'tablet';
+    public const string SUBCATEGORY_CONSOLE = 'console';
 
     public const string COLOR_OTHER = '#d8d8dc';
     public const array NAMES_OTHER = ['Unknown', 'Other'];

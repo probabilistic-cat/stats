@@ -6,10 +6,6 @@ namespace App\Profile;
 
 class AndroidVersionProfile extends BaseProfile
 {
-    public const string SUBCATEGORY_ALL = 'all';
-    public const string SUBCATEGORY_MOBILE = 'mobile';
-    public const string SUBCATEGORY_TABLET = 'tablet';
-
     public string $category = 'android_version';
     public array $subcategories = [
         self::SUBCATEGORY_ALL,

@@ -6,12 +6,6 @@ namespace App\Profile;
 
 class OsProfile extends BaseProfile
 {
-    public const string SUBCATEGORY_ALL = 'all';
-    public const string SUBCATEGORY_DESKTOP = 'desktop';
-    public const string SUBCATEGORY_MOBILE = 'mobile';
-    public const string SUBCATEGORY_TABLET = 'tablet';
-    public const string SUBCATEGORY_CONSOLE = 'console';
-
     public string $category = 'os_combined';
     public array $subcategories = [
         self::SUBCATEGORY_ALL,

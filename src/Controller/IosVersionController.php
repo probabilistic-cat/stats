@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Profile\BaseProfile;
 use App\Profile\IosVersionProfile;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -16,17 +17,17 @@ class IosVersionController extends BaseController
 
     #[Route('/ios_version_all', name: self::ROUTE_NAME_ALL)]
     public function all(): Response {
-        return $this->getIosVersionResponse(subcategory: IosVersionProfile::SUBCATEGORY_ALL);
+        return $this->getIosVersionResponse(subcategory: BaseProfile::SUBCATEGORY_ALL);
     }
 
     #[Route('/ios_version_iphone', name: self::ROUTE_NAME_IPHONE)]
     public function iphone(): Response {
-        return $this->getIosVersionResponse(subcategory: IosVersionProfile::SUBCATEGORY_IPHONE);
+        return $this->getIosVersionResponse(subcategory: BaseProfile::SUBCATEGORY_MOBILE);
     }
 
     #[Route('/ios_version_ipad', name: self::ROUTE_NAME_IPAD)]
     public function ipad(): Response {
-        return $this->getIosVersionResponse(subcategory: IosVersionProfile::SUBCATEGORY_IPAD);
+        return $this->getIosVersionResponse(subcategory: BaseProfile::SUBCATEGORY_TABLET);
     }
 
     private function getIosVersionResponse(string $subcategory): Response {
@@ -34,14 +35,14 @@ class IosVersionController extends BaseController
             'categoryName' => 'iOS versions',
             'categoryRoute' => $this->generateUrl(self::ROUTE_NAME_ALL),
             'subcategoriesNames' => [
-                IosVersionProfile::SUBCATEGORY_ALL => 'All',
-                IosVersionProfile::SUBCATEGORY_IPHONE => 'iPhone',
-                IosVersionProfile::SUBCATEGORY_IPAD => 'iPad',
+                BaseProfile::SUBCATEGORY_ALL => 'All',
+                BaseProfile::SUBCATEGORY_MOBILE => 'iPhone',
+                BaseProfile::SUBCATEGORY_TABLET => 'iPad',
             ],
             'subcategoriesRoutes' => [
-                IosVersionProfile::SUBCATEGORY_ALL => $this->generateUrl(self::ROUTE_NAME_ALL),
-                IosVersionProfile::SUBCATEGORY_IPHONE => $this->generateUrl(self::ROUTE_NAME_IPHONE),
-                IosVersionProfile::SUBCATEGORY_IPAD => $this->generateUrl(self::ROUTE_NAME_IPAD),
+                BaseProfile::SUBCATEGORY_ALL => $this->generateUrl(self::ROUTE_NAME_ALL),
+                BaseProfile::SUBCATEGORY_MOBILE => $this->generateUrl(self::ROUTE_NAME_IPHONE),
+                BaseProfile::SUBCATEGORY_TABLET => $this->generateUrl(self::ROUTE_NAME_IPAD),
             ],
         ];
 

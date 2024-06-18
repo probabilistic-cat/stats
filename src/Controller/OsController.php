@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Profile\BaseProfile;
 use App\Profile\OsProfile;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -18,27 +19,27 @@ class OsController extends BaseController
 
     #[Route('/os_all', name: self::ROUTE_NAME_ALL)]
     public function all(): Response {
-        return $this->getOsResponse(subcategory: OsProfile::SUBCATEGORY_ALL);
+        return $this->getOsResponse(subcategory: BaseProfile::SUBCATEGORY_ALL);
     }
 
     #[Route('/os_desktop', name: self::ROUTE_NAME_DESKTOP)]
     public function desktop(): Response {
-        return $this->getOsResponse(subcategory: OsProfile::SUBCATEGORY_DESKTOP);
+        return $this->getOsResponse(subcategory: BaseProfile::SUBCATEGORY_DESKTOP);
     }
 
     #[Route('/os_mobile', name: self::ROUTE_NAME_MOBILE)]
     public function mobile(): Response {
-        return $this->getOsResponse(subcategory: OsProfile::SUBCATEGORY_MOBILE);
+        return $this->getOsResponse(subcategory: BaseProfile::SUBCATEGORY_MOBILE);
     }
 
     #[Route('/os_tablet', name: self::ROUTE_NAME_TABLET)]
     public function tablet(): Response {
-        return $this->getOsResponse(subcategory: OsProfile::SUBCATEGORY_TABLET);
+        return $this->getOsResponse(subcategory: BaseProfile::SUBCATEGORY_TABLET);
     }
 
     #[Route('/os_console', name: self::ROUTE_NAME_CONSOLE)]
     public function console(): Response {
-        return $this->getOsResponse(subcategory: OsProfile::SUBCATEGORY_CONSOLE);
+        return $this->getOsResponse(subcategory: BaseProfile::SUBCATEGORY_CONSOLE);
     }
 
     private function getOsResponse(string $subcategory): Response {
@@ -46,18 +47,18 @@ class OsController extends BaseController
             'categoryName' => 'Operating systems',
             'categoryRoute' => $this->generateUrl(self::ROUTE_NAME_ALL),
             'subcategoriesNames' => [
-                OsProfile::SUBCATEGORY_ALL => 'All',
-                OsProfile::SUBCATEGORY_DESKTOP => 'Desktop',
-                OsProfile::SUBCATEGORY_MOBILE => 'Mobile',
-                OsProfile::SUBCATEGORY_TABLET => 'Tablet',
-                OsProfile::SUBCATEGORY_CONSOLE => 'Console',
+                BaseProfile::SUBCATEGORY_ALL => 'All',
+                BaseProfile::SUBCATEGORY_DESKTOP => 'Desktop',
+                BaseProfile::SUBCATEGORY_MOBILE => 'Mobile',
+                BaseProfile::SUBCATEGORY_TABLET => 'Tablet',
+                BaseProfile::SUBCATEGORY_CONSOLE => 'Console',
             ],
             'subcategoriesRoutes' => [
-                OsProfile::SUBCATEGORY_ALL => $this->generateUrl(self::ROUTE_NAME_ALL),
-                OsProfile::SUBCATEGORY_DESKTOP => $this->generateUrl(self::ROUTE_NAME_DESKTOP),
-                OsProfile::SUBCATEGORY_MOBILE => $this->generateUrl(self::ROUTE_NAME_MOBILE),
-                OsProfile::SUBCATEGORY_TABLET => $this->generateUrl(self::ROUTE_NAME_TABLET),
-                OsProfile::SUBCATEGORY_CONSOLE => $this->generateUrl(self::ROUTE_NAME_CONSOLE),
+                BaseProfile::SUBCATEGORY_ALL => $this->generateUrl(self::ROUTE_NAME_ALL),
+                BaseProfile::SUBCATEGORY_DESKTOP => $this->generateUrl(self::ROUTE_NAME_DESKTOP),
+                BaseProfile::SUBCATEGORY_MOBILE => $this->generateUrl(self::ROUTE_NAME_MOBILE),
+                BaseProfile::SUBCATEGORY_TABLET => $this->generateUrl(self::ROUTE_NAME_TABLET),
+                BaseProfile::SUBCATEGORY_CONSOLE => $this->generateUrl(self::ROUTE_NAME_CONSOLE),
             ],
         ];
 
