@@ -31,6 +31,7 @@ class OsProfile extends BaseProfile
         self::SUBCATEGORY_TABLET => 8,
         self::SUBCATEGORY_CONSOLE => 8,
     ];
+    protected bool $isUrlPathShort = true;
 
     public string $sort = BaseProfile::SORT_PERCENT_ASC;
 
@@ -52,11 +53,4 @@ class OsProfile extends BaseProfile
         'iOS' => '#ff6482',
         'webOS' => '#ff6861',
     ];
-
-    protected function getUrlWithoutParams(string $subcategory): string {
-        return ($subcategory === self::SUBCATEGORY_ALL)
-            ? "$this->site/chart.php"
-            : parent::getUrlWithoutParams(subcategory: $subcategory)
-        ;
-    }
 }

@@ -20,7 +20,7 @@ class WindowsVersionController extends BaseController
 
     private function getWindowsResponse(string $subcategory): Response {
         $extraContext = [
-            'categoryName' => 'Windows versions',
+            'categoryName' => 'Windows version',
             'categoryRoute' => $this->generateUrl(self::ROUTE_NAME_DESKTOP),
             'subcategoriesNames' => [
                 BaseProfile::SUBCATEGORY_DESKTOP => 'Desktop',

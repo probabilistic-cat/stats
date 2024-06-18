@@ -32,7 +32,7 @@ class AndroidVersionController extends BaseController
 
     private function getIosVersionResponse(string $subcategory): Response {
         $extraContext = [
-            'categoryName' => 'Android versions',
+            'categoryName' => 'Android version',
             'categoryRoute' => $this->generateUrl(self::ROUTE_NAME_ALL),
             'subcategoriesNames' => [
                 BaseProfile::SUBCATEGORY_ALL => 'All',

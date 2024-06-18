@@ -18,6 +18,7 @@ class PlatformProfile extends BaseProfile
     protected array $fromMonthBySubcategory = [
         self::SUBCATEGORY_ALL => 1,
     ];
+    protected bool $isUrlPathShort = true;
 
     public string $sort = BaseProfile::SORT_PERCENT_ASC;
 
@@ -27,13 +28,6 @@ class PlatformProfile extends BaseProfile
         'Mobile' => '#30db5b',
         'Tablet' => '#ff6482',
     ];
-
-    protected function getUrlWithoutParams(string $subcategory): string {
-        return ($subcategory === self::SUBCATEGORY_ALL)
-            ? "$this->site/chart.php"
-            : parent::getUrlWithoutParams(subcategory: $subcategory)
-        ;
-    }
 
     protected function getUrlDevicePart(string $subcategory, string $separator, bool $ucfirst = false): string {
         $devices = [];

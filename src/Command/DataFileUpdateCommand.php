@@ -10,6 +10,7 @@ use App\Profile\BrowserProfile;
 use App\Profile\IosVersionProfile;
 use App\Profile\OsProfile;
 use App\Profile\PlatformProfile;
+use App\Profile\SearchEngineProfile;
 use App\Profile\WindowsVersionProfile;
 use App\Service\DataFileManager;
 use App\Service\DataFileResultDTO;
@@ -39,12 +40,13 @@ class DataFileUpdateCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int {
         /** @var array<BaseProfile> $profiles */
         $profiles = [
-            new IosVersionProfile(),
             new AndroidVersionProfile(),
             new BrowserProfile(),
+            new IosVersionProfile(),
             new OsProfile(),
-            new WindowsVersionProfile(),
             new PlatformProfile(),
+            new SearchEngineProfile(),
+            new WindowsVersionProfile(),
         ];
         $stepsCount = 0;
         foreach ($profiles as $profile) {

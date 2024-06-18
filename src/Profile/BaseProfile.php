@@ -34,6 +34,7 @@ abstract class BaseProfile
     protected array $fromYearBySubcategory;
     /** @var array<string, int> */
     protected array $fromMonthBySubcategory;
+    protected bool $isUrlPathShort = false;
 
     public string $prefix = '';
     public bool $keepPrefix = false;
@@ -67,7 +68,7 @@ abstract class BaseProfile
 
         $multiDevicePart = ($subcategory === self::SUBCATEGORY_ALL) ? '&multi-device=true' : '';
 
-        $url = $this->getUrlWithoutParams(subcategory: $subcategory);
+        $url = $this->getUrlPath(subcategory: $subcategory);
         $url .= '?device='
             .rawurlencode($this->getUrlDevicePart(subcategory: $subcategory, separator: ' & ', ucfirst: true))
         ;
@@ -91,9 +92,13 @@ abstract class BaseProfile
         return $url;
     }
 
-    protected function getUrlWithoutParams(string $subcategory): string {
+    protected function getUrlPath(string $subcategory): string {
         $devicePart = $this->getUrlDevicePart(subcategory: $subcategory, separator: '-');
-        return "$this->site/$this->marketShareUrlPart/$devicePart/$this->region/chart.php";
+        $longPathPart = ($this->isUrlPathShort && $subcategory === self::SUBCATEGORY_ALL)
+            ? ''
+            : "$this->marketShareUrlPart/$devicePart/$this->region/"
+        ;
+        return "{$this->site}/{$longPathPart}chart.php";
     }
 
     protected function getUrlDevicePart(string $subcategory, string $separator, bool $ucfirst = false): string {

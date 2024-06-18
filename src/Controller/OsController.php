@@ -44,7 +44,7 @@ class OsController extends BaseController
 
     private function getOsResponse(string $subcategory): Response {
         $extraContext = [
-            'categoryName' => 'Operating systems',
+            'categoryName' => 'Operating system',
             'categoryRoute' => $this->generateUrl(self::ROUTE_NAME_ALL),
             'subcategoriesNames' => [
                 BaseProfile::SUBCATEGORY_ALL => 'All',

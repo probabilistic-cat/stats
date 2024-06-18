@@ -31,6 +31,7 @@ class BrowserProfile extends BaseProfile
         self::SUBCATEGORY_TABLET => 8,
         self::SUBCATEGORY_CONSOLE => 8,
     ];
+    protected bool $isUrlPathShort = true;
 
     public string $sort = BaseProfile::SORT_PERCENT_ASC;
 
@@ -69,11 +70,4 @@ class BrowserProfile extends BaseProfile
         'Whale Browser' => '#01d3ae',
         'Yandex Browser' => '#ffd426',
     ];
-
-    protected function getUrlWithoutParams(string $subcategory): string {
-        return ($subcategory === self::SUBCATEGORY_ALL)
-            ? "$this->site/chart.php"
-            : parent::getUrlWithoutParams(subcategory: $subcategory)
-        ;
-    }
 }

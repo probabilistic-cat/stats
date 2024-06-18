@@ -20,7 +20,7 @@ class PlatformController extends BaseController
 
     private function getPlatformResponse(string $subcategory): Response {
         $extraContext = [
-            'categoryName' => 'Platforms',
+            'categoryName' => 'Platform',
             'categoryRoute' => $this->generateUrl(self::ROUTE_NAME_ALL),
             'subcategoriesNames' => [
                 BaseProfile::SUBCATEGORY_ALL => 'All',

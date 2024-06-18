@@ -5,46 +5,46 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Profile\BaseProfile;
-use App\Profile\BrowserProfile;
+use App\Profile\SearchEngineProfile;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-class BrowserController extends BaseController
+class SearchEngineController extends BaseController
 {
-    private const string ROUTE_NAME_ALL = 'app_browser_all';
-    private const string ROUTE_NAME_DESKTOP = 'app_browser_desktop';
-    private const string ROUTE_NAME_MOBILE = 'app_browser_mobile';
-    private const string ROUTE_NAME_TABLET = 'app_browser_tablet';
-    private const string ROUTE_NAME_CONSOLE = 'app_browser_console';
+    private const string ROUTE_NAME_ALL = 'app_search_engine_all';
+    private const string ROUTE_NAME_DESKTOP = 'app_search_engine_desktop';
+    private const string ROUTE_NAME_MOBILE = 'app_search_engine_mobile';
+    private const string ROUTE_NAME_TABLET = 'app_search_engine_tablet';
+    private const string ROUTE_NAME_CONSOLE = 'app_search_engine_console';
 
-    #[Route('/browser_all', name: self::ROUTE_NAME_ALL)]
+    #[Route('/search_engine_all', name: self::ROUTE_NAME_ALL)]
     public function all(): Response {
-        return $this->getBrowserResponse(subcategory: BaseProfile::SUBCATEGORY_ALL);
+        return $this->getSearchEngineResponse(subcategory: BaseProfile::SUBCATEGORY_ALL);
     }
 
-    #[Route('/browser_desktop', name: self::ROUTE_NAME_DESKTOP)]
+    #[Route('/search_engine_desktop', name: self::ROUTE_NAME_DESKTOP)]
     public function desktop(): Response {
-        return $this->getBrowserResponse(subcategory: BaseProfile::SUBCATEGORY_DESKTOP);
+        return $this->getSearchEngineResponse(subcategory: BaseProfile::SUBCATEGORY_DESKTOP);
     }
 
-    #[Route('/browser_mobile', name: self::ROUTE_NAME_MOBILE)]
+    #[Route('/search_engine_mobile', name: self::ROUTE_NAME_MOBILE)]
     public function mobile(): Response {
-        return $this->getBrowserResponse(subcategory: BaseProfile::SUBCATEGORY_MOBILE);
+        return $this->getSearchEngineResponse(subcategory: BaseProfile::SUBCATEGORY_MOBILE);
     }
 
-    #[Route('/browser_tablet', name: self::ROUTE_NAME_TABLET)]
+    #[Route('/search_engine_tablet', name: self::ROUTE_NAME_TABLET)]
     public function tablet(): Response {
-        return $this->getBrowserResponse(subcategory: BaseProfile::SUBCATEGORY_TABLET);
+        return $this->getSearchEngineResponse(subcategory: BaseProfile::SUBCATEGORY_TABLET);
     }
 
-    #[Route('/browser_console', name: self::ROUTE_NAME_CONSOLE)]
+    #[Route('/search_engine_console', name: self::ROUTE_NAME_CONSOLE)]
     public function console(): Response {
-        return $this->getBrowserResponse(subcategory: BaseProfile::SUBCATEGORY_CONSOLE);
+        return $this->getSearchEngineResponse(subcategory: BaseProfile::SUBCATEGORY_CONSOLE);
     }
 
-    private function getBrowserResponse(string $subcategory): Response {
+    private function getSearchEngineResponse(string $subcategory): Response {
         $extraContext = [
-            'categoryName' => 'Browser',
+            'categoryName' => 'Search Engine',
             'categoryRoute' => $this->generateUrl(self::ROUTE_NAME_ALL),
             'subcategoriesNames' => [
                 BaseProfile::SUBCATEGORY_ALL => 'All',
@@ -63,7 +63,7 @@ class BrowserController extends BaseController
         ];
 
         return $this->getResponse(
-            profile: new BrowserProfile(),
+            profile: new SearchEngineProfile(),
             subcategory: $subcategory,
             extraContext: $extraContext,
         );
