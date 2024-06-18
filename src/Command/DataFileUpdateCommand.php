@@ -9,6 +9,7 @@ use App\Profile\BaseProfile;
 use App\Profile\BrowserProfile;
 use App\Profile\IosVersionProfile;
 use App\Profile\OsProfile;
+use App\Profile\WindowsVersionProfile;
 use App\Service\DataFileManager;
 use App\Service\DataFileResultDTO;
 use Symfony\Component\Console\Attribute\AsCommand;
@@ -41,6 +42,7 @@ class DataFileUpdateCommand extends Command
             new AndroidVersionProfile(),
             new BrowserProfile(),
             new OsProfile(),
+            new WindowsVersionProfile(),
         ];
         $stepsCount = 0;
         foreach ($profiles as $profile) {
