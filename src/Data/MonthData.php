@@ -10,6 +10,10 @@ class MonthData
     public array $versions = [];
 
     public function __construct(
-        public \DateTime $date,
+        public readonly \DateTime $date,
     ) {}
+
+    public function getDateString(): string {
+        return $this->date->format('Y-m');
+    }
 }

@@ -22,7 +22,10 @@ class DataFileDecoder
         /** @var array<array<string, string|array<string, string>>> $rawData */
         $rawData = $this->getRawData(profile: $profile, filepath: $filepath);
 
-        return self::getData(rawData: $rawData, profile: $profile);
+        $data = self::getData(rawData: $rawData, profile: $profile);
+        $data->setMinor();
+
+        return $data;
     }
 
     /**
@@ -48,8 +51,6 @@ class DataFileDecoder
             $monthData = self::getMonthData(rawMonthData: $rawMonthData, date: $date, profile: $profile);
             $data->monthDatas[] = $monthData;
         }
-
-        $data->setMinor();
 
         return $data;
     }

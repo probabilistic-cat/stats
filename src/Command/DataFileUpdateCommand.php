@@ -29,6 +29,15 @@ class DataFileUpdateCommand extends Command
 {
     private const int OPERATIONS_PER_SUBCATEGORY = 2;
 
+    private SymfonyStyle $io;
+    private Cursor $cursor;
+    private ProgressBar $progressBar;
+
+    private string $successStyle = 'success';
+    private string $failureStyle = 'failure';
+
+    private bool $fileDownloadedStatus = false;
+
     public function __construct(
         private readonly DataFileManager $dataFileManager,
     ) {
@@ -38,6 +47,10 @@ class DataFileUpdateCommand extends Command
     protected function configure(): void {}
 
     protected function execute(InputInterface $input, OutputInterface $output): int {
+        $this->io = new SymfonyStyle(input: $input, output: $output);
+        $this->cursor = new Cursor($output);
+        $this->progressBar = $this->io->createProgressBar();
+
         /** @var array<BaseProfile> $profiles */
         $profiles = [
             new AndroidVersionProfile(),
@@ -48,87 +61,100 @@ class DataFileUpdateCommand extends Command
             new SearchEngineProfile(),
             new WindowsVersionProfile(),
         ];
+        $stepsCount = self::getSpetsCount(profiles: $profiles);
+
+        $this->progressBar->setMaxSteps($stepsCount);
+        $this->successStyle = 'success';
+        $this->failureStyle = 'failure';
+        $this->io->getFormatter()->setStyle($this->successStyle, new OutputFormatterStyle('green'));
+        $this->io->getFormatter()->setStyle($this->failureStyle, new OutputFormatterStyle('red'));
+
+        foreach ($profiles as $profile) {
+            foreach ($profile->subcategories as $subcategory) {
+                $this->io->section("$profile->category - $subcategory");
+                $this->cursor->moveUp();
+
+                $this->io->text('UPDATE');
+                $this->updateFile(profile: $profile, subcategory: $subcategory);
+
+                $this->io->text('DELETE');
+                $this->deleteOldFiles(profile: $profile, subcategory: $subcategory);
+
+                $this->io->newLine();
+            }
+        }
+        $this->progressBar->finish();
+        $this->io->newLine();
+
+        return Command::SUCCESS;
+    }
+
+    private function updateFile(BaseProfile $profile, string $subcategory): void {
+        $this->outputBeforeOperation();
+        $this->waitBeforeFileDownload();
+        $updateResult = $this->dataFileManager->updateFile(profile: $profile, subcategory: $subcategory);
+
+        $this->outputAfterOperation();
+        if ($updateResult instanceof DataFileResultDTO) {
+            $style = ($updateResult->status === DataFileResultDTO::STATUS_SUCCESS)
+                ? $this->successStyle
+                : $this->failureStyle
+            ;
+            $this->io->text("<$style>$updateResult->message</>");
+            $this->io->text("    File: $updateResult->filePath");
+            $this->io->text("    Url: $updateResult->fileUrl");
+            $this->fileDownloadedStatus = true;
+        } else {
+            $this->io->text('No file update required.');
+            $this->fileDownloadedStatus = false;
+        }
+    }
+
+    private function deleteOldFiles(BaseProfile $profile, string $subcategory): void {
+        $this->outputBeforeOperation();
+        $deleteResults = $this->dataFileManager->deleteOldFiles(profile: $profile, subcategory: $subcategory);
+        $this->outputAfterOperation();
+
+        foreach ($deleteResults as $index => $deleteResult) {
+            $number = $index + 1;
+            $style = ($deleteResult->status === DataFileResultDTO::STATUS_SUCCESS)
+                ? $this->successStyle
+                : $this->failureStyle
+            ;
+            $this->io->text("<$style>$number. $deleteResult->message</>");
+            $this->io->text("    File: $deleteResult->filePath");
+        }
+        if (count($deleteResults) === 0) {
+            $this->io->text('No file deletion required.');
+        }
+    }
+
+    private function outputBeforeOperation(): void {
+        $this->io->newLine();
+        $this->progressBar->display();
+    }
+
+    private function outputAfterOperation(): void {
+        $this->progressBar->advance();
+        $this->progressBar->clear();
+        $this->cursor->moveUp();
+    }
+
+    private function waitBeforeFileDownload(): void {
+        if ($this->fileDownloadedStatus) {
+            sleep(rand(5, 10));
+        }
+    }
+
+    /**
+     * @param array<BaseProfile> $profiles
+     */
+    private static function getSpetsCount(array $profiles): int {
         $stepsCount = 0;
         foreach ($profiles as $profile) {
             $stepsCount += count($profile->subcategories) * self::OPERATIONS_PER_SUBCATEGORY;
         }
 
-        $io = new SymfonyStyle(input: $input, output: $output);
-        $progressBar = $io->createProgressBar($stepsCount);
-        $cursor = new Cursor($output);
-        $successStyle = 'success';
-        $failureStyle = 'failure';
-        $io->getFormatter()->setStyle($successStyle, new OutputFormatterStyle('green'));
-        $io->getFormatter()->setStyle($failureStyle, new OutputFormatterStyle('red'));
-        $tab = '    ';
-
-        $fileDownloaded = false;
-        foreach ($profiles as $profile) {
-            foreach ($profile->subcategories as $subcategory) {
-                $io->section("$profile->category - $subcategory");
-                $cursor->moveUp();
-
-                $io->text('UPDATE');
-                self::outputBeforeOperation(progressBar: $progressBar, io: $io);
-                if ($fileDownloaded) {
-                    self::wait();
-                }
-                $updateResult = $this->dataFileManager->updateFile(profile: $profile, subcategory: $subcategory);
-                self::outputAfterOperation(progressBar: $progressBar, cursor: $cursor);
-
-                if ($updateResult instanceof DataFileResultDTO) {
-                    $style = ($updateResult->status === DataFileResultDTO::STATUS_SUCCESS)
-                        ? $successStyle
-                        : $failureStyle
-                    ;
-                    $io->text("<$style>$updateResult->message</>");
-                    $io->text("{$tab}File: $updateResult->filePath");
-                    $io->text("{$tab}Url: $updateResult->fileUrl");
-                    $fileDownloaded = true;
-                } else {
-                    $io->text('No file update required.');
-                    $fileDownloaded = false;
-                }
-
-                $io->text('DELETE');
-                self::outputBeforeOperation(progressBar: $progressBar, io: $io);
-                $deleteResults = $this->dataFileManager->deleteOldFiles(profile: $profile, subcategory: $subcategory);
-                self::outputAfterOperation(progressBar: $progressBar, cursor: $cursor);
-
-                foreach ($deleteResults as $index => $deleteResult) {
-                    $number = $index + 1;
-                    $style = ($deleteResult->status === DataFileResultDTO::STATUS_SUCCESS)
-                        ? $successStyle
-                        : $failureStyle
-                    ;
-                    $io->text("<$style>$number. $deleteResult->message</>");
-                    $io->text("{$tab}File: $deleteResult->filePath");
-                }
-                if (count($deleteResults) === 0) {
-                    $io->text('No file deletion required.');
-                }
-
-                $io->newLine();
-            }
-        }
-        $progressBar->finish();
-        $io->newLine();
-
-        return Command::SUCCESS;
-    }
-
-    private static function outputBeforeOperation(ProgressBar $progressBar, SymfonyStyle $io): void {
-        $io->newLine();
-        $progressBar->display();
-    }
-
-    private static function outputAfterOperation(ProgressBar $progressBar, Cursor $cursor): void {
-        $progressBar->advance();
-        $progressBar->clear();
-        $cursor->moveUp();
-    }
-
-    private static function wait(): void {
-        sleep(rand(5, 10));
+        return $stepsCount;
     }
 }
