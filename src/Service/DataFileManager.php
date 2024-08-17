@@ -17,7 +17,7 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 readonly class DataFileManager
 {
-    private const string DATA_FILE_DIR = Consts::DIR.'/File/';
+    private const string DATA_FILE_DIR = Consts::DIR.'/../files/';
 
     private const int PREV_MONTH_DATA_AVAILABLE_FROM_DAY = 2;
     private const int CHECK_LAST_MONTHS = 12;

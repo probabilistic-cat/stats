@@ -30,4 +30,5 @@ phpstan.neon
 /.php-cs-fixer.cache
 ###< friendsofphp/php-cs-fixer ###
 
-/src/File/*
+/files/*
+!files/.gitkeep
