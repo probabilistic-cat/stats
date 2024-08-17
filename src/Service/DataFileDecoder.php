@@ -10,12 +10,12 @@ use App\Data\Version;
 use App\Profile\BaseProfile;
 use Symfony\Component\Serializer\SerializerInterface;
 
-class DataFileDecoder
+readonly class DataFileDecoder
 {
     private const string COLUMN_DATE = 'Date';
 
     public function __construct(
-        private readonly SerializerInterface $serializer,
+        private SerializerInterface $serializer,
     ) {}
 
     public function decode(BaseProfile $profile, string $filepath): Data {

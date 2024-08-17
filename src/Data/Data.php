@@ -14,7 +14,7 @@ class Data
     public array $monthDatas = [];
 
     public function __construct(
-        public BaseProfile $profile,
+        public readonly BaseProfile $profile,
     ) {}
 
     public function setMinor(): void {

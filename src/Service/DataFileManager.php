@@ -77,8 +77,8 @@ readonly class DataFileManager
                     status: DataFileResultDTO::STATUS_SUCCESS,
                     filePath: $filePath,
                     message: $message,
+                    fileUrl: $fileUrl,
                 );
-                $result->fileUrl = $fileUrl;
             } catch (TransportExceptionInterface $e) {
                 $message = 'Data file not downloaded.';
                 $this->logger->error($message, [
@@ -90,8 +90,8 @@ readonly class DataFileManager
                     status: DataFileResultDTO::STATUS_FAILURE,
                     filePath: $filePath,
                     message: "$message Error: {$e->getMessage()}",
+                    fileUrl: $fileUrl,
                 );
-                $result->fileUrl = $fileUrl;
             } finally {
                 self::unlockFile(filePath: $filePath);
             }
@@ -211,7 +211,7 @@ readonly class DataFileManager
     }
 }
 
-class YearMonthDTO
+readonly class YearMonthDTO
 {
     public function __construct(
         public int $year,
@@ -219,16 +219,15 @@ class YearMonthDTO
     ) {}
 }
 
-class DataFileResultDTO
+readonly class DataFileResultDTO
 {
     public const string STATUS_SUCCESS = 'success';
     public const string STATUS_FAILURE = 'failure';
-
-    public ?string $fileUrl = null;
 
     public function __construct(
         public string $status,
         public string $filePath,
         public string $message,
+        public ?string $fileUrl = null,
     ) {}
 }

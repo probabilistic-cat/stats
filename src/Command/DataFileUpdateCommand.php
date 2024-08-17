@@ -28,13 +28,12 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 class DataFileUpdateCommand extends Command
 {
     private const int OPERATIONS_PER_SUBCATEGORY = 2;
+    private const string SUCCESS_STYLE = 'success';
+    private const string FAILURE_STYLE = 'failure';
 
     private SymfonyStyle $io;
     private Cursor $cursor;
     private ProgressBar $progressBar;
-
-    private string $successStyle = 'success';
-    private string $failureStyle = 'failure';
 
     private bool $fileDownloadedStatus = false;
 
@@ -64,10 +63,8 @@ class DataFileUpdateCommand extends Command
         $stepsCount = self::getSpetsCount(profiles: $profiles);
 
         $this->progressBar->setMaxSteps($stepsCount);
-        $this->successStyle = 'success';
-        $this->failureStyle = 'failure';
-        $this->io->getFormatter()->setStyle($this->successStyle, new OutputFormatterStyle('green'));
-        $this->io->getFormatter()->setStyle($this->failureStyle, new OutputFormatterStyle('red'));
+        $this->io->getFormatter()->setStyle(self::SUCCESS_STYLE, new OutputFormatterStyle('green'));
+        $this->io->getFormatter()->setStyle(self::FAILURE_STYLE, new OutputFormatterStyle('red'));
 
         foreach ($profiles as $profile) {
             foreach ($profile->subcategories as $subcategory) {
@@ -97,8 +94,8 @@ class DataFileUpdateCommand extends Command
         $this->outputAfterOperation();
         if ($updateResult instanceof DataFileResultDTO) {
             $style = ($updateResult->status === DataFileResultDTO::STATUS_SUCCESS)
-                ? $this->successStyle
-                : $this->failureStyle
+                ? self::SUCCESS_STYLE
+                : self::FAILURE_STYLE
             ;
             $this->io->text("<$style>$updateResult->message</>");
             $this->io->text("    File: $updateResult->filePath");
@@ -118,8 +115,8 @@ class DataFileUpdateCommand extends Command
         foreach ($deleteResults as $index => $deleteResult) {
             $number = $index + 1;
             $style = ($deleteResult->status === DataFileResultDTO::STATUS_SUCCESS)
-                ? $this->successStyle
-                : $this->failureStyle
+                ? self::SUCCESS_STYLE
+                : self::FAILURE_STYLE
             ;
             $this->io->text("<$style>$number. $deleteResult->message</>");
             $this->io->text("    File: $deleteResult->filePath");
