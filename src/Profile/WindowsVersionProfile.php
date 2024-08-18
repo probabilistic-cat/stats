@@ -22,7 +22,7 @@ class WindowsVersionProfile extends BaseProfile
 
     public string $prefix = 'Win';
 
-    public string $sort = BaseProfile::SORT_CUSTOM;
+    public ProfileSort $sort = ProfileSort::CUSTOM;
     public array $customSortedNames = [
         '98',
         'ME',

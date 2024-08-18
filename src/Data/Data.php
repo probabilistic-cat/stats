@@ -6,6 +6,7 @@ namespace App\Data;
 
 use App\Helper\ColorHelper;
 use App\Profile\BaseProfile;
+use App\Profile\ProfileSort;
 
 class Data
 {
@@ -93,7 +94,7 @@ class Data
         }
 
         $customPriority = count($allNames) + count(BaseProfile::NAMES_OTHER);
-        if ($this->profile->sort === BaseProfile::SORT_PERCENT_ASC) {
+        if ($this->profile->sort === ProfileSort::PERCENT_ASC) {
             $lastMonthVersions = $lastMontData->versions;
             usort($lastMonthVersions, static fn (Version $a, Version $b): int => $b->percent <=> $a->percent);
             foreach ($lastMonthVersions as $version) {
@@ -102,7 +103,7 @@ class Data
                     $customPriority--;
                 }
             }
-        } elseif ($this->profile->sort === BaseProfile::SORT_CUSTOM) {
+        } elseif ($this->profile->sort === ProfileSort::CUSTOM) {
             $sortCustom = $this->profile->customSortedNames;
             krsort($sortCustom);
             foreach ($sortCustom as $name) {

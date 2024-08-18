@@ -4,6 +4,13 @@ declare(strict_types=1);
 
 namespace App\Profile;
 
+enum ProfileSort
+{
+    case CUSTOM;
+    case NAME_ASC;
+    case PERCENT_ASC;
+}
+
 abstract class BaseProfile
 {
     public const string SUBCATEGORY_ALL = 'all';
@@ -15,10 +22,6 @@ abstract class BaseProfile
     public const string COLOR_OTHER = '#d8d8dc';
     public const array NAMES_OTHER = ['Unknown', 'Other'];
     public const string PREFIX_OTHER = '';
-
-    public const string SORT_PERCENT_ASC = 'sort_percent_asc';
-    public const string SORT_NAME_ASC = 'sort_name_asc';
-    public const string SORT_CUSTOM = 'sort_custom';
 
     public string $category;
     /** @var array<string> */
@@ -48,7 +51,7 @@ abstract class BaseProfile
     /** @var array<string, string> */
     public array $customColorsByName = [];
 
-    public string $sort = self::SORT_NAME_ASC;
+    public ProfileSort $sort = ProfileSort::NAME_ASC;
     /** @var array<int, string> */
     public array $customSortedNames;
 

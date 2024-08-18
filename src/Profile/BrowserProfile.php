@@ -33,7 +33,7 @@ class BrowserProfile extends BaseProfile
     ];
     protected bool $isUrlPathShort = true;
 
-    public string $sort = BaseProfile::SORT_PERCENT_ASC;
+    public ProfileSort $sort = ProfileSort::PERCENT_ASC;
 
     public array $customColorsByName = [
         '360 Safe Browser' => '#30db5b',

@@ -33,7 +33,7 @@ class OsProfile extends BaseProfile
     ];
     protected bool $isUrlPathShort = true;
 
-    public string $sort = BaseProfile::SORT_PERCENT_ASC;
+    public ProfileSort $sort = ProfileSort::PERCENT_ASC;
 
     public array $customColorsByName = [
         'Android' => '#30db5b',
