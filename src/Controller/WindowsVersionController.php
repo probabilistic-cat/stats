@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\DTO\ContentViewDTO;
+use App\DTO\SubcategoryViewDTO;
 use App\Profile\BaseProfile;
 use App\Profile\WindowsVersionProfile;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,21 +21,22 @@ class WindowsVersionController extends BaseController
     }
 
     private function getWindowsResponse(string $subcategory): Response {
-        $extraContext = [
-            'categoryName' => 'Windows version',
-            'categoryRoute' => $this->generateUrl(self::ROUTE_NAME_DESKTOP),
-            'subcategoriesNames' => [
-                BaseProfile::SUBCATEGORY_DESKTOP => 'Desktop',
+        $contentView = new ContentViewDTO(
+            categoryName: 'Windows version',
+            categoryRoute: $this->generateUrl(self::ROUTE_NAME_DESKTOP),
+            subcategories: [
+                new SubcategoryViewDTO(
+                    name: 'Desktop',
+                    route: $this->generateUrl(self::ROUTE_NAME_DESKTOP),
+                    isCurrent: $subcategory === BaseProfile::SUBCATEGORY_DESKTOP,
+                ),
             ],
-            'subcategoriesRoutes' => [
-                BaseProfile::SUBCATEGORY_DESKTOP => $this->generateUrl(self::ROUTE_NAME_DESKTOP),
-            ],
-        ];
+        );
 
         return $this->getResponse(
             profile: new WindowsVersionProfile(),
             subcategory: $subcategory,
-            extraContext: $extraContext,
+            contentView: $contentView,
         );
     }
 }

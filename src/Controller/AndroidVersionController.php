@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\DTO\ContentViewDTO;
+use App\DTO\SubcategoryViewDTO;
 use App\Profile\AndroidVersionProfile;
 use App\Profile\BaseProfile;
 use Symfony\Component\HttpFoundation\Response;
@@ -31,25 +33,32 @@ class AndroidVersionController extends BaseController
     }
 
     private function getIosVersionResponse(string $subcategory): Response {
-        $extraContext = [
-            'categoryName' => 'Android version',
-            'categoryRoute' => $this->generateUrl(self::ROUTE_NAME_ALL),
-            'subcategoriesNames' => [
-                BaseProfile::SUBCATEGORY_ALL => 'All',
-                BaseProfile::SUBCATEGORY_MOBILE => 'Mobile',
-                BaseProfile::SUBCATEGORY_TABLET => 'Tablet',
+        $contentView = new ContentViewDTO(
+            categoryName: 'Android version',
+            categoryRoute: $this->generateUrl(self::ROUTE_NAME_ALL),
+            subcategories: [
+                new SubcategoryViewDTO(
+                    name: 'All',
+                    route: $this->generateUrl(self::ROUTE_NAME_ALL),
+                    isCurrent: $subcategory === BaseProfile::SUBCATEGORY_ALL,
+                ),
+                new SubcategoryViewDTO(
+                    name: 'Mobile',
+                    route: $this->generateUrl(self::ROUTE_NAME_MOBILE),
+                    isCurrent: $subcategory === BaseProfile::SUBCATEGORY_MOBILE,
+                ),
+                new SubcategoryViewDTO(
+                    name: 'Tablet',
+                    route: $this->generateUrl(self::ROUTE_NAME_TABLET),
+                    isCurrent: $subcategory === BaseProfile::SUBCATEGORY_TABLET,
+                ),
             ],
-            'subcategoriesRoutes' => [
-                BaseProfile::SUBCATEGORY_ALL => $this->generateUrl(self::ROUTE_NAME_ALL),
-                BaseProfile::SUBCATEGORY_MOBILE => $this->generateUrl(self::ROUTE_NAME_MOBILE),
-                BaseProfile::SUBCATEGORY_TABLET => $this->generateUrl(self::ROUTE_NAME_TABLET),
-            ],
-        ];
+        );
 
         return $this->getResponse(
             profile: new AndroidVersionProfile(),
             subcategory: $subcategory,
-            extraContext: $extraContext,
+            contentView: $contentView,
         );
     }
 }

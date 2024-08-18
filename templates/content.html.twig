@@ -8,12 +8,9 @@
     </div>
 
     <div class="subcategories">
-    {% for subcategory, subcategoryName in subcategoriesNames %}
-        <a
-            {% if subcategory == subcategoryCurrent %}class="selected"{% endif %}
-            href="{{ subcategoriesRoutes[subcategory] }}"
-        >
-            {{ subcategoryName }}
+    {% for subcategory in subcategories %}
+        <a {% if subcategory.isCurrent %}class="selected"{% endif %} href="{{ subcategory.route }}">
+            {{ subcategory.name }}
         </a>
     {% endfor %}
     </div>

@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\DTO\ContentViewDTO;
+use App\DTO\SubcategoryViewDTO;
 use App\Profile\BaseProfile;
 use App\Profile\PlatformProfile;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,21 +21,22 @@ class PlatformController extends BaseController
     }
 
     private function getPlatformResponse(string $subcategory): Response {
-        $extraContext = [
-            'categoryName' => 'Platform',
-            'categoryRoute' => $this->generateUrl(self::ROUTE_NAME_ALL),
-            'subcategoriesNames' => [
-                BaseProfile::SUBCATEGORY_ALL => 'All',
+        $contentView = new ContentViewDTO(
+            categoryName: 'Platform',
+            categoryRoute: $this->generateUrl(self::ROUTE_NAME_ALL),
+            subcategories: [
+                new SubcategoryViewDTO(
+                    name: 'All',
+                    route: $this->generateUrl(self::ROUTE_NAME_ALL),
+                    isCurrent: $subcategory === BaseProfile::SUBCATEGORY_ALL,
+                ),
             ],
-            'subcategoriesRoutes' => [
-                BaseProfile::SUBCATEGORY_ALL => $this->generateUrl(self::ROUTE_NAME_ALL),
-            ],
-        ];
+        );
 
         return $this->getResponse(
             profile: new PlatformProfile(),
             subcategory: $subcategory,
-            extraContext: $extraContext,
+            contentView: $contentView,
         );
     }
 }

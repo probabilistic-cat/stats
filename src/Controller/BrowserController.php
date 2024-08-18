@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\DTO\ContentViewDTO;
+use App\DTO\SubcategoryViewDTO;
 use App\Profile\BaseProfile;
 use App\Profile\BrowserProfile;
 use Symfony\Component\HttpFoundation\Response;
@@ -43,29 +45,42 @@ class BrowserController extends BaseController
     }
 
     private function getBrowserResponse(string $subcategory): Response {
-        $extraContext = [
-            'categoryName' => 'Browser',
-            'categoryRoute' => $this->generateUrl(self::ROUTE_NAME_ALL),
-            'subcategoriesNames' => [
-                BaseProfile::SUBCATEGORY_ALL => 'All',
-                BaseProfile::SUBCATEGORY_DESKTOP => 'Desktop',
-                BaseProfile::SUBCATEGORY_MOBILE => 'Mobile',
-                BaseProfile::SUBCATEGORY_TABLET => 'Tablet',
-                BaseProfile::SUBCATEGORY_CONSOLE => 'Console',
+        $contentView = new ContentViewDTO(
+            categoryName: 'Browser',
+            categoryRoute: $this->generateUrl(self::ROUTE_NAME_ALL),
+            subcategories: [
+                new SubcategoryViewDTO(
+                    name: 'All',
+                    route: $this->generateUrl(self::ROUTE_NAME_ALL),
+                    isCurrent: $subcategory === BaseProfile::SUBCATEGORY_ALL,
+                ),
+                new SubcategoryViewDTO(
+                    name: 'Desktop',
+                    route: $this->generateUrl(self::ROUTE_NAME_DESKTOP),
+                    isCurrent: $subcategory === BaseProfile::SUBCATEGORY_DESKTOP,
+                ),
+                new SubcategoryViewDTO(
+                    name: 'Mobile',
+                    route: $this->generateUrl(self::ROUTE_NAME_MOBILE),
+                    isCurrent: $subcategory === BaseProfile::SUBCATEGORY_MOBILE,
+                ),
+                new SubcategoryViewDTO(
+                    name: 'Tablet',
+                    route: $this->generateUrl(self::ROUTE_NAME_TABLET),
+                    isCurrent: $subcategory === BaseProfile::SUBCATEGORY_TABLET,
+                ),
+                new SubcategoryViewDTO(
+                    name: 'Console',
+                    route: $this->generateUrl(self::ROUTE_NAME_CONSOLE),
+                    isCurrent: $subcategory === BaseProfile::SUBCATEGORY_CONSOLE,
+                ),
             ],
-            'subcategoriesRoutes' => [
-                BaseProfile::SUBCATEGORY_ALL => $this->generateUrl(self::ROUTE_NAME_ALL),
-                BaseProfile::SUBCATEGORY_DESKTOP => $this->generateUrl(self::ROUTE_NAME_DESKTOP),
-                BaseProfile::SUBCATEGORY_MOBILE => $this->generateUrl(self::ROUTE_NAME_MOBILE),
-                BaseProfile::SUBCATEGORY_TABLET => $this->generateUrl(self::ROUTE_NAME_TABLET),
-                BaseProfile::SUBCATEGORY_CONSOLE => $this->generateUrl(self::ROUTE_NAME_CONSOLE),
-            ],
-        ];
+        );
 
         return $this->getResponse(
             profile: new BrowserProfile(),
             subcategory: $subcategory,
-            extraContext: $extraContext,
+            contentView: $contentView,
         );
     }
 }

@@ -6,6 +6,7 @@ namespace App\Controller;
 
 use App\Consts;
 use App\Data\Data;
+use App\DTO\ContentViewDTO;
 use App\Profile\BaseProfile;
 use App\Service\DataFileDecoder;
 use App\Service\DataFileManager;
@@ -23,10 +24,7 @@ class BaseController extends AbstractController
         private readonly CacheInterface $cache,
     ) {}
 
-    /**
-     * @param array<string, string> $extraContext
-     */
-    protected function getResponse(BaseProfile $profile, string $subcategory, array $extraContext): Response {
+    protected function getResponse(BaseProfile $profile, string $subcategory, ContentViewDTO $contentView): Response {
         $cacheKey = $profile->getDataCacheKey(subcategory: $subcategory);
 
         $data = $this->cache->get($cacheKey, function (CacheItemInterface $cacheItem) use ($profile, $subcategory) {
@@ -42,11 +40,10 @@ class BaseController extends AbstractController
         assert($data instanceof Data);
 
         $context = [
-            'subcategoryCurrent' => $subcategory,
             'data' => $data,
             'hasMinor' => $data->hasMinor(),
         ];
 
-        return $this->render('content.html.twig', [...$context, ...$extraContext]);
+        return $this->render('content.html.twig', [...$context, ...(array)$contentView]);
     }
 }
