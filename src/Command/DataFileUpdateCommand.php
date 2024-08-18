@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Command;
 
+use App\DTO\DataFileResultDTO;
+use App\DTO\DataFileResultStatus;
 use App\Profile\AndroidVersionProfile;
 use App\Profile\BaseProfile;
 use App\Profile\BrowserProfile;
@@ -13,7 +15,6 @@ use App\Profile\PlatformProfile;
 use App\Profile\SearchEngineProfile;
 use App\Profile\WindowsVersionProfile;
 use App\Service\DataFileManager;
-use App\Service\DataFileResultDTO;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Cursor;
@@ -93,7 +94,7 @@ class DataFileUpdateCommand extends Command
 
         $this->outputAfterOperation();
         if ($updateResult instanceof DataFileResultDTO) {
-            $style = ($updateResult->status === DataFileResultDTO::STATUS_SUCCESS)
+            $style = ($updateResult->status === DataFileResultStatus::SUCCESS)
                 ? self::SUCCESS_STYLE
                 : self::FAILURE_STYLE
             ;
@@ -114,7 +115,7 @@ class DataFileUpdateCommand extends Command
 
         foreach ($deleteResults as $index => $deleteResult) {
             $number = $index + 1;
-            $style = ($deleteResult->status === DataFileResultDTO::STATUS_SUCCESS)
+            $style = ($deleteResult->status === DataFileResultStatus::SUCCESS)
                 ? self::SUCCESS_STYLE
                 : self::FAILURE_STYLE
             ;

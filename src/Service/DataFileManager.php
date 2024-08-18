@@ -5,6 +5,9 @@ declare(strict_types=1);
 namespace App\Service;
 
 use App\Consts;
+use App\DTO\DataFileResultDTO;
+use App\DTO\DataFileResultStatus;
+use App\DTO\YearMonthDTO;
 use App\Profile\BaseProfile;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -74,7 +77,7 @@ readonly class DataFileManager
                 ]);
 
                 $result = new DataFileResultDTO(
-                    status: DataFileResultDTO::STATUS_SUCCESS,
+                    status: DataFileResultStatus::SUCCESS,
                     filePath: $filePath,
                     message: $message,
                     fileUrl: $fileUrl,
@@ -87,7 +90,7 @@ readonly class DataFileManager
                 ]);
 
                 $result = new DataFileResultDTO(
-                    status: DataFileResultDTO::STATUS_FAILURE,
+                    status: DataFileResultStatus::FAILED,
                     filePath: $filePath,
                     message: "$message Error: {$e->getMessage()}",
                     fileUrl: $fileUrl,
@@ -133,7 +136,7 @@ readonly class DataFileManager
             $this->logger->info($message, ['file_path' => $filePath]);
 
             return new DataFileResultDTO(
-                status: DataFileResultDTO::STATUS_SUCCESS,
+                status: DataFileResultStatus::SUCCESS,
                 filePath: $filePath,
                 message: $message,
             );
@@ -143,7 +146,7 @@ readonly class DataFileManager
         $this->logger->warning('Data file not deleted.', ['file_path' => $filePath]);
 
         return new DataFileResultDTO(
-            status: DataFileResultDTO::STATUS_FAILURE,
+            status: DataFileResultStatus::FAILED,
             filePath: $filePath,
             message: $message,
         );
@@ -209,25 +212,4 @@ readonly class DataFileManager
     private static function getLockFilePath(string $filePath): string {
         return $filePath.self::FILE_LOCK_POSTFIX;
     }
-}
-
-readonly class YearMonthDTO
-{
-    public function __construct(
-        public int $year,
-        public int $month,
-    ) {}
-}
-
-readonly class DataFileResultDTO
-{
-    public const string STATUS_SUCCESS = 'success';
-    public const string STATUS_FAILURE = 'failure';
-
-    public function __construct(
-        public string $status,
-        public string $filePath,
-        public string $message,
-        public ?string $fileUrl = null,
-    ) {}
 }
