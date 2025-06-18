@@ -41,6 +41,7 @@ class OsProfile extends BaseProfile
         'Chrome OS' => '#ff6861',
         'KaiOS' => '#7d7aff',
         'Linux' => '#ffd426',
+        'macOS' => '#2dd4bf',
         'Nintendo' => '#ff6861',
         'OS X' => '#2dd4bf',
         'Playstation' => '#7d7aff',
