@@ -1,4 +1,4 @@
-* {
+*:not(.sf-toolbar *) {
     position: relative;
     float: left;
     margin: 0;
