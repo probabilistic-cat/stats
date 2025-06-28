@@ -14,6 +14,7 @@ use App\Profile\IosVersionProfile;
 use App\Profile\OsProfile;
 use App\Profile\PlatformProfile;
 use App\Profile\SearchEngineProfile;
+use App\Profile\VendorProfile;
 use App\Profile\WindowsVersionProfile;
 use App\Service\DataFileManager;
 use Symfony\Component\Console\Attribute\AsCommand;
@@ -61,6 +62,7 @@ class DataFileUpdateCommand extends Command
             new OsProfile(),
             new PlatformProfile(),
             new SearchEngineProfile(),
+            new VendorProfile(),
             new WindowsVersionProfile(),
         ];
         $stepsCount = self::getSpetsCount(profiles: $profiles);
