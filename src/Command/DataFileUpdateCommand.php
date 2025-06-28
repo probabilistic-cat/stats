@@ -6,6 +6,7 @@ namespace App\Command;
 
 use App\DTO\DataFileResultDTO;
 use App\DTO\DataFileResultStatus;
+use App\Profile\AiChatbotProfile;
 use App\Profile\AndroidVersionProfile;
 use App\Profile\BaseProfile;
 use App\Profile\BrowserProfile;
@@ -53,6 +54,7 @@ class DataFileUpdateCommand extends Command
 
         /** @var array<BaseProfile> $profiles */
         $profiles = [
+            new AiChatbotProfile(),
             new AndroidVersionProfile(),
             new BrowserProfile(),
             new IosVersionProfile(),
@@ -140,7 +142,7 @@ class DataFileUpdateCommand extends Command
 
     private function waitBeforeFileDownload(): void {
         if ($this->fileDownloadedStatus) {
-            sleep(rand(5, 10));
+            sleep(random_int(5, 10));
         }
     }
 
