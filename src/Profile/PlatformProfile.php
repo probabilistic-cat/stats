@@ -11,6 +11,7 @@ class PlatformProfile extends BaseProfile
         self::SUBCATEGORY_ALL,
     ];
 
+    protected string $marketShareUrlPart = 'platform-market-share';
     protected string $statType = 'Platform Comparison';
     protected array $fromYearBySubcategory = [
         self::SUBCATEGORY_ALL => 2009,

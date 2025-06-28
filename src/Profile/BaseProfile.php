@@ -95,6 +95,11 @@ abstract class BaseProfile
         return $url;
     }
 
+    public function getSourceUrl(string $subcategory): string {
+        $devicePart = $this->getUrlDevicePart(subcategory: $subcategory, separator: '-');
+        return "{$this->site}/$this->marketShareUrlPart/$devicePart/$this->region/";
+    }
+
     protected function getUrlPath(string $subcategory): string {
         $devicePart = $this->getUrlDevicePart(subcategory: $subcategory, separator: '-');
         $longPathPart = ($this->isUrlPathShort && $subcategory === self::SUBCATEGORY_ALL)

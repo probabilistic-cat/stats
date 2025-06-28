@@ -11,6 +11,7 @@ class AiChatbotProfile extends BaseProfile
         self::SUBCATEGORY_ALL,
     ];
 
+    protected string $marketShareUrlPart = 'ai-chatbot-market-share';
     protected string $statType = 'AI Chatbot';
     protected array $fromYearBySubcategory = [
         self::SUBCATEGORY_ALL => 2025,

@@ -42,6 +42,7 @@ class BaseController extends AbstractController
         $context = [
             'data' => $data,
             'hasMinor' => $data->hasMinor(),
+            'source_url' => $profile->getSourceUrl($subcategory),
         ];
 
         return $this->render('content.html.twig', [...$context, ...(array)$contentView]);
