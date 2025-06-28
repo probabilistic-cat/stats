@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Profile;
 
+use App\Helper\ColorHelper;
+
 class OsProfile extends BaseProfile
 {
     public string $category = 'os_combined';
@@ -36,22 +38,22 @@ class OsProfile extends BaseProfile
     public ProfileSort $sort = ProfileSort::PERCENT_ASC;
 
     public array $customColorsByName = [
-        'Android' => '#30db5b',
-        'BlackBerry OS' => '#aeaeb2',
-        'Chrome OS' => '#ff6861',
-        'KaiOS' => '#7d7aff',
-        'Linux' => '#ffd426',
-        'macOS' => '#2dd4bf',
-        'Nintendo' => '#ff6861',
-        'OS X' => '#2dd4bf',
-        'Playstation' => '#7d7aff',
-        'Samsung' => '#da8fff',
-        'Series 40' => '#2fbacd',
-        'Sony Ericsson' => '#30db5b',
-        'SymbianOS' => '#ffb33f',
-        'Windows' => '#70d7ff',
-        'Xbox' => '#30db5b',
-        'iOS' => '#ff6482',
-        'webOS' => '#ff6861',
+        'Android' => ColorHelper::SYSTEM_GREEN,
+        'BlackBerry OS' => ColorHelper::SYSTEM_GRAY,
+        'Chrome OS' => ColorHelper::SYSTEM_RED,
+        'KaiOS' => ColorHelper::SYSTEM_INDIGO,
+        'Linux' => ColorHelper::SYSTEM_YELLOW,
+        'macOS' => ColorHelper::MAC_OS,
+        'Nintendo' => ColorHelper::SYSTEM_RED,
+        'OS X' => ColorHelper::MAC_OS,
+        'Playstation' => ColorHelper::SYSTEM_INDIGO,
+        'Samsung' => ColorHelper::SYSTEM_PURPLE,
+        'Series 40' => ColorHelper::SYSTEM_TEAL,
+        'Sony Ericsson' => ColorHelper::SYSTEM_GREEN,
+        'SymbianOS' => ColorHelper::SYSTEM_ORANGE,
+        'Windows' => ColorHelper::SYSTEM_BLUE,
+        'Xbox' => ColorHelper::SYSTEM_GREEN,
+        'iOS' => ColorHelper::SYSTEM_PINK,
+        'webOS' => ColorHelper::SYSTEM_RED,
     ];
 }

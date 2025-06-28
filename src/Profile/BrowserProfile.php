@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Profile;
 
+use App\Helper\ColorHelper;
+
 class BrowserProfile extends BaseProfile
 {
     public string $category = 'browser';
@@ -36,38 +38,38 @@ class BrowserProfile extends BaseProfile
     public ProfileSort $sort = ProfileSort::PERCENT_ASC;
 
     public array $customColorsByName = [
-        '360 Safe Browser' => '#30db5b',
-        'Android' => '#7d7aff',
-        'BlackBerry' => '#aeaeb2',
-        'Bolt' => '#70d7ff',
-        'Chrome' => '#30db5b',
+        '360 Safe Browser' => ColorHelper::SYSTEM_GREEN,
+        'Android' => ColorHelper::SYSTEM_INDIGO,
+        'BlackBerry' => ColorHelper::SYSTEM_GRAY,
+        'Bolt' => ColorHelper::SYSTEM_BLUE,
+        'Chrome' => ColorHelper::SYSTEM_GREEN,
         'Coc Coc' => '#a2d34b',
-        'Dolfin' => '#30db5b',
+        'Dolfin' => ColorHelper::SYSTEM_GREEN,
         'Edge Legacy' => '#5fa3e6',
-        'Edge' => '#70d7ff',
-        'Firefox' => '#ffb33f',
-        'IE' => '#67d4cf',
+        'Edge' => ColorHelper::SYSTEM_BLUE,
+        'Firefox' => ColorHelper::SYSTEM_ORANGE,
+        'IE' => ColorHelper::WINDOWS_98,
         'IEMobile' => '#3f7aff',
         'Instabridge' => '#f7aa6e',
         'Jasmine' => '#c28dbc',
-        'Mozilla' => '#ffb33f',
+        'Mozilla' => ColorHelper::SYSTEM_ORANGE,
         'NetFront NX' => '#acdc5a',
         'NetFront' => '#acdc5a',
-        'Nokia' => '#2fbacd',
-        'Obigo' => '#70d7ff',
+        'Nokia' => ColorHelper::SYSTEM_TEAL,
+        'Obigo' => ColorHelper::SYSTEM_BLUE,
         'Openwave' => '#ba94c8',
-        'Opera' => '#ff6861',
-        'QQ Browser' => '#70d7ff',
-        'Safari' => '#d8d8dc',
-        'Samsung Internet' => '#da8fff',
-        'Samsung' => '#da8fff',
-        'Silk' => '#ffb33f',
-        'Sony PS3' => '#7d7aff',
-        'Sony PS4' => '#ff6482',
-        'Sony PSP Vita' => '#70d7ff',
-        'SonyEricsson' => '#30db5b',
-        'UC Browser' => '#ffd426',
+        'Opera' => ColorHelper::SYSTEM_RED,
+        'QQ Browser' => ColorHelper::SYSTEM_BLUE,
+        'Safari' => ColorHelper::OTHER,
+        'Samsung Internet' => ColorHelper::SYSTEM_PURPLE,
+        'Samsung' => ColorHelper::SYSTEM_PURPLE,
+        'Silk' => ColorHelper::SYSTEM_ORANGE,
+        'Sony PS3' => ColorHelper::SYSTEM_INDIGO,
+        'Sony PS4' => ColorHelper::SYSTEM_PINK,
+        'Sony PSP Vita' => ColorHelper::SYSTEM_BLUE,
+        'SonyEricsson' => ColorHelper::SYSTEM_GREEN,
+        'UC Browser' => ColorHelper::SYSTEM_YELLOW,
         'Whale Browser' => '#01d3ae',
-        'Yandex Browser' => '#ffd426',
+        'Yandex Browser' => ColorHelper::SYSTEM_YELLOW,
     ];
 }

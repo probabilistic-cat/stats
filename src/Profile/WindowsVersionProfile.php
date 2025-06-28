@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Profile;
 
+use App\Helper\ColorHelper;
+
 class WindowsVersionProfile extends BaseProfile
 {
     public string $category = 'windows_version';
@@ -40,18 +42,18 @@ class WindowsVersionProfile extends BaseProfile
     ];
 
     public array $customColorsByName = [
-        '98' => '#67d4cf',
-        '2000' => '#ff6482',
-        'ME' => '#7d7aff',
-        'XP' => '#7dabf7',
-        '2003' => '#aeaeb2',
-        'Vista' => '#ffd426',
-        '7' => '#30db5b',
-        '8' => '#ff6861',
-        '8.1' => '#da8fff',
-        '8.1 RT' => '#da8fff',
-        '10' => '#70d7ff',
-        '11' => '#ffb33f',
-        '12' => '#ff6482',
+        '98' => ColorHelper::WINDOWS_98,
+        '2000' => ColorHelper::SYSTEM_PINK,
+        'ME' => ColorHelper::SYSTEM_INDIGO,
+        'XP' => ColorHelper::WINDOWS_XP,
+        '2003' => ColorHelper::SYSTEM_GRAY,
+        'Vista' => ColorHelper::SYSTEM_YELLOW,
+        '7' => ColorHelper::SYSTEM_GREEN,
+        '8' => ColorHelper::SYSTEM_RED,
+        '8.1' => ColorHelper::SYSTEM_PURPLE,
+        '8.1 RT' => ColorHelper::SYSTEM_PURPLE,
+        '10' => ColorHelper::SYSTEM_BLUE,
+        '11' => ColorHelper::SYSTEM_ORANGE,
+        '12' => ColorHelper::SYSTEM_PINK,
     ];
 }

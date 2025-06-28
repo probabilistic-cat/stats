@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Profile;
 
+use App\Helper\ColorHelper;
+
 class PlatformProfile extends BaseProfile
 {
     public string $category = 'comparison';
@@ -24,10 +26,10 @@ class PlatformProfile extends BaseProfile
     public ProfileSort $sort = ProfileSort::PERCENT_ASC;
 
     public array $customColorsByName = [
-        'Console' => '#ffd426',
-        'Desktop' => '#70d7ff',
-        'Mobile' => '#30db5b',
-        'Tablet' => '#ff6482',
+        'Console' => ColorHelper::SYSTEM_YELLOW,
+        'Desktop' => ColorHelper::SYSTEM_BLUE,
+        'Mobile' => ColorHelper::SYSTEM_GREEN,
+        'Tablet' => ColorHelper::SYSTEM_PINK,
     ];
 
     protected function getUrlDevicePart(string $subcategory, string $separator, bool $ucfirst = false): string {

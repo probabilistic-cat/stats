@@ -158,7 +158,7 @@ class Data
         $colorsByName = array_replace($colorsByName, $this->profile->customColorsByName);
 
         foreach (BaseProfile::NAMES_OTHER as $nameOther) {
-            $colorsByName[$nameOther] = BaseProfile::COLOR_OTHER;
+            $colorsByName[$nameOther] = ColorHelper::OTHER;
         }
 
         $colorIndex = 0;

@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Profile;
 
+use App\Helper\ColorHelper;
+
 class AiChatbotProfile extends BaseProfile
 {
     public string $category = 'ai_chatbot';
@@ -24,12 +26,12 @@ class AiChatbotProfile extends BaseProfile
     public ProfileSort $sort = ProfileSort::PERCENT_ASC;
 
     public array $customColorsByName = [
-        'ChatGPT' => '#30db5b',
-        'Perplexity' => '#da8fff',
-        'Microsoft Copilot' => '#ff6482',
-        'Google Gemini' => '#ffd426',
-        'Deepseek' => '#70d7ff',
-        'Claude' => '#ffb33f',
+        'ChatGPT' => ColorHelper::SYSTEM_GREEN,
+        'Perplexity' => ColorHelper::SYSTEM_PURPLE,
+        'Microsoft Copilot' => ColorHelper::SYSTEM_PINK,
+        'Google Gemini' => ColorHelper::SYSTEM_YELLOW,
+        'Deepseek' => ColorHelper::SYSTEM_BLUE,
+        'Claude' => ColorHelper::SYSTEM_ORANGE,
     ];
 
     protected function getUrlDevicePart(string $subcategory, string $separator, bool $ucfirst = false): string {

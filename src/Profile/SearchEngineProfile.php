@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Profile;
 
+use App\Helper\ColorHelper;
+
 class SearchEngineProfile extends BaseProfile
 {
     public string $category = 'search_engine';
@@ -36,31 +38,31 @@ class SearchEngineProfile extends BaseProfile
     public ProfileSort $sort = ProfileSort::PERCENT_ASC;
 
     public array $customColorsByName = [
-        'AOL' => '#67d4cf',
-        'AVG Search' => '#ffd426',
-        'Ask Jeeves' => '#ff6861',
-        'Babylon' => '#30db5b',
-        'Baidu' => '#7d7aff',
-        'bing' => '#70d7ff',
-        'CocCoc' => '#30db5b',
-        'Conduit' => '#70d7ff',
-        'Daum' => '#ff6482',
-        'DuckDuckGo' => '#ffb33f',
-        'Ecosia' => '#30db5b',
-        'Google' => '#30db5b',
-        'Haosou' => '#30db5b',
-        'MSN' => '#ffb33f',
-        'Mail.ru' => '#67d4cf',
+        'AOL' => ColorHelper::SYSTEM_MINT,
+        'AVG Search' => ColorHelper::SYSTEM_YELLOW,
+        'Ask Jeeves' => ColorHelper::SYSTEM_RED,
+        'Babylon' => ColorHelper::SYSTEM_GREEN,
+        'Baidu' => ColorHelper::SYSTEM_INDIGO,
+        'bing' => ColorHelper::SYSTEM_BLUE,
+        'CocCoc' => ColorHelper::SYSTEM_GREEN,
+        'Conduit' => ColorHelper::SYSTEM_BLUE,
+        'Daum' => ColorHelper::SYSTEM_PINK,
+        'DuckDuckGo' => ColorHelper::SYSTEM_ORANGE,
+        'Ecosia' => ColorHelper::SYSTEM_GREEN,
+        'Google' => ColorHelper::SYSTEM_GREEN,
+        'Haosou' => ColorHelper::SYSTEM_GREEN,
+        'MSN' => ColorHelper::SYSTEM_ORANGE,
+        'Mail.ru' => ColorHelper::SYSTEM_MINT,
         'Naver' => '#03c95a',
-        'Seznam' => '#ff6482',
-        'Shenma' => '#ffb33f',
-        'Sogou' => '#ff6482',
-        'StartPagina (Google)' => '#ffb33f',
-        'SweetIM' => '#7d7aff',
-        'Webcrawler' => '#ffb33f',
-        'Windows Live' => '#70d7ff',
-        'YANDEX RU' => '#ffd426',
-        'YANDEX' => '#ffd426',
-        'Yahoo!' => '#da8fff',
+        'Seznam' => ColorHelper::SYSTEM_PINK,
+        'Shenma' => ColorHelper::SYSTEM_ORANGE,
+        'Sogou' => ColorHelper::SYSTEM_PINK,
+        'StartPagina (Google)' => ColorHelper::SYSTEM_ORANGE,
+        'SweetIM' => ColorHelper::SYSTEM_INDIGO,
+        'Webcrawler' => ColorHelper::SYSTEM_ORANGE,
+        'Windows Live' => ColorHelper::SYSTEM_BLUE,
+        'YANDEX RU' => ColorHelper::SYSTEM_YELLOW,
+        'YANDEX' => ColorHelper::SYSTEM_YELLOW,
+        'Yahoo!' => ColorHelper::SYSTEM_PURPLE,
     ];
 }

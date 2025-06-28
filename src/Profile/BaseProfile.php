@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Profile;
 
+use App\Helper\ColorHelper;
+
 enum ProfileSort
 {
     case CUSTOM;
@@ -19,7 +21,6 @@ abstract class BaseProfile
     public const string SUBCATEGORY_TABLET = 'tablet';
     public const string SUBCATEGORY_CONSOLE = 'console';
 
-    public const string COLOR_OTHER = '#d8d8dc';
     public const array NAMES_OTHER = ['Unknown', 'Other'];
     public const string PREFIX_OTHER = '';
 
@@ -46,7 +47,15 @@ abstract class BaseProfile
 
     /** @var array<string> */
     public array $colors = [
-        '#70d7ff', '#ffb33f', '#da8fff', '#30db5b', '#ffd426', '#ff6482', '#67d4cf', '#7d7aff', '#ff6861',
+        ColorHelper::SYSTEM_BLUE,
+        ColorHelper::SYSTEM_ORANGE,
+        ColorHelper::SYSTEM_PURPLE,
+        ColorHelper::SYSTEM_GREEN,
+        ColorHelper::SYSTEM_YELLOW,
+        ColorHelper::SYSTEM_PINK,
+        ColorHelper::SYSTEM_MINT,
+        ColorHelper::SYSTEM_INDIGO,
+        ColorHelper::SYSTEM_RED,
     ];
     /** @var array<string, string> */
     public array $customColorsByName = [];
@@ -133,16 +142,16 @@ abstract class BaseProfile
      */
     protected static function getCustomColorsByNumberName(): array {
         $customColors0to10 = [
-            0 => '#aeaeb2',
-            1 => '#ff6861',
-            2 => '#ffb33f',
-            3 => '#70d7ff',
-            4 => '#30db5b',
-            5 => '#da8fff',
-            6 => '#ffd426',
-            7 => '#ff6482',
-            8 => '#67d4cf',
-            9 => '#7d7aff',
+            0 => ColorHelper::SYSTEM_GRAY,
+            1 => ColorHelper::SYSTEM_RED,
+            2 => ColorHelper::SYSTEM_ORANGE,
+            3 => ColorHelper::SYSTEM_BLUE,
+            4 => ColorHelper::SYSTEM_GREEN,
+            5 => ColorHelper::SYSTEM_PURPLE,
+            6 => ColorHelper::SYSTEM_YELLOW,
+            7 => ColorHelper::SYSTEM_PINK,
+            8 => ColorHelper::SYSTEM_MINT,
+            9 => ColorHelper::SYSTEM_INDIGO,
         ];
 
         $customColors = [];

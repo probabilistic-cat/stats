@@ -4,8 +4,37 @@ declare(strict_types=1);
 
 namespace App\Helper;
 
-class ColorHelper
+readonly class ColorHelper
 {
+    public const string SYSTEM_GRAY = '#aeaeb2';
+    public const string SYSTEM_RED = '#ff6861';
+    public const string SYSTEM_ORANGE = '#ffb33f';
+    public const string SYSTEM_BLUE = '#70d7ff';
+    public const string SYSTEM_GREEN = '#30db5b';
+    public const string SYSTEM_PURPLE = '#da8fff';
+    public const string SYSTEM_YELLOW = '#ffd426';
+    public const string SYSTEM_PINK = '#ff6482';
+    public const string SYSTEM_MINT = '#67d4cf';
+    public const string SYSTEM_INDIGO = '#7d7aff';
+    public const string SYSTEM_TEAL = '#2fbacd';
+
+    // dark mode
+    //public const string SYSTEM_GRAY = '#aeaeb2';
+    //public const string SYSTEM_RED = '#ff4245';
+    //public const string SYSTEM_ORANGE = '#ff9230';
+    //public const string SYSTEM_BLUE = '#0091ff';
+    //public const string SYSTEM_GREEN = '#30d158';
+    //public const string SYSTEM_PURPLE = '#db34f2';
+    //public const string SYSTEM_YELLOW = '#ffd600';
+    //public const string SYSTEM_PINK = '#ff375f';
+    //public const string SYSTEM_MINT = '#00dac3';
+    //public const string SYSTEM_INDIGO = '#6b5dff';
+
+    public const string OTHER = '#d8d8dc';
+    public const string WINDOWS_98 = '#67d4cf';
+    public const string WINDOWS_XP = '#7dabf7';
+    public const string MAC_OS = '#2dd4bf';
+
     private const int COMPONENT_MAX_VALUE = 255;
     private const int COMPONENT_MIN_VALUE = 0;
     private const int COMPONENT_STEP = 16;
