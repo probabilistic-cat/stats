@@ -46,7 +46,7 @@ class SearchEngineController extends BaseController
 
     private function getSearchEngineResponse(string $subcategory): Response {
         $contentView = new ContentViewDTO(
-            categoryName: 'Search Engine',
+            categoryName: 'Search engine',
             categoryRoute: $this->generateUrl(self::ROUTE_NAME_ALL),
             subcategories: [
                 new SubcategoryViewDTO(

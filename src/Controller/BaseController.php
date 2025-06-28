@@ -27,17 +27,19 @@ class BaseController extends AbstractController
     protected function getResponse(BaseProfile $profile, string $subcategory, ContentViewDTO $contentView): Response {
         $cacheKey = $profile->getDataCacheKey(subcategory: $subcategory);
 
-        $data = $this->cache->get($cacheKey, function (CacheItemInterface $cacheItem) use ($profile, $subcategory) {
-            $cacheItem->expiresAfter(self::DATA_CACHE_EXPIRATION_TIME);
+        $data = $this->cache->get(
+            $cacheKey,
+            function (CacheItemInterface $cacheItem) use ($profile, $subcategory): Data {
+                $cacheItem->expiresAfter(self::DATA_CACHE_EXPIRATION_TIME);
 
-            $filePath = DataFileManager::getLastAvailableFilePath(profile: $profile, subcategory: $subcategory);
-            $data = $this->decoder->decode(profile: $profile, filepath: $filePath);
-            $data->filterOutZeroPercentVersions();
-            $data->sort();
-            $data->setColors();
-            return $data;
-        });
-        assert($data instanceof Data);
+                $filePath = DataFileManager::getLastAvailableFilePath(profile: $profile, subcategory: $subcategory);
+                $data = $this->decoder->decode(profile: $profile, filepath: $filePath);
+                $data->filterOutZeroPercentVersions();
+                $data->sort();
+                $data->setColors();
+                return $data;
+            },
+        );
 
         $context = [
             'data' => $data,

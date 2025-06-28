@@ -25,6 +25,7 @@ return (new PhpCsFixer\Config())
         'phpdoc_align' => ['align' => 'left'],
         'phpdoc_separation' => false,
         'phpdoc_summary' => false,
+        'single_line_comment_spacing' => false,
         'single_line_empty_body' => true,
         'single_line_throw' => false,
         'trailing_comma_in_multiline' => ['elements' => ['arguments', 'arrays', 'parameters']],

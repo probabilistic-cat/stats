@@ -22,7 +22,7 @@ class AiChatbotController extends BaseController
 
     private function getAiChatborResponse(string $subcategory): Response {
         $contentView = new ContentViewDTO(
-            categoryName: 'AI Chatbot',
+            categoryName: 'AI chatbot',
             categoryRoute: $this->generateUrl(self::ROUTE_NAME_ALL),
             subcategories: [
                 new SubcategoryViewDTO(
