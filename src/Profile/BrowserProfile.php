@@ -60,7 +60,7 @@ class BrowserProfile extends BaseProfile
         'Openwave' => '#ba94c8',
         'Opera' => ColorHelper::SYSTEM_RED,
         'QQ Browser' => ColorHelper::SYSTEM_BLUE,
-        'Safari' => ColorHelper::OTHER,
+        'Safari' => ColorHelper::SYSTEM_GRAY,
         'Samsung Internet' => ColorHelper::SYSTEM_PURPLE,
         'Samsung' => ColorHelper::SYSTEM_PURPLE,
         'Silk' => ColorHelper::SYSTEM_ORANGE,

@@ -27,7 +27,6 @@ class IosVersionProfile extends BaseProfile
     ];
 
     public string $prefix = 'iOS ';
-    public bool $keepPrefix = true;
 
     public string $nameSeparator = '.';
 
