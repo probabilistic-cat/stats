@@ -28,9 +28,9 @@ class AiChatbotProfile extends BaseProfile
     public array $customColorsByName = [
         'ChatGPT' => ColorHelper::SYSTEM_GREEN,
         'Perplexity' => ColorHelper::SYSTEM_PURPLE,
-        'Microsoft Copilot' => ColorHelper::SYSTEM_PINK,
+        'Microsoft Copilot' => ColorHelper::SYSTEM_BLUE,
         'Google Gemini' => ColorHelper::SYSTEM_YELLOW,
-        'Deepseek' => ColorHelper::SYSTEM_BLUE,
+        'Deepseek' => ColorHelper::SYSTEM_RED,
         'Claude' => ColorHelper::SYSTEM_ORANGE,
     ];
 
