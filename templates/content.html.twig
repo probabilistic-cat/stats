@@ -3,7 +3,7 @@
 
 {% block content %}
 <div class="content">
-    <div class="category" data-has_minor="{{ hasMinor ? 1 : 0 }}">
+    <div class="category" data-has_minor="{{ data.hasMinor ? 1 : 0 }}">
         <a href="{{ categoryRoute }}">{{ categoryName }}</a>
     </div>
 
@@ -15,7 +15,7 @@
     {% endfor %}
     </div>
 
-{% if hasMinor %}
+{% if data.hasMinor %}
     <div class="show_major_minor">
         <a class="show_minor" href="">show minor versions</a>
         <a class="show_major" href="">show major versions</a>

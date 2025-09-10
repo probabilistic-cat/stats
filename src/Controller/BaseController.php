@@ -6,7 +6,7 @@ namespace App\Controller;
 
 use App\Consts;
 use App\Data\Data;
-use App\DTO\ContentViewDTO;
+use App\DTO\SubcategoryViewDTO;
 use App\Profile\BaseProfile;
 use App\Service\DataFileDecoder;
 use App\Service\DataFileManager;
@@ -15,18 +15,31 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Contracts\Cache\CacheInterface;
 
-class BaseController extends AbstractController
+abstract class BaseController extends AbstractController
 {
     private const int DATA_CACHE_EXPIRATION_TIME = Consts::SECONDS_IN_YEAR;
+
+    protected string $categoryName = 'Stats';
 
     public function __construct(
         private readonly DataFileDecoder $decoder,
         private readonly CacheInterface $cache,
     ) {}
 
-    protected function getResponse(BaseProfile $profile, string $subcategory, ContentViewDTO $contentView): Response {
+    abstract protected function getCategoryRoute(): string;
+
+    abstract protected function getProfile(): BaseProfile;
+
+    /**
+     * @return array<string, string>
+     */
+    abstract protected function getRoutesByName(): array;
+
+    protected function getResponse(string $subcategory): Response {
+        $profile = $this->getProfile();
         $cacheKey = $profile->getDataCacheKey(subcategory: $subcategory);
 
+        /** @var Data $data */
         $data = $this->cache->get(
             $cacheKey,
             function (CacheItemInterface $cacheItem) use ($profile, $subcategory): Data {
@@ -43,10 +56,28 @@ class BaseController extends AbstractController
 
         $context = [
             'data' => $data,
-            'hasMinor' => $data->hasMinor(),
-            'source_url' => $profile->getSourceUrl($subcategory),
+            'categoryName' => $this->categoryName,
+            'categoryRoute' => $this->getCategoryRoute(),
+            'subcategories' => $this->getSubcategories(subcategory: $subcategory),
+            'sourceUrl' => $profile->getSourceUrl($subcategory),
         ];
 
-        return $this->render('content.html.twig', [...$context, ...(array)$contentView]);
+        return $this->render('content.html.twig', $context /*[...$context, ...(array)$contentView]*/);
+    }
+
+    /**
+     * @return array<SubcategoryViewDTO>
+     */
+    protected function getSubcategories(string $subcategory): array {
+        $subcategories = [];
+        foreach ($this->getRoutesByName() as $name => $route) {
+            $subcategories[] = new SubcategoryViewDTO(
+                name: ucfirst($name),
+                route: $this->generateUrl($route),
+                isCurrent: $subcategory === $name,
+            );
+        }
+
+        return $subcategories;
     }
 }
