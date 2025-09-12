@@ -35,8 +35,6 @@ class BrowserProfile extends BaseProfile
     ];
     protected bool $isUrlPathShort = true;
 
-    public ProfileSort $sort = ProfileSort::PERCENT_ASC;
-
     public array $customColorsByName = [
         '360 Safe Browser' => ColorHelper::SYSTEM_GREEN,
         'Android' => ColorHelper::SYSTEM_INDIGO,

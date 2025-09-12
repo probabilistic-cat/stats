@@ -23,8 +23,6 @@ class AiChatbotProfile extends BaseProfile
     ];
     protected bool $isUrlPathShort = true;
 
-    public ProfileSort $sort = ProfileSort::PERCENT_ASC;
-
     public array $customColorsByName = [
         'ChatGPT' => ColorHelper::SYSTEM_GREEN,
         'Perplexity' => ColorHelper::SYSTEM_PURPLE,

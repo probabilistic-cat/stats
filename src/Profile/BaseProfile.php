@@ -4,14 +4,8 @@ declare(strict_types=1);
 
 namespace App\Profile;
 
+use App\Enum\ProfileSort;
 use App\Helper\ColorHelper;
-
-enum ProfileSort
-{
-    case CUSTOM;
-    case NAME_ASC;
-    case PERCENT_ASC;
-}
 
 abstract class BaseProfile
 {
@@ -60,7 +54,7 @@ abstract class BaseProfile
     /** @var array<string, string> */
     public array $customColorsByName = [];
 
-    public ProfileSort $sort = ProfileSort::NAME_ASC;
+    public ProfileSort $sort = ProfileSort::PERCENT_ASC;
     /** @var array<int, string> */
     public array $customSortedNames;
 

@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Profile;
 
+use App\Enum\ProfileSort;
+
 class AndroidVersionProfile extends BaseProfile
 {
     public string $category = 'android_version';
@@ -27,6 +29,8 @@ class AndroidVersionProfile extends BaseProfile
     ];
 
     public string $nameSeparator = '.';
+
+    public ProfileSort $sort = ProfileSort::NAME_ASC;
 
     public function __construct() {
         $this->customColorsByName = self::getCustomColorsByNumberName();

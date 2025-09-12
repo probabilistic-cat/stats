@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Profile;
 
+use App\Enum\ProfileSort;
 use App\Helper\ColorHelper;
 
 class WindowsVersionProfile extends BaseProfile

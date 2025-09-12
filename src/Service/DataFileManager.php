@@ -6,8 +6,8 @@ namespace App\Service;
 
 use App\Consts;
 use App\DTO\DataFileResultDTO;
-use App\DTO\DataFileResultStatus;
 use App\DTO\YearMonthDTO;
+use App\Enum\DataFileResultStatus;
 use App\Profile\BaseProfile;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\Request;

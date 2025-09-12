@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Data;
 
+use App\Enum\ProfileSort;
 use App\Helper\ColorHelper;
 use App\Profile\BaseProfile;
-use App\Profile\ProfileSort;
 
 class Data
 {

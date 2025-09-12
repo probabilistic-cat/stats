@@ -31,8 +31,6 @@ class VendorProfile extends BaseProfile
         self::SUBCATEGORY_CONSOLE => 8,
     ];
 
-    public ProfileSort $sort = ProfileSort::PERCENT_ASC;
-
     public array $customColorsByName = [
         'Amazon' => ColorHelper::SYSTEM_TEAL,
         'Apple' => ColorHelper::SYSTEM_GRAY,

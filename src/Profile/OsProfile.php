@@ -35,8 +35,6 @@ class OsProfile extends BaseProfile
     ];
     protected bool $isUrlPathShort = true;
 
-    public ProfileSort $sort = ProfileSort::PERCENT_ASC;
-
     public array $customColorsByName = [
         'Android' => ColorHelper::SYSTEM_GREEN,
         'BlackBerry OS' => ColorHelper::SYSTEM_GRAY,

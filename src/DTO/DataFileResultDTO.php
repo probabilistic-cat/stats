@@ -4,11 +4,7 @@ declare(strict_types=1);
 
 namespace App\DTO;
 
-enum DataFileResultStatus
-{
-    case SUCCESS;
-    case FAILED;
-}
+use App\Enum\DataFileResultStatus;
 
 readonly class DataFileResultDTO
 {

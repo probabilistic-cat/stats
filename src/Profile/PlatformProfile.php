@@ -23,8 +23,6 @@ class PlatformProfile extends BaseProfile
     ];
     protected bool $isUrlPathShort = true;
 
-    public ProfileSort $sort = ProfileSort::PERCENT_ASC;
-
     public array $customColorsByName = [
         'Console' => ColorHelper::SYSTEM_YELLOW,
         'Desktop' => ColorHelper::SYSTEM_BLUE,

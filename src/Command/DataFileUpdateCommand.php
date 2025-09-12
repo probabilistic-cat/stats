@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Command;
 
 use App\DTO\DataFileResultDTO;
-use App\DTO\DataFileResultStatus;
+use App\Enum\DataFileResultStatus;
 use App\Profile\AiChatbotProfile;
 use App\Profile\AndroidVersionProfile;
 use App\Profile\BaseProfile;

@@ -35,8 +35,6 @@ class SearchEngineProfile extends BaseProfile
     ];
     protected bool $isUrlPathShort = true;
 
-    public ProfileSort $sort = ProfileSort::PERCENT_ASC;
-
     public array $customColorsByName = [
         'AOL' => ColorHelper::SYSTEM_MINT,
         'AVG Search' => ColorHelper::SYSTEM_YELLOW,

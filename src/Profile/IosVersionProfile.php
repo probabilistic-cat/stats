@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Profile;
 
+use App\Enum\ProfileSort;
+
 class IosVersionProfile extends BaseProfile
 {
     public string $category = 'ios_version';
@@ -29,6 +31,8 @@ class IosVersionProfile extends BaseProfile
     public string $prefix = 'iOS ';
 
     public string $nameSeparator = '.';
+
+    public ProfileSort $sort = ProfileSort::NAME_ASC;
 
     public function __construct() {
         $this->customColorsByName = self::getCustomColorsByNumberName();
