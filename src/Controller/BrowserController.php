@@ -45,7 +45,7 @@ class BrowserController extends BaseController
     }
 
     protected function getCategoryRoute(): string {
-        return $this->generateUrl(self::ROUTE_NAME_ALL);
+        return self::ROUTE_NAME_ALL;
     }
 
     protected function getProfile(): BaseProfile {

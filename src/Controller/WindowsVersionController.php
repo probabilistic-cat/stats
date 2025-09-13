@@ -21,7 +21,7 @@ class WindowsVersionController extends BaseController
     }
 
     protected function getCategoryRoute(): string {
-        return $this->generateUrl(self::ROUTE_NAME_DESKTOP);
+        return self::ROUTE_NAME_DESKTOP;
     }
 
     protected function getProfile(): BaseProfile {

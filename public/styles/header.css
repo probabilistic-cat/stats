@@ -16,3 +16,7 @@
     font-weight: 400;
     text-decoration: none;
 }
+
+.header a.selected {
+    text-decoration: underline;
+}

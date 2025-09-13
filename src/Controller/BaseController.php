@@ -19,7 +19,7 @@ abstract class BaseController extends AbstractController
 {
     private const int DATA_CACHE_EXPIRATION_TIME = Consts::SECONDS_IN_YEAR;
 
-    protected string $categoryName = 'Stats';
+    protected string $categoryName;
 
     public function __construct(
         private readonly DataFileDecoder $decoder,
@@ -68,16 +68,16 @@ abstract class BaseController extends AbstractController
     /**
      * @return array<SubcategoryViewDTO>
      */
-    protected function getSubcategories(string $subcategory): array {
-        $subcategories = [];
+    private function getSubcategories(string $subcategory): array {
+        $subcategoryViewDTOs = [];
         foreach ($this->getRoutesByName() as $name => $route) {
-            $subcategories[] = new SubcategoryViewDTO(
+            $subcategoryViewDTOs[] = new SubcategoryViewDTO(
                 name: ucfirst($name),
-                route: $this->generateUrl($route),
+                route: $route,
                 isCurrent: $subcategory === $name,
             );
         }
 
-        return $subcategories;
+        return $subcategoryViewDTOs;
     }
 }
