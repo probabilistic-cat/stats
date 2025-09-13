@@ -5,7 +5,7 @@ let isMajorShown = true;
 let hasMinor = false;
 
 //function selectSubcategory() {
-//    $('.content .subcategory a').click(function() {
+//    $('.content .subcategory a').on('click', function() {
 //        $('.content p.subcategory a').each(function() {
 //            $(this).removeClass('selected');
 //        });
@@ -143,7 +143,7 @@ function majorMinorButton() {
     let aShowMinor = $('.content div.show_major_minor a.show_minor');
     let aShowMajor = $('.content div.show_major_minor a.show_major');
 
-    aShowMinor.click(function() {
+    aShowMinor.on('click', function() {
         aShowMinor.hide();
         aShowMajor.show();
         isMajorShown = false;
@@ -151,7 +151,7 @@ function majorMinorButton() {
         return false;
     });
 
-    aShowMajor.click(function() {
+    aShowMajor.on('click', function() {
         aShowMajor.hide();
         aShowMinor.show();
         isMajorShown = true;
@@ -171,7 +171,7 @@ function dataMonthMajorMinorButton() {
         return;
     }
 
-    aShowMinor.click(function() {
+    aShowMinor.on('click', function() {
         divDataMonth.find('div.month div.version.' + classDataMonthVersionMajor).hide();
         divDataMonth.find('div.month div.version.' + classDataMonthVersionMinor).show();
         aShowMinor.hide();
@@ -179,7 +179,7 @@ function dataMonthMajorMinorButton() {
         return false;
     });
 
-    aShowMajor.click(function() {
+    aShowMajor.on('click', function() {
         divDataMonth.find('div.month div.version.' + classDataMonthVersionMinor).hide();
         divDataMonth.find('div.month div.version.' + classDataMonthVersionMajor).show();
         aShowMajor.hide();
@@ -188,7 +188,7 @@ function dataMonthMajorMinorButton() {
     });
 }
 
-function dataMonthOpen(year, monthName) {
+function dataMonthOpen() {
     $('div.overlay_body').show();
     $('div.data_month').show();
 }
@@ -199,7 +199,7 @@ function dataMonthClose() {
 }
 
 function dataMonthOpenFields() {
-    $('.content div.data div.month div.versions').click(function() {
+    $('.content div.data div.month div.versions').on('click', function() {
         let divMonth = $(this).parent();
         let year = divMonth.attr('data-year');
         let monthName = divMonth.attr('data-month_name');
@@ -235,11 +235,11 @@ function getVersionAttrs(divVersion) {
 }
 
 function dataMonthCloseFields() {
-    $('div.overlay_body').click(function() {
+    $('div.overlay_body').on('click', function() {
         dataMonthClose();
     });
 
-    $('div.data_month div.close').click(function() {
+    $('div.data_month div.close').on('click', function() {
         dataMonthClose();
     });
 }
@@ -289,7 +289,7 @@ function getDataMonthVersionsHtml(versions, isMajor) {
 }
 
 
-$(document).ready(function() {
+$(() => {
     setMinor();
     majorMinorButton();
     dataMonthMajorMinorButton();
@@ -299,6 +299,6 @@ $(document).ready(function() {
     dataMonthOpenFields();
 });
 
-$(window).resize(function() {
+$(window).on('resize', function() {
     calcVersionDivWidth();
 });
