@@ -77,7 +77,7 @@ readonly class DataFileManager
                 ]);
 
                 $result = new DataFileResultDTO(
-                    status: DataFileResultStatus::SUCCESS,
+                    status: DataFileResultStatus::Success,
                     filePath: $filePath,
                     message: $message,
                     fileUrl: $fileUrl,
@@ -90,7 +90,7 @@ readonly class DataFileManager
                 ]);
 
                 $result = new DataFileResultDTO(
-                    status: DataFileResultStatus::FAILED,
+                    status: DataFileResultStatus::Failed,
                     filePath: $filePath,
                     message: "$message Error: {$e->getMessage()}",
                     fileUrl: $fileUrl,
@@ -136,7 +136,7 @@ readonly class DataFileManager
             $this->logger->info($message, ['file_path' => $filePath]);
 
             return new DataFileResultDTO(
-                status: DataFileResultStatus::SUCCESS,
+                status: DataFileResultStatus::Success,
                 filePath: $filePath,
                 message: $message,
             );
@@ -146,7 +146,7 @@ readonly class DataFileManager
         $this->logger->warning('Data file not deleted.', ['file_path' => $filePath]);
 
         return new DataFileResultDTO(
-            status: DataFileResultStatus::FAILED,
+            status: DataFileResultStatus::Failed,
             filePath: $filePath,
             message: $message,
         );

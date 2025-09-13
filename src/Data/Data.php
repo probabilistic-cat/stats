@@ -94,7 +94,7 @@ class Data
         }
 
         $customPriority = count($allNames) + count(BaseProfile::NAMES_OTHER);
-        if ($this->profile->sort === ProfileSort::PERCENT_ASC) {
+        if ($this->profile->sort === ProfileSort::PercentAsc) {
             $lastMonthVersions = $lastMontData->versions;
             usort($lastMonthVersions, static fn (Version $a, Version $b): int => $b->percent <=> $a->percent);
             foreach ($lastMonthVersions as $version) {
@@ -103,7 +103,7 @@ class Data
                     $customPriority--;
                 }
             }
-        } elseif ($this->profile->sort === ProfileSort::CUSTOM) {
+        } elseif ($this->profile->sort === ProfileSort::Custom) {
             $sortCustom = $this->profile->customSortedNames;
             krsort($sortCustom);
             foreach ($sortCustom as $name) {

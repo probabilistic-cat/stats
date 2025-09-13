@@ -54,7 +54,7 @@ abstract class BaseProfile
     /** @var array<string, string> */
     public array $customColorsByName = [];
 
-    public ProfileSort $sort = ProfileSort::PERCENT_ASC;
+    public ProfileSort $sort = ProfileSort::PercentAsc;
     /** @var array<int, string> */
     public array $customSortedNames;
 

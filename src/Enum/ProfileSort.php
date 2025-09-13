@@ -6,7 +6,7 @@ namespace App\Enum;
 
 enum ProfileSort
 {
-    case CUSTOM;
-    case NAME_ASC;
-    case PERCENT_ASC;
+    case Custom;
+    case NameAsc;
+    case PercentAsc;
 }

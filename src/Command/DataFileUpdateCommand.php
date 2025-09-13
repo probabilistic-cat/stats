@@ -98,7 +98,7 @@ class DataFileUpdateCommand extends Command
 
         $this->outputAfterOperation();
         if ($updateResult instanceof DataFileResultDTO) {
-            $style = ($updateResult->status === DataFileResultStatus::SUCCESS)
+            $style = ($updateResult->status === DataFileResultStatus::Success)
                 ? self::SUCCESS_STYLE
                 : self::FAILURE_STYLE
             ;
@@ -119,7 +119,7 @@ class DataFileUpdateCommand extends Command
 
         foreach ($deleteResults as $index => $deleteResult) {
             $number = $index + 1;
-            $style = ($deleteResult->status === DataFileResultStatus::SUCCESS)
+            $style = ($deleteResult->status === DataFileResultStatus::Success)
                 ? self::SUCCESS_STYLE
                 : self::FAILURE_STYLE
             ;

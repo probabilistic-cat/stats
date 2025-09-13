@@ -6,6 +6,6 @@ namespace App\Enum;
 
 enum DataFileResultStatus
 {
-    case SUCCESS;
-    case FAILED;
+    case Success;
+    case Failed;
 }
