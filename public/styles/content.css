@@ -41,6 +41,11 @@
     text-decoration: none;
 }
 
+.content div.show_major_minor a.inactive {
+    color: #bbbbbb;
+    cursor: default;
+}
+
 .content div.show_major_minor a.show_major {
     display: none;
 }

@@ -3,6 +3,7 @@ let classDataMonthVersionMinor = 'version_minor';
 
 let isMajorShown = true;
 let hasMinor = false;
+let showMinorMajorClicked = false;
 
 //function selectSubcategory() {
 //    $('.content .subcategory a').on('click', function() {
@@ -143,21 +144,40 @@ function majorMinorButton() {
     let aShowMinor = $('.content div.show_major_minor a.show_minor');
     let aShowMajor = $('.content div.show_major_minor a.show_major');
 
-    aShowMinor.on('click', function() {
-        aShowMinor.hide();
-        aShowMajor.show();
-        isMajorShown = false;
-        calcVersionDivWidth();
-        return false;
-    });
+    aShowMinor.on('click', () => handleMajorMinorClick(false));
+    aShowMajor.on('click', () => handleMajorMinorClick(true));
+}
 
-    aShowMajor.on('click', function() {
-        aShowMajor.hide();
-        aShowMinor.show();
-        isMajorShown = true;
-        calcVersionDivWidth();
+function handleMajorMinorClick(showMajorClicked) {
+    if (showMinorMajorClicked) {
         return false;
-    });
+    }
+    showMinorMajorClicked = true;
+
+    let aShowMinor = $('.content div.show_major_minor a.show_minor');
+    let aShowMajor = $('.content div.show_major_minor a.show_major');
+
+    aShowMinor.addClass('inactive');
+    aShowMajor.addClass('inactive');
+
+    setTimeout(() => {
+        isMajorShown = showMajorClicked;
+        calcVersionDivWidth();
+
+        if (showMajorClicked) {
+            aShowMajor.hide();
+            aShowMinor.show();
+        } else {
+            aShowMinor.hide();
+            aShowMajor.show();
+        }
+        aShowMinor.removeClass('inactive');
+        aShowMajor.removeClass('inactive');
+
+        showMinorMajorClicked = false;
+    }, 0);
+
+    return false;
 }
 
 function dataMonthMajorMinorButton() {
