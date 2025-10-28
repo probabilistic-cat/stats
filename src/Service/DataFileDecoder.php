@@ -98,9 +98,7 @@ readonly class DataFileDecoder
                     name: $name,
                     profile: $profile,
                 );
-                if ($version instanceof Version) {
-                    $versions[] = $version;
-                }
+                $versions[] = $version;
             }
         }
 
@@ -114,7 +112,7 @@ readonly class DataFileDecoder
         array $minorVersionsData,
         string $name,
         BaseProfile $profile,
-    ): ?Version {
+    ): Version {
         $version = new Version(name: $name, percent: 0);
         if ($profile->keepPrefix) {
             $version->prefix = $profile->prefix;
