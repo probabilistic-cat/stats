@@ -32,6 +32,7 @@ class AiChatbotProfile extends BaseProfile
         'Claude' => ColorHelper::SYSTEM_ORANGE,
     ];
 
+    #[\Override]
     protected function getUrlDevicePart(string $subcategory, string $separator, bool $ucfirst = false): string {
         $devices = [];
         $platforms = [

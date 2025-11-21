@@ -30,6 +30,7 @@ class PlatformProfile extends BaseProfile
         'Tablet' => ColorHelper::SYSTEM_PINK,
     ];
 
+    #[\Override]
     protected function getUrlDevicePart(string $subcategory, string $separator, bool $ucfirst = false): string {
         $devices = [];
         $platforms = [

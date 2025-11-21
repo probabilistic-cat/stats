@@ -94,7 +94,7 @@ readonly class ColorHelper
         }
         array_shift($matches);
 
-        return array_map(static fn (string $component): int => hexdec($component), $matches);
+        return array_map(hexdec(...), $matches);
     }
 
     /**
