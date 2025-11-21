@@ -10,10 +10,10 @@ use Rector\Symfony\Set\SymfonySetList;
 
 return RectorConfig::configure()
     ->withPaths([
-        __DIR__.'/src',
-        __DIR__.'/tests',
-        __DIR__.'/.php-cs-fixer.dist.php',
-        __DIR__.'/rector.php',
+        __DIR__ . '/src',
+        __DIR__ . '/tests',
+        __DIR__ . '/.php-cs-fixer.dist.php',
+        __DIR__ . '/rector.php',
     ])
     ->withRules([
         Rector\TypeDeclaration\Rector\StmtsAwareInterface\DeclareStrictTypesRector::class,
@@ -34,8 +34,8 @@ return RectorConfig::configure()
         SymfonySetList::SYMFONY_CONSTRUCTOR_INJECTION,
     ])
     ->withSkip([
-        __DIR__.'/src/Kernel.php',
-        __DIR__.'/tests/bootstrap.php',
+        __DIR__ . '/src/Kernel.php',
+        __DIR__ . '/tests/bootstrap.php',
         Rector\CodeQuality\Rector\ClassMethod\LocallyCalledStaticMethodToNonStaticRector::class,
         Rector\CodeQuality\Rector\Concat\JoinStringConcatRector::class,
         Rector\CodeQuality\Rector\Foreach_\UnusedForeachValueToArrayKeysRector::class,

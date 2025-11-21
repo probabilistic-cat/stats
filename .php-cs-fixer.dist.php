@@ -2,15 +2,21 @@
 
 declare(strict_types=1);
 
-$finder = (new PhpCsFixer\Finder())
+$finder = new PhpCsFixer\Finder()
     ->in(__DIR__)
-    ->exclude('bin')
-    ->exclude('public')
-    ->exclude('var')
-    ->exclude('vendor')
+    ->exclude([
+        'bin',
+        'public',
+        'var',
+        'vendor',
+    ])
+    ->notPath([
+        'config/preload.php',
+        'tests/bootstrap.php',
+    ])
 ;
 
-return (new PhpCsFixer\Config())
+return new PhpCsFixer\Config()
     ->setRules([
         '@Symfony' => true,
         'blank_line_before_statement' => false,
@@ -20,6 +26,7 @@ return (new PhpCsFixer\Config())
             'functions_opening_brace' => 'same_line',
         ],
         'cast_spaces' => ['space' => 'none'],
+        'concat_space' => ['spacing' => 'one'],
         'increment_style' => ['style' => 'post'],
         'list_syntax' => ['syntax' => 'short'],
         'phpdoc_align' => ['align' => 'left'],

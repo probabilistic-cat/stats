@@ -70,7 +70,7 @@ readonly class DataFileDecoder
             }
         }
 
-        $monthData = new MonthData(date: \DateTime::createFromFormat('Y-m-d H:i', $date.'-15 00:00'));
+        $monthData = new MonthData(date: \DateTime::createFromFormat('Y-m-d H:i', $date . '-15 00:00'));
         $monthData->versions = [...$versionsOther, ...self::getVersions($rawMonthData, $profile)];
 
         return $monthData;
@@ -122,7 +122,7 @@ readonly class DataFileDecoder
         foreach ($minorVersionsData as $minorName => $minorPercent) {
             if ((float)$minorPercent > 0) {
                 $version->minorVersions[] = new Version(
-                    name: $name.$profile->nameSeparator.$minorName,
+                    name: $name . $profile->nameSeparator . $minorName,
                     percent: (float)$minorPercent,
                 );
                 $majorPercent += (float)$minorPercent;

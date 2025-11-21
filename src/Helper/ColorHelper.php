@@ -90,7 +90,7 @@ readonly class ColorHelper
         $matches = [];
         $status = preg_match('~^#([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})$~i', $color, $matches);
         if ($status !== 1) {
-            throw new \InvalidArgumentException('Not a color: '.$color);
+            throw new \InvalidArgumentException('Not a color: ' . $color);
         }
         array_shift($matches);
 
@@ -106,6 +106,6 @@ readonly class ColorHelper
             $colorRgb,
         );
 
-        return '#'.implode('', $stringComponents);
+        return '#' . implode('', $stringComponents);
     }
 }

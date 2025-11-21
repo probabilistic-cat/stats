@@ -62,10 +62,10 @@ abstract class BaseProfile
         $this->checkSubcategory(subcategory: $subcategory);
 
         return "{$this->category}_{$subcategory}-{$this->regionHidden}-{$this->granularity}-"
-            .$this->fromYearBySubcategory[$subcategory]
-            .mb_str_pad((string)$this->fromMonthBySubcategory[$subcategory], 2, '0', STR_PAD_LEFT)
-            .'-'.$year.mb_str_pad((string)$month, 2, '0', STR_PAD_LEFT)
-            .'.csv'
+            . $this->fromYearBySubcategory[$subcategory]
+            . mb_str_pad((string)$this->fromMonthBySubcategory[$subcategory], 2, '0', STR_PAD_LEFT)
+            . '-' . $year . mb_str_pad((string)$month, 2, '0', STR_PAD_LEFT)
+            . '.csv'
         ;
     }
 
@@ -76,23 +76,23 @@ abstract class BaseProfile
 
         $url = $this->getUrlPath(subcategory: $subcategory);
         $url .= '?device='
-            .rawurlencode($this->getUrlDevicePart(subcategory: $subcategory, separator: ' & ', ucfirst: true))
+            . rawurlencode($this->getUrlDevicePart(subcategory: $subcategory, separator: ' & ', ucfirst: true))
         ;
-        $url .= '&device_hidden='.rawurlencode($this->getUrlDevicePart(subcategory: $subcategory, separator: '+'));
+        $url .= '&device_hidden=' . rawurlencode($this->getUrlDevicePart(subcategory: $subcategory, separator: '+'));
         $url .= $multiDevicePart;
-        $url .= '&statType_hidden='.$this->category;
-        $url .= '&region_hidden='.$this->regionHidden;
-        $url .= '&granularity='.$this->granularity;
-        $url .= '&statType='.rawurlencode($this->statType);
-        $url .= '&region='.ucfirst($this->region);
-        $url .= '&fromInt='.$this->fromYearBySubcategory[$subcategory]
-            .mb_str_pad((string)$this->fromMonthBySubcategory[$subcategory], 2, '0', STR_PAD_LEFT)
+        $url .= '&statType_hidden=' . $this->category;
+        $url .= '&region_hidden=' . $this->regionHidden;
+        $url .= '&granularity=' . $this->granularity;
+        $url .= '&statType=' . rawurlencode($this->statType);
+        $url .= '&region=' . ucfirst($this->region);
+        $url .= '&fromInt=' . $this->fromYearBySubcategory[$subcategory]
+            . mb_str_pad((string)$this->fromMonthBySubcategory[$subcategory], 2, '0', STR_PAD_LEFT)
         ;
-        $url .= '&toInt='.$year.mb_str_pad((string)$month, 2, '0', STR_PAD_LEFT);
-        $url .= '&fromMonthYear='.$this->fromYearBySubcategory[$subcategory].'-'
-            .mb_str_pad((string)$this->fromMonthBySubcategory[$subcategory], 2, '0', STR_PAD_LEFT)
+        $url .= '&toInt=' . $year . mb_str_pad((string)$month, 2, '0', STR_PAD_LEFT);
+        $url .= '&fromMonthYear=' . $this->fromYearBySubcategory[$subcategory] . '-'
+            . mb_str_pad((string)$this->fromMonthBySubcategory[$subcategory], 2, '0', STR_PAD_LEFT)
         ;
-        $url .= '&toMonthYear='.$year.'-'.mb_str_pad((string)$month, 2, '0', STR_PAD_LEFT);
+        $url .= '&toMonthYear=' . $year . '-' . mb_str_pad((string)$month, 2, '0', STR_PAD_LEFT);
         $url .= '&csv=1';
 
         return $url;
@@ -128,7 +128,7 @@ abstract class BaseProfile
     }
 
     public function getDataCacheKey(string $subcategory): string {
-        return 'data_'.$this->category.'_'.$subcategory;
+        return 'data_' . $this->category . '_' . $subcategory;
     }
 
     /**

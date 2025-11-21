@@ -20,7 +20,7 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 readonly class DataFileManager
 {
-    private const string DATA_FILE_DIR = Consts::DIR.'/../files/';
+    private const string DATA_FILE_DIR = Consts::DIR . '/../files/';
 
     private const int PREV_MONTH_DATA_AVAILABLE_FROM_DAY = 2;
     private const int CHECK_LAST_MONTHS = 12;
@@ -169,7 +169,7 @@ readonly class DataFileManager
 
     private static function getFilePath(BaseProfile $profile, string $subcategory, YearMonthDTO $yearMonth): string {
         $fileName = $profile->getFileName(subcategory: $subcategory, year: $yearMonth->year, month: $yearMonth->month);
-        return self::DATA_FILE_DIR.$fileName;
+        return self::DATA_FILE_DIR . $fileName;
     }
 
     private static function getLastYearMonth(): YearMonthDTO {
@@ -210,6 +210,6 @@ readonly class DataFileManager
     }
 
     private static function getLockFilePath(string $filePath): string {
-        return $filePath.self::FILE_LOCK_POSTFIX;
+        return $filePath . self::FILE_LOCK_POSTFIX;
     }
 }
