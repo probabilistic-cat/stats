@@ -10,7 +10,6 @@ class VendorProfile extends BaseProfile
 {
     public string $category = 'vendor';
     public array $subcategories = [
-        self::SUBCATEGORY_ALL,
         self::SUBCATEGORY_MOBILE,
         self::SUBCATEGORY_TABLET,
         self::SUBCATEGORY_CONSOLE,
@@ -19,13 +18,11 @@ class VendorProfile extends BaseProfile
     protected string $marketShareUrlPart = 'vendor-market-share';
     protected string $statType = 'Device Vendor';
     protected array $fromYearBySubcategory = [
-        self::SUBCATEGORY_ALL => 2012,
         self::SUBCATEGORY_MOBILE => 2010,
         self::SUBCATEGORY_TABLET => 2012,
         self::SUBCATEGORY_CONSOLE => 2012,
     ];
     protected array $fromMonthBySubcategory = [
-        self::SUBCATEGORY_ALL => 8,
         self::SUBCATEGORY_MOBILE => 3,
         self::SUBCATEGORY_TABLET => 8,
         self::SUBCATEGORY_CONSOLE => 8,
