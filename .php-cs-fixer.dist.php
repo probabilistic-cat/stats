@@ -11,7 +11,9 @@ $finder = new PhpCsFixer\Finder()
         'vendor',
     ])
     ->notPath([
+        'config/bundles.php',
         'config/preload.php',
+        'config/reference.php',
         'tests/bootstrap.php',
     ])
 ;
