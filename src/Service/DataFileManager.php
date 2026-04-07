@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\Service;
 
-use App\Consts;
 use App\DTO\DataFileResultDTO;
 use App\DTO\YearMonthDTO;
 use App\Enum\DataFileResultStatus;
+use App\Helper\FileSystemHelper;
 use App\Profile\BaseProfile;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,8 +20,6 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 readonly class DataFileManager
 {
-    private const string DATA_FILE_DIR = Consts::DIR . '/../files/';
-
     private const int PREV_MONTH_DATA_AVAILABLE_FROM_DAY = 2;
     private const int CHECK_LAST_MONTHS = 12;
     private const int KEEP_LAST_FILES = 3;
@@ -169,7 +167,7 @@ readonly class DataFileManager
 
     private static function getFilePath(BaseProfile $profile, string $subcategory, YearMonthDTO $yearMonth): string {
         $fileName = $profile->getFileName(subcategory: $subcategory, year: $yearMonth->year, month: $yearMonth->month);
-        return self::DATA_FILE_DIR . $fileName;
+        return FileSystemHelper::DIR_FILES . $fileName;
     }
 
     private static function getLastYearMonth(): YearMonthDTO {
