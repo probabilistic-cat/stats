@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Consts;
 use App\Data\Data;
 use App\DTO\SubcategoryViewDTO;
 use App\Profile\BaseProfile;
@@ -17,8 +16,6 @@ use Symfony\Contracts\Cache\CacheInterface;
 
 abstract class BaseController extends AbstractController
 {
-    private const int DATA_CACHE_EXPIRATION_TIME = Consts::SECONDS_IN_YEAR;
-
     protected string $categoryName;
 
     public function __construct(
@@ -43,7 +40,7 @@ abstract class BaseController extends AbstractController
         $data = $this->cache->get(
             $cacheKey,
             function (CacheItemInterface $cacheItem) use ($profile, $subcategory): Data {
-                $cacheItem->expiresAfter(self::DATA_CACHE_EXPIRATION_TIME);
+                $cacheItem->expiresAfter($this->getParameter('data_cache_expiration_time'));
 
                 $filePath = DataFileManager::getLastAvailableFilePath(profile: $profile, subcategory: $subcategory);
                 $data = $this->decoder->decode(profile: $profile, filepath: $filePath);
