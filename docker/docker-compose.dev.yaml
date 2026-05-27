@@ -1,0 +1,19 @@
+# docker compose -f docker/docker-compose.dev.yaml --env-file .env --env-file .env.dev --env-file .env.local -p stats up -d
+
+include:
+    - docker-compose.base.yaml
+
+services:
+    app:
+        build:
+            target: dev
+        volumes:
+            - ..:/var/www:ro
+            - ../files:/var/www/files:rw
+            - ../var:/var/www/var:rw
+        environment:
+            - PHP_IDE_CONFIG=serverName=${IDE_SERVER_NAME}
+
+    nginx:
+        volumes:
+            - ..:/var/www:ro

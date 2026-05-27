@@ -1,0 +1,16 @@
+services:
+    app:
+        build:
+            context: ..
+            dockerfile: docker/Dockerfile
+
+    nginx:
+        image: nginx:1.30
+        environment:
+            SERVER_NAME: ${SERVER_NAME}
+        ports:
+            - ${SERVER_PORT}:80
+        volumes:
+            - ./nginx/default.conf.template:/etc/nginx/templates/default.conf.template
+        depends_on:
+            - app
