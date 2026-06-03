@@ -18,6 +18,8 @@ abstract class BaseProfile
     public const array NAMES_OTHER = ['Unknown', 'Other'];
     public const string PREFIX_OTHER = '';
 
+    public const string MINOR_VERSION_UNKNOWN = 'unknown';
+
     public string $category;
     /** @var array<string> */
     public array $subcategories;
@@ -37,6 +39,7 @@ abstract class BaseProfile
     public string $prefix = '';
     public bool $keepPrefix = false;
 
+    public string $csvEnclosureKey = '"';
     public string $nameSeparator = '~';
 
     /** @var array<string> */
@@ -101,6 +104,10 @@ abstract class BaseProfile
     public function getSourceUrl(string $subcategory): string {
         $devicePart = $this->getUrlDevicePart(subcategory: $subcategory, separator: '-');
         return "{$this->site}/$this->marketShareUrlPart/$devicePart/$this->region/";
+    }
+
+    public function preDecodeCsvData(string $data): string {
+        return $data;
     }
 
     protected function getUrlPath(string $subcategory): string {

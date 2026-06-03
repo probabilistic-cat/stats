@@ -8,6 +8,7 @@ use App\Data\Data;
 use App\Data\MonthData;
 use App\Data\Version;
 use App\Profile\BaseProfile;
+use Symfony\Component\Serializer\Encoder\CsvEncoder;
 use Symfony\Component\Serializer\SerializerInterface;
 
 readonly class DataFileDecoder
@@ -32,11 +33,13 @@ readonly class DataFileDecoder
      * @return array<array<string, string|array<string, string>>>
      */
     private function getRawData(BaseProfile $profile, string $filepath): array {
-        return $this->serializer->decode(
-            file_get_contents($filepath),
-            'csv',
-            ['csv_key_separator' => $profile->nameSeparator],
-        );
+        $data = file_get_contents($filepath);
+        $data = $profile->preDecodeCsvData(data: $data);
+
+        return $this->serializer->decode($data, CsvEncoder::FORMAT, [
+            CsvEncoder::ENCLOSURE_KEY => $profile->csvEnclosureKey,
+            CsvEncoder::KEY_SEPARATOR_KEY => $profile->nameSeparator,
+        ]);
     }
 
     /**

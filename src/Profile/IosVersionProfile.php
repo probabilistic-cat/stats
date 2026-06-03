@@ -37,4 +37,13 @@ class IosVersionProfile extends BaseProfile
     public function __construct() {
         $this->customColorsByName = self::getCustomColorsByNumberName();
     }
+
+    #[\Override]
+    public function preDecodeCsvData(string $data): string {
+        return preg_replace(
+            '~(' . $this->csvEnclosureKey . $this->prefix . ')(\d+)(' . $this->csvEnclosureKey . ')~',
+            '$1$2' . $this->nameSeparator . static::MINOR_VERSION_UNKNOWN . ' $3',
+            $data,
+        );
+    }
 }
