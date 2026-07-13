@@ -13,6 +13,7 @@ class PlatformController extends BaseController
 {
     private const string ROUTE_NAME_ALL = 'app_platform_all';
 
+    #[\Override]
     protected string $categoryName = 'Platform';
 
     #[Route('/platform_all', name: self::ROUTE_NAME_ALL)]

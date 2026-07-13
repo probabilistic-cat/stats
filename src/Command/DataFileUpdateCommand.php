@@ -148,9 +148,7 @@ class DataFileUpdateCommand extends Command
         }
     }
 
-    /**
-     * @param array<BaseProfile> $profiles
-     */
+    /** @param array<BaseProfile> $profiles */
     private static function getSpetsCount(array $profiles): int {
         $stepsCount = 0;
         foreach ($profiles as $profile) {

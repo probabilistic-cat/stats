@@ -138,9 +138,7 @@ abstract class BaseProfile
         return 'data_' . $this->category . '_' . $subcategory;
     }
 
-    /**
-     * @return array<string, string>
-     */
+    /** @return array<string, string> */
     protected static function getCustomColorsByNumberName(): array {
         $customColors0to10 = [
             0 => ColorHelper::SYSTEM_GRAY,

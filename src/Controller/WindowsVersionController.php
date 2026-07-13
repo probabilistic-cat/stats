@@ -13,6 +13,7 @@ class WindowsVersionController extends BaseController
 {
     private const string ROUTE_NAME_DESKTOP = 'app_windows_desktop';
 
+    #[\Override]
     protected string $categoryName = 'Windows version';
 
     #[Route('/windows_desktop', name: self::ROUTE_NAME_DESKTOP)]

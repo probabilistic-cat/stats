@@ -29,9 +29,7 @@ readonly class DataFileDecoder
         return $data;
     }
 
-    /**
-     * @return array<array<string, string|array<string, string>>>
-     */
+    /** @return array<array<string, string|array<string, string>>> */
     private function getRawData(BaseProfile $profile, string $filepath): array {
         $data = file_get_contents($filepath);
         $data = $profile->preDecodeCsvData(data: $data);
@@ -42,9 +40,7 @@ readonly class DataFileDecoder
         ]);
     }
 
-    /**
-     * @param array<array<string, string|array<string, string>>> $rawData
-     */
+    /** @param array<array<string, string|array<string, string>>> $rawData */
     private static function getData(array $rawData, BaseProfile $profile): Data {
         $data = new Data(profile: $profile);
         foreach ($rawData as $rawMonthData) {
@@ -58,9 +54,7 @@ readonly class DataFileDecoder
         return $data;
     }
 
-    /**
-     * @param array<string, string|array<string, string>> $rawMonthData
-     */
+    /** @param array<string, string|array<string, string>> $rawMonthData */
     private static function getMonthData(array $rawMonthData, string $date, BaseProfile $profile): MonthData {
         $versionsOther = [];
         foreach (BaseProfile::NAMES_OTHER as $name) {
@@ -108,9 +102,7 @@ readonly class DataFileDecoder
         return $versions;
     }
 
-    /**
-     * @param array<string, string> $minorVersionsData
-     */
+    /** @param array<string, string> $minorVersionsData */
     private static function getVersionsWithMinorVersions(
         array $minorVersionsData,
         string $name,

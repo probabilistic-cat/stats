@@ -78,9 +78,7 @@ class Data
         }
     }
 
-    /**
-     * @return array<string, int>
-     */
+    /** @return array<string, int> */
     private function getSortVersionsReference(MonthData $lastMontData): array {
         $reference = [];
         $allNames = $this->getAllMajorNamesSortedAsc();
@@ -135,9 +133,7 @@ class Data
         }
     }
 
-    /**
-     * @return array<string, string>
-     */
+    /** @return array<string, string> */
     private function getColorsByName(): array {
         $minorNamesByName = [];
         foreach ($this->monthDatas as $monthData) {
@@ -186,9 +182,7 @@ class Data
         return $colorsByName;
     }
 
-    /**
-     * @return array<string, null>
-     */
+    /** @return array<string> */
     private function getAllMajorNamesSortedAsc(): array {
         $allNames = [];
         foreach ($this->monthDatas as $monthData) {

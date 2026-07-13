@@ -15,6 +15,7 @@ class AndroidVersionController extends BaseController
     private const string ROUTE_NAME_MOBILE = 'app_android_version_mobile';
     private const string ROUTE_NAME_TABLET = 'app_android_version_tablet';
 
+    #[\Override]
     protected string $categoryName = 'Android version';
 
     #[Route('/android_version_all', name: self::ROUTE_NAME_ALL)]

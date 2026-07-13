@@ -8,26 +8,33 @@ use App\Helper\ColorHelper;
 
 class VendorProfile extends BaseProfile
 {
+    #[\Override]
     public string $category = 'vendor';
+    #[\Override]
     public array $subcategories = [
         self::SUBCATEGORY_MOBILE,
         self::SUBCATEGORY_TABLET,
         self::SUBCATEGORY_CONSOLE,
     ];
 
+    #[\Override]
     protected string $marketShareUrlPart = 'vendor-market-share';
+    #[\Override]
     protected string $statType = 'Device Vendor';
+    #[\Override]
     protected array $fromYearBySubcategory = [
         self::SUBCATEGORY_MOBILE => 2010,
         self::SUBCATEGORY_TABLET => 2012,
         self::SUBCATEGORY_CONSOLE => 2012,
     ];
+    #[\Override]
     protected array $fromMonthBySubcategory = [
         self::SUBCATEGORY_MOBILE => 3,
         self::SUBCATEGORY_TABLET => 8,
         self::SUBCATEGORY_CONSOLE => 8,
     ];
 
+    #[\Override]
     public array $customColorsByName = [
         'Amazon' => ColorHelper::SYSTEM_TEAL,
         'Apple' => ColorHelper::SYSTEM_GRAY,

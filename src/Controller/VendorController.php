@@ -15,6 +15,7 @@ class VendorController extends BaseController
     private const string ROUTE_NAME_TABLET = 'app_vendor_tablet';
     private const string ROUTE_NAME_CONSOLE = 'app_vendor_console';
 
+    #[\Override]
     protected string $categoryName = 'Device vendor';
 
     #[Route('/vendor_mobile', name: self::ROUTE_NAME_MOBILE)]

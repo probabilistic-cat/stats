@@ -8,21 +8,29 @@ use App\Helper\ColorHelper;
 
 class AiChatbotProfile extends BaseProfile
 {
+    #[\Override]
     public string $category = 'ai_chatbot';
+    #[\Override]
     public array $subcategories = [
         self::SUBCATEGORY_ALL,
     ];
 
+    #[\Override]
     protected string $marketShareUrlPart = 'ai-chatbot-market-share';
+    #[\Override]
     protected string $statType = 'AI Chatbot';
+    #[\Override]
     protected array $fromYearBySubcategory = [
         self::SUBCATEGORY_ALL => 2025,
     ];
+    #[\Override]
     protected array $fromMonthBySubcategory = [
         self::SUBCATEGORY_ALL => 3,
     ];
+    #[\Override]
     protected bool $isUrlPathShort = true;
 
+    #[\Override]
     public array $customColorsByName = [
         'ChatGPT' => ColorHelper::SYSTEM_GREEN,
         'Perplexity' => ColorHelper::SYSTEM_PURPLE,

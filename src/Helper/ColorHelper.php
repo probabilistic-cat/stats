@@ -83,9 +83,7 @@ readonly class ColorHelper
         return $shadesRgb;
     }
 
-    /**
-     * @return array<int>
-     */
+    /** @return array<int> */
     private static function stringColorToRgb(string $color): array {
         $matches = [];
         $status = preg_match('~^#([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})$~i', $color, $matches);
@@ -97,9 +95,7 @@ readonly class ColorHelper
         return array_map(hexdec(...), $matches);
     }
 
-    /**
-     * @param array<int> $colorRgb
-     */
+    /** @param array<int> $colorRgb */
     private static function colorRgbToStringColor(array $colorRgb): string {
         $stringComponents = array_map(
             static fn (int $component): string => mb_str_pad(dechex($component), 2, '0', STR_PAD_LEFT),

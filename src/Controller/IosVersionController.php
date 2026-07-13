@@ -15,6 +15,7 @@ class IosVersionController extends BaseController
     private const string ROUTE_NAME_MOBILE = 'app_ios_version_iphone';
     private const string ROUTE_NAME_TABLET = 'app_ios_version_ipad';
 
+    #[\Override]
     protected string $categoryName = 'iOS version';
 
     #[Route('/ios_version_all', name: self::ROUTE_NAME_ALL)]

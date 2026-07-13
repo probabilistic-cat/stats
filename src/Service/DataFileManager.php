@@ -9,6 +9,7 @@ use App\DTO\YearMonthDTO;
 use App\Enum\DataFileResultStatus;
 use App\Helper\FileSystemHelper;
 use App\Profile\BaseProfile;
+use Psr\Cache\InvalidArgumentException;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Contracts\Cache\CacheInterface;
@@ -35,7 +36,7 @@ readonly class DataFileManager
      * @throws RedirectionExceptionInterface
      * @throws ClientExceptionInterface
      * @throws ServerExceptionInterface
-     * @throws \Psr\Cache\InvalidArgumentException
+     * @throws InvalidArgumentException
      */
     public function updateFile(BaseProfile $profile, string $subcategory): ?DataFileResultDTO {
         $result = null;
@@ -101,9 +102,7 @@ readonly class DataFileManager
         return $result;
     }
 
-    /**
-     * @return array<DataFileResultDTO>
-     */
+    /** @return array<DataFileResultDTO> */
     public function deleteOldFiles(BaseProfile $profile, string $subcategory): array {
         $result = [];
 

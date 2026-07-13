@@ -27,9 +27,7 @@ abstract class BaseController extends AbstractController
 
     abstract protected function getProfile(): BaseProfile;
 
-    /**
-     * @return array<string, string>
-     */
+    /** @return array<string, string> */
     abstract protected function getRoutesByName(): array;
 
     protected function getResponse(string $subcategory): Response {
@@ -62,9 +60,7 @@ abstract class BaseController extends AbstractController
         return $this->render('content.html.twig', $context /*[...$context, ...(array)$contentView]*/);
     }
 
-    /**
-     * @return array<SubcategoryViewDTO>
-     */
+    /** @return array<SubcategoryViewDTO> */
     private function getSubcategories(string $subcategory): array {
         $subcategoryViewDTOs = [];
         foreach ($this->getRoutesByName() as $name => $route) {

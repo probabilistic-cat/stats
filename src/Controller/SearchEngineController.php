@@ -17,6 +17,7 @@ class SearchEngineController extends BaseController
     private const string ROUTE_NAME_TABLET = 'app_search_engine_tablet';
     private const string ROUTE_NAME_CONSOLE = 'app_search_engine_console';
 
+    #[\Override]
     protected string $categoryName = 'Search engine';
 
     #[Route('/search_engine_all', name: self::ROUTE_NAME_ALL)]

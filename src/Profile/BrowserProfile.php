@@ -8,7 +8,9 @@ use App\Helper\ColorHelper;
 
 class BrowserProfile extends BaseProfile
 {
+    #[\Override]
     public string $category = 'browser';
+    #[\Override]
     public array $subcategories = [
         self::SUBCATEGORY_ALL,
         self::SUBCATEGORY_DESKTOP,
@@ -17,8 +19,11 @@ class BrowserProfile extends BaseProfile
         self::SUBCATEGORY_CONSOLE,
     ];
 
+    #[\Override]
     protected string $marketShareUrlPart = 'browser-market-share';
+    #[\Override]
     protected string $statType = 'Browser';
+    #[\Override]
     protected array $fromYearBySubcategory = [
         self::SUBCATEGORY_ALL => 2009,
         self::SUBCATEGORY_DESKTOP => 2009,
@@ -26,6 +31,7 @@ class BrowserProfile extends BaseProfile
         self::SUBCATEGORY_TABLET => 2012,
         self::SUBCATEGORY_CONSOLE => 2012,
     ];
+    #[\Override]
     protected array $fromMonthBySubcategory = [
         self::SUBCATEGORY_ALL => 1,
         self::SUBCATEGORY_DESKTOP => 1,
@@ -33,8 +39,10 @@ class BrowserProfile extends BaseProfile
         self::SUBCATEGORY_TABLET => 8,
         self::SUBCATEGORY_CONSOLE => 8,
     ];
+    #[\Override]
     protected bool $isUrlPathShort = true;
 
+    #[\Override]
     public array $customColorsByName = [
         '360 Safe Browser' => ColorHelper::SYSTEM_GREEN,
         'Android' => ColorHelper::SYSTEM_INDIGO,

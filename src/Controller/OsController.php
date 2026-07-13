@@ -17,6 +17,7 @@ class OsController extends BaseController
     private const string ROUTE_NAME_TABLET = 'app_os_tablet';
     private const string ROUTE_NAME_CONSOLE = 'app_os_console';
 
+    #[\Override]
     protected string $categoryName = 'Operating system';
 
     #[Route('/os_all', name: self::ROUTE_NAME_ALL)]

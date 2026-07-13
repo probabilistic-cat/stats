@@ -8,21 +8,29 @@ use App\Helper\ColorHelper;
 
 class PlatformProfile extends BaseProfile
 {
+    #[\Override]
     public string $category = 'comparison';
+    #[\Override]
     public array $subcategories = [
         self::SUBCATEGORY_ALL,
     ];
 
+    #[\Override]
     protected string $marketShareUrlPart = 'platform-market-share';
+    #[\Override]
     protected string $statType = 'Platform Comparison';
+    #[\Override]
     protected array $fromYearBySubcategory = [
         self::SUBCATEGORY_ALL => 2009,
     ];
+    #[\Override]
     protected array $fromMonthBySubcategory = [
         self::SUBCATEGORY_ALL => 1,
     ];
+    #[\Override]
     protected bool $isUrlPathShort = true;
 
+    #[\Override]
     public array $customColorsByName = [
         'Console' => ColorHelper::SYSTEM_YELLOW,
         'Desktop' => ColorHelper::SYSTEM_BLUE,

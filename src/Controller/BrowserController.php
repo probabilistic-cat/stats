@@ -17,6 +17,7 @@ class BrowserController extends BaseController
     private const string ROUTE_NAME_TABLET = 'app_browser_tablet';
     private const string ROUTE_NAME_CONSOLE = 'app_browser_console';
 
+    #[\Override]
     protected string $categoryName = 'Browser';
 
     #[Route('/browser_all', name: self::ROUTE_NAME_ALL)]

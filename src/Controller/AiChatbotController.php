@@ -13,6 +13,7 @@ class AiChatbotController extends BaseController
 {
     private const string ROUTE_NAME_ALL = 'app_ai_chatbot_all';
 
+    #[\Override]
     protected string $categoryName = 'AI chatbot';
 
     #[Route('/ai_chatbot_all', name: self::ROUTE_NAME_ALL)]

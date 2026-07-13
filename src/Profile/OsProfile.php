@@ -8,7 +8,9 @@ use App\Helper\ColorHelper;
 
 class OsProfile extends BaseProfile
 {
+    #[\Override]
     public string $category = 'os_combined';
+    #[\Override]
     public array $subcategories = [
         self::SUBCATEGORY_ALL,
         self::SUBCATEGORY_DESKTOP,
@@ -17,8 +19,11 @@ class OsProfile extends BaseProfile
         self::SUBCATEGORY_CONSOLE,
     ];
 
+    #[\Override]
     protected string $marketShareUrlPart = 'os-market-share';
+    #[\Override]
     protected string $statType = 'Operating System';
+    #[\Override]
     protected array $fromYearBySubcategory = [
         self::SUBCATEGORY_ALL => 2009,
         self::SUBCATEGORY_DESKTOP => 2009,
@@ -26,6 +31,7 @@ class OsProfile extends BaseProfile
         self::SUBCATEGORY_TABLET => 2012,
         self::SUBCATEGORY_CONSOLE => 2012,
     ];
+    #[\Override]
     protected array $fromMonthBySubcategory = [
         self::SUBCATEGORY_ALL => 1,
         self::SUBCATEGORY_DESKTOP => 1,
@@ -33,8 +39,10 @@ class OsProfile extends BaseProfile
         self::SUBCATEGORY_TABLET => 8,
         self::SUBCATEGORY_CONSOLE => 8,
     ];
+    #[\Override]
     protected bool $isUrlPathShort = true;
 
+    #[\Override]
     public array $customColorsByName = [
         'Android' => ColorHelper::SYSTEM_GREEN,
         'BlackBerry OS' => ColorHelper::SYSTEM_GRAY,
