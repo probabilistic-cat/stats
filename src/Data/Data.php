@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 namespace App\Data;
 
+use App\Enum\Color;
 use App\Enum\ProfileSort;
-use App\Helper\ColorHelper;
 use App\Profile\BaseProfile;
+use App\Service\ColorService;
 
 class Data
 {
@@ -15,7 +16,8 @@ class Data
     public array $monthDatas = [];
 
     public function __construct(
-        public readonly BaseProfile $profile,
+        private readonly BaseProfile $profile,
+        private readonly ColorService $colorService,
     ) {}
 
     public function setMinor(): void {
@@ -154,7 +156,7 @@ class Data
         $colorsByName = array_replace($colorsByName, $this->profile->customColorsByName);
 
         foreach (BaseProfile::NAMES_OTHER as $nameOther) {
-            $colorsByName[$nameOther] = ColorHelper::OTHER;
+            $colorsByName[$nameOther] = Color::OTHER->value;
         }
 
         $colorIndex = 0;
@@ -172,7 +174,7 @@ class Data
             if (array_key_exists($name, $minorNamesByName)) {
                 $minorNames = array_keys($minorNamesByName[$name]);
                 sort($minorNames, SORT_NATURAL);
-                $minorNamesColors = ColorHelper::getGradient($colorsByName[$name], count($minorNames));
+                $minorNamesColors = $this->colorService->getGradient($colorsByName[$name], count($minorNames));
                 foreach ($minorNamesColors as $index => $color) {
                     $colorsByName[$minorNames[$index]] = $color;
                 }

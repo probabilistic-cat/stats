@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Profile;
 
+use App\Enum\Color;
 use App\Enum\ProfileSort;
-use App\Helper\ColorHelper;
 
 abstract class BaseProfile
 {
@@ -44,15 +44,15 @@ abstract class BaseProfile
 
     /** @var array<string> */
     public array $colors = [
-        ColorHelper::SYSTEM_BLUE,
-        ColorHelper::SYSTEM_ORANGE,
-        ColorHelper::SYSTEM_PURPLE,
-        ColorHelper::SYSTEM_GREEN,
-        ColorHelper::SYSTEM_YELLOW,
-        ColorHelper::SYSTEM_PINK,
-        ColorHelper::SYSTEM_MINT,
-        ColorHelper::SYSTEM_INDIGO,
-        ColorHelper::SYSTEM_RED,
+        Color::SYSTEM_BLUE->value,
+        Color::SYSTEM_ORANGE->value,
+        Color::SYSTEM_PURPLE->value,
+        Color::SYSTEM_GREEN->value,
+        Color::SYSTEM_YELLOW->value,
+        Color::SYSTEM_PINK->value,
+        Color::SYSTEM_MINT->value,
+        Color::SYSTEM_INDIGO->value,
+        Color::SYSTEM_RED->value,
     ];
     /** @var array<string, string> */
     public array $customColorsByName = [];
@@ -139,18 +139,18 @@ abstract class BaseProfile
     }
 
     /** @return array<string, string> */
-    protected static function getCustomColorsByNumberName(): array {
+    protected function getCustomColorsByNumberName(): array {
         $customColors0to10 = [
-            0 => ColorHelper::SYSTEM_GRAY,
-            1 => ColorHelper::SYSTEM_RED,
-            2 => ColorHelper::SYSTEM_ORANGE,
-            3 => ColorHelper::SYSTEM_BLUE,
-            4 => ColorHelper::SYSTEM_GREEN,
-            5 => ColorHelper::SYSTEM_PURPLE,
-            6 => ColorHelper::SYSTEM_YELLOW,
-            7 => ColorHelper::SYSTEM_PINK,
-            8 => ColorHelper::SYSTEM_MINT,
-            9 => ColorHelper::SYSTEM_INDIGO,
+            0 => Color::SYSTEM_GRAY->value,
+            1 => Color::SYSTEM_RED->value,
+            2 => Color::SYSTEM_ORANGE->value,
+            3 => Color::SYSTEM_BLUE->value,
+            4 => Color::SYSTEM_GREEN->value,
+            5 => Color::SYSTEM_PURPLE->value,
+            6 => Color::SYSTEM_YELLOW->value,
+            7 => Color::SYSTEM_PINK->value,
+            8 => Color::SYSTEM_MINT->value,
+            9 => Color::SYSTEM_INDIGO->value,
         ];
 
         $customColors = [];

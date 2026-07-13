@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Profile;
 
-use App\Helper\ColorHelper;
+use App\Enum\Color;
 
 class PlatformProfile extends BaseProfile
 {
@@ -32,10 +32,10 @@ class PlatformProfile extends BaseProfile
 
     #[\Override]
     public array $customColorsByName = [
-        'Console' => ColorHelper::SYSTEM_YELLOW,
-        'Desktop' => ColorHelper::SYSTEM_BLUE,
-        'Mobile' => ColorHelper::SYSTEM_GREEN,
-        'Tablet' => ColorHelper::SYSTEM_PINK,
+        'Console' => Color::SYSTEM_YELLOW->value,
+        'Desktop' => Color::SYSTEM_BLUE->value,
+        'Mobile' => Color::SYSTEM_GREEN->value,
+        'Tablet' => Color::SYSTEM_PINK->value,
     ];
 
     #[\Override]

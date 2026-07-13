@@ -7,10 +7,10 @@ namespace App\Service;
 use App\DTO\DataFileResultDTO;
 use App\DTO\YearMonthDTO;
 use App\Enum\DataFileResultStatus;
-use App\Helper\FileSystemHelper;
 use App\Profile\BaseProfile;
 use Psr\Cache\InvalidArgumentException;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Contracts\Cache\CacheInterface;
 use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
@@ -30,6 +30,7 @@ readonly class DataFileManager
         private HttpClientInterface $httpClient,
         private CacheInterface $cache,
         private LoggerInterface $logger,
+        #[Autowire('%dir_files%')] private string $filesDir,
     ) {}
 
     /**
@@ -40,11 +41,11 @@ readonly class DataFileManager
      */
     public function updateFile(BaseProfile $profile, string $subcategory): ?DataFileResultDTO {
         $result = null;
-        $yearMonth = self::getLastYearMonth();
+        $yearMonth = $this->getLastYearMonth();
 
-        $filePath = self::getFilePath(profile: $profile, subcategory: $subcategory, yearMonth: $yearMonth);
+        $filePath = $this->getFilePath(profile: $profile, subcategory: $subcategory, yearMonth: $yearMonth);
         if (!file_exists($filePath)) {
-            self::lockFile(filePath: $filePath);
+            $this->lockFile(filePath: $filePath);
             $fileUrl = $profile->getUrl(
                 subcategory: $subcategory,
                 year: $yearMonth->year,
@@ -64,7 +65,7 @@ readonly class DataFileManager
                     'file_path' => $filePath,
                 ]);
 
-                self::unlockFile(filePath: $filePath);
+                $this->unlockFile(filePath: $filePath);
                 $cacheKey = $profile->getDataCacheKey(subcategory: $subcategory);
                 $this->cache->delete($cacheKey);
                 $this->logger->info('Cache for data deleted.', [
@@ -95,7 +96,7 @@ readonly class DataFileManager
                     fileUrl: $fileUrl,
                 );
             } finally {
-                self::unlockFile(filePath: $filePath);
+                $this->unlockFile(filePath: $filePath);
             }
         }
 
@@ -106,27 +107,27 @@ readonly class DataFileManager
     public function deleteOldFiles(BaseProfile $profile, string $subcategory): array {
         $result = [];
 
-        $yearMonth = self::getLastYearMonth();
+        $yearMonth = $this->getLastYearMonth();
 
         $filesExists = 0;
         for ($i = 0; $i < self::CHECK_LAST_MONTHS; $i++) {
-            $filePath = self::getFilePath(profile: $profile, subcategory: $subcategory, yearMonth: $yearMonth);
+            $filePath = $this->getFilePath(profile: $profile, subcategory: $subcategory, yearMonth: $yearMonth);
             if (file_exists($filePath)) {
                 $filesExists++;
                 if ($filesExists > self::KEEP_LAST_FILES) {
                     $result[] = $this->deleteFile(filePath: $filePath);
                 }
             }
-            $yearMonth = self::getPreviousYearMonth(yearMonth: $yearMonth);
+            $yearMonth = $this->getPreviousYearMonth(yearMonth: $yearMonth);
         }
 
         return $result;
     }
 
     private function deleteFile(string $filePath): DataFileResultDTO {
-        self::lockFile(filePath: $filePath);
+        $this->lockFile(filePath: $filePath);
         $deleteResult = unlink($filePath);
-        self::unlockFile(filePath: $filePath);
+        $this->unlockFile(filePath: $filePath);
 
         if ($deleteResult) {
             $message = 'Data file deleted.';
@@ -149,14 +150,14 @@ readonly class DataFileManager
         );
     }
 
-    public static function getLastAvailableFilePath(BaseProfile $profile, string $subcategory): string {
-        $yearMonth = self::getLastYearMonth();
+    public function getLastAvailableFilePath(BaseProfile $profile, string $subcategory): string {
+        $yearMonth = $this->getLastYearMonth();
         for ($i = 0; $i < self::CHECK_LAST_MONTHS; $i++) {
-            $filePath = self::getFilePath(profile: $profile, subcategory: $subcategory, yearMonth: $yearMonth);
-            if (file_exists($filePath) && !self::isFileLocked(filePath: $filePath)) {
+            $filePath = $this->getFilePath(profile: $profile, subcategory: $subcategory, yearMonth: $yearMonth);
+            if (file_exists($filePath) && !$this->isFileLocked(filePath: $filePath)) {
                 return $filePath;
             }
-            $yearMonth = self::getPreviousYearMonth(yearMonth: $yearMonth);
+            $yearMonth = $this->getPreviousYearMonth(yearMonth: $yearMonth);
         }
 
         throw new \UnexpectedValueException(
@@ -164,23 +165,23 @@ readonly class DataFileManager
         );
     }
 
-    private static function getFilePath(BaseProfile $profile, string $subcategory, YearMonthDTO $yearMonth): string {
+    private function getFilePath(BaseProfile $profile, string $subcategory, YearMonthDTO $yearMonth): string {
         $fileName = $profile->getFileName(subcategory: $subcategory, year: $yearMonth->year, month: $yearMonth->month);
-        return FileSystemHelper::DIR_FILES . $fileName;
+        return $this->filesDir . '/' . $fileName;
     }
 
-    private static function getLastYearMonth(): YearMonthDTO {
-        $yearMonth = self::getPreviousYearMonth(
+    private function getLastYearMonth(): YearMonthDTO {
+        $yearMonth = $this->getPreviousYearMonth(
             yearMonth: new YearMonthDTO(year: (int)date('Y'), month: (int)date('m')),
         );
         $day = (int)date('d');
         return ($day < self::PREV_MONTH_DATA_AVAILABLE_FROM_DAY)
-            ? self::getPreviousYearMonth(yearMonth: $yearMonth)
+            ? $this->getPreviousYearMonth(yearMonth: $yearMonth)
             : $yearMonth
         ;
     }
 
-    private static function getPreviousYearMonth(YearMonthDTO $yearMonth): YearMonthDTO {
+    private function getPreviousYearMonth(YearMonthDTO $yearMonth): YearMonthDTO {
         $year = $yearMonth->year;
         $month = $yearMonth->month - 1;
         if ($month < 1) {
@@ -191,22 +192,22 @@ readonly class DataFileManager
         return new YearMonthDTO(year: $year, month: $month);
     }
 
-    private static function isFileLocked(string $filePath): bool {
-        return file_exists(self::getLockFilePath(filePath: $filePath));
+    private function isFileLocked(string $filePath): bool {
+        return file_exists($this->getLockFilePath(filePath: $filePath));
     }
 
-    private static function lockFile(string $filePath): void {
-        file_put_contents(self::getLockFilePath(filePath: $filePath), '');
+    private function lockFile(string $filePath): void {
+        file_put_contents($this->getLockFilePath(filePath: $filePath), '');
     }
 
-    private static function unlockFile(string $filePath): void {
-        $lockfilePath = self::getLockFilePath(filePath: $filePath);
+    private function unlockFile(string $filePath): void {
+        $lockfilePath = $this->getLockFilePath(filePath: $filePath);
         if (file_exists($lockfilePath)) {
             unlink($lockfilePath);
         }
     }
 
-    private static function getLockFilePath(string $filePath): string {
+    private function getLockFilePath(string $filePath): string {
         return $filePath . self::FILE_LOCK_POSTFIX;
     }
 }

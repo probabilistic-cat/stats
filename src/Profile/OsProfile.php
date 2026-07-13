@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Profile;
 
-use App\Helper\ColorHelper;
+use App\Enum\Color;
 
 class OsProfile extends BaseProfile
 {
@@ -44,22 +44,22 @@ class OsProfile extends BaseProfile
 
     #[\Override]
     public array $customColorsByName = [
-        'Android' => ColorHelper::SYSTEM_GREEN,
-        'BlackBerry OS' => ColorHelper::SYSTEM_GRAY,
-        'Chrome OS' => ColorHelper::SYSTEM_RED,
-        'KaiOS' => ColorHelper::SYSTEM_INDIGO,
-        'Linux' => ColorHelper::SYSTEM_YELLOW,
-        'macOS' => ColorHelper::MAC_OS,
-        'Nintendo' => ColorHelper::SYSTEM_RED,
-        'OS X' => ColorHelper::MAC_OS,
-        'Playstation' => ColorHelper::SYSTEM_INDIGO,
-        'Samsung' => ColorHelper::SYSTEM_PURPLE,
-        'Series 40' => ColorHelper::SYSTEM_TEAL,
-        'Sony Ericsson' => ColorHelper::SYSTEM_GREEN,
-        'SymbianOS' => ColorHelper::SYSTEM_ORANGE,
-        'Windows' => ColorHelper::SYSTEM_BLUE,
-        'Xbox' => ColorHelper::SYSTEM_GREEN,
-        'iOS' => ColorHelper::SYSTEM_PINK,
-        'webOS' => ColorHelper::SYSTEM_RED,
+        'Android' => Color::SYSTEM_GREEN->value,
+        'BlackBerry OS' => Color::SYSTEM_GRAY->value,
+        'Chrome OS' => Color::SYSTEM_RED->value,
+        'KaiOS' => Color::SYSTEM_INDIGO->value,
+        'Linux' => Color::SYSTEM_YELLOW->value,
+        'macOS' => Color::MAC_OS->value,
+        'Nintendo' => Color::SYSTEM_RED->value,
+        'OS X' => Color::MAC_OS->value,
+        'Playstation' => Color::SYSTEM_INDIGO->value,
+        'Samsung' => Color::SYSTEM_PURPLE->value,
+        'Series 40' => Color::SYSTEM_TEAL->value,
+        'Sony Ericsson' => Color::SYSTEM_GREEN->value,
+        'SymbianOS' => Color::SYSTEM_ORANGE->value,
+        'Windows' => Color::SYSTEM_BLUE->value,
+        'Xbox' => Color::SYSTEM_GREEN->value,
+        'iOS' => Color::SYSTEM_PINK->value,
+        'webOS' => Color::SYSTEM_RED->value,
     ];
 }

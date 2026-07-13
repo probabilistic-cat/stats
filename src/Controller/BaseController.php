@@ -11,6 +11,7 @@ use App\Service\DataFileDecoder;
 use App\Service\DataFileManager;
 use Psr\Cache\CacheItemInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\DependencyInjection\Attribute\Lazy;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Contracts\Cache\CacheInterface;
 
@@ -19,8 +20,9 @@ abstract class BaseController extends AbstractController
     protected string $categoryName;
 
     public function __construct(
-        private readonly DataFileDecoder $decoder,
         private readonly CacheInterface $cache,
+        #[Lazy] private readonly DataFileDecoder $decoder,
+        #[Lazy] private readonly DataFileManager $dataFileManager,
     ) {}
 
     abstract protected function getCategoryRoute(): string;
@@ -40,7 +42,7 @@ abstract class BaseController extends AbstractController
             function (CacheItemInterface $cacheItem) use ($profile, $subcategory): Data {
                 $cacheItem->expiresAfter($this->getParameter('data_cache_expiration_time'));
 
-                $filePath = DataFileManager::getLastAvailableFilePath(profile: $profile, subcategory: $subcategory);
+                $filePath = $this->dataFileManager->getLastAvailableFilePath(profile: $profile, subcategory: $subcategory);
                 $data = $this->decoder->decode(profile: $profile, filepath: $filePath);
                 $data->filterOutZeroPercentVersions();
                 $data->sort();

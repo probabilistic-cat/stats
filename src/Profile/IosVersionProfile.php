@@ -44,7 +44,7 @@ class IosVersionProfile extends BaseProfile
     public ProfileSort $sort = ProfileSort::NameAsc;
 
     public function __construct() {
-        $this->customColorsByName = self::getCustomColorsByNumberName();
+        $this->customColorsByName = $this->getCustomColorsByNumberName();
     }
 
     #[\Override]

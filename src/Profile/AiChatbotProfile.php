@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Profile;
 
-use App\Helper\ColorHelper;
+use App\Enum\Color;
 
 class AiChatbotProfile extends BaseProfile
 {
@@ -32,12 +32,12 @@ class AiChatbotProfile extends BaseProfile
 
     #[\Override]
     public array $customColorsByName = [
-        'ChatGPT' => ColorHelper::SYSTEM_GREEN,
-        'Perplexity' => ColorHelper::SYSTEM_PURPLE,
-        'Microsoft Copilot' => ColorHelper::SYSTEM_BLUE,
-        'Google Gemini' => ColorHelper::SYSTEM_YELLOW,
-        'Deepseek' => ColorHelper::SYSTEM_RED,
-        'Claude' => ColorHelper::SYSTEM_ORANGE,
+        'ChatGPT' => Color::SYSTEM_GREEN->value,
+        'Perplexity' => Color::SYSTEM_PURPLE->value,
+        'Microsoft Copilot' => Color::SYSTEM_BLUE->value,
+        'Google Gemini' => Color::SYSTEM_YELLOW->value,
+        'Deepseek' => Color::SYSTEM_RED->value,
+        'Claude' => Color::SYSTEM_ORANGE->value,
     ];
 
     #[\Override]

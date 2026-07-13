@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Profile;
 
-use App\Helper\ColorHelper;
+use App\Enum\Color;
 
 class SearchEngineProfile extends BaseProfile
 {
@@ -44,31 +44,31 @@ class SearchEngineProfile extends BaseProfile
 
     #[\Override]
     public array $customColorsByName = [
-        'AOL' => ColorHelper::SYSTEM_MINT,
-        'AVG Search' => ColorHelper::SYSTEM_YELLOW,
-        'Ask Jeeves' => ColorHelper::SYSTEM_RED,
-        'Babylon' => ColorHelper::SYSTEM_GREEN,
-        'Baidu' => ColorHelper::SYSTEM_INDIGO,
-        'bing' => ColorHelper::SYSTEM_BLUE,
-        'CocCoc' => ColorHelper::SYSTEM_GREEN,
-        'Conduit' => ColorHelper::SYSTEM_BLUE,
-        'Daum' => ColorHelper::SYSTEM_PINK,
-        'DuckDuckGo' => ColorHelper::SYSTEM_ORANGE,
-        'Ecosia' => ColorHelper::SYSTEM_GREEN,
-        'Google' => ColorHelper::SYSTEM_GREEN,
-        'Haosou' => ColorHelper::SYSTEM_GREEN,
-        'MSN' => ColorHelper::SYSTEM_ORANGE,
-        'Mail.ru' => ColorHelper::SYSTEM_MINT,
+        'AOL' => Color::SYSTEM_MINT->value,
+        'AVG Search' => Color::SYSTEM_YELLOW->value,
+        'Ask Jeeves' => Color::SYSTEM_RED->value,
+        'Babylon' => Color::SYSTEM_GREEN->value,
+        'Baidu' => Color::SYSTEM_INDIGO->value,
+        'bing' => Color::SYSTEM_BLUE->value,
+        'CocCoc' => Color::SYSTEM_GREEN->value,
+        'Conduit' => Color::SYSTEM_BLUE->value,
+        'Daum' => Color::SYSTEM_PINK->value,
+        'DuckDuckGo' => Color::SYSTEM_ORANGE->value,
+        'Ecosia' => Color::SYSTEM_GREEN->value,
+        'Google' => Color::SYSTEM_GREEN->value,
+        'Haosou' => Color::SYSTEM_GREEN->value,
+        'MSN' => Color::SYSTEM_ORANGE->value,
+        'Mail.ru' => Color::SYSTEM_MINT->value,
         'Naver' => '#03c95a',
-        'Seznam' => ColorHelper::SYSTEM_PINK,
-        'Shenma' => ColorHelper::SYSTEM_ORANGE,
-        'Sogou' => ColorHelper::SYSTEM_PINK,
-        'StartPagina (Google)' => ColorHelper::SYSTEM_ORANGE,
-        'SweetIM' => ColorHelper::SYSTEM_INDIGO,
-        'Webcrawler' => ColorHelper::SYSTEM_ORANGE,
-        'Windows Live' => ColorHelper::SYSTEM_BLUE,
-        'YANDEX RU' => ColorHelper::SYSTEM_YELLOW,
-        'YANDEX' => ColorHelper::SYSTEM_YELLOW,
-        'Yahoo!' => ColorHelper::SYSTEM_PURPLE,
+        'Seznam' => Color::SYSTEM_PINK->value,
+        'Shenma' => Color::SYSTEM_ORANGE->value,
+        'Sogou' => Color::SYSTEM_PINK->value,
+        'StartPagina (Google)' => Color::SYSTEM_ORANGE->value,
+        'SweetIM' => Color::SYSTEM_INDIGO->value,
+        'Webcrawler' => Color::SYSTEM_ORANGE->value,
+        'Windows Live' => Color::SYSTEM_BLUE->value,
+        'YANDEX RU' => Color::SYSTEM_YELLOW->value,
+        'YANDEX' => Color::SYSTEM_YELLOW->value,
+        'Yahoo!' => Color::SYSTEM_PURPLE->value,
     ];
 }

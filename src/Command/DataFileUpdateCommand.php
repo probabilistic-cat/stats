@@ -65,7 +65,7 @@ class DataFileUpdateCommand extends Command
             new VendorProfile(),
             new WindowsVersionProfile(),
         ];
-        $stepsCount = self::getSpetsCount(profiles: $profiles);
+        $stepsCount = $this->getSpetsCount(profiles: $profiles);
 
         $this->progressBar->setMaxSteps($stepsCount);
         $this->io->getFormatter()->setStyle(self::SUCCESS_STYLE, new OutputFormatterStyle('green'));
@@ -149,7 +149,7 @@ class DataFileUpdateCommand extends Command
     }
 
     /** @param array<BaseProfile> $profiles */
-    private static function getSpetsCount(array $profiles): int {
+    private function getSpetsCount(array $profiles): int {
         $stepsCount = 0;
         foreach ($profiles as $profile) {
             $stepsCount += count($profile->subcategories) * self::OPERATIONS_PER_SUBCATEGORY;

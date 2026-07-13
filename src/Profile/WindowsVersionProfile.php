@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Profile;
 
+use App\Enum\Color;
 use App\Enum\ProfileSort;
-use App\Helper\ColorHelper;
 
 class WindowsVersionProfile extends BaseProfile
 {
@@ -53,18 +53,18 @@ class WindowsVersionProfile extends BaseProfile
 
     #[\Override]
     public array $customColorsByName = [
-        '98' => ColorHelper::WINDOWS_98,
-        '2000' => ColorHelper::SYSTEM_PINK,
-        'ME' => ColorHelper::SYSTEM_INDIGO,
-        'XP' => ColorHelper::WINDOWS_XP,
-        '2003' => ColorHelper::SYSTEM_GRAY,
-        'Vista' => ColorHelper::SYSTEM_YELLOW,
-        '7' => ColorHelper::SYSTEM_GREEN,
-        '8' => ColorHelper::SYSTEM_RED,
-        '8.1' => ColorHelper::SYSTEM_PURPLE,
-        '8.1 RT' => ColorHelper::SYSTEM_PURPLE,
-        '10' => ColorHelper::SYSTEM_BLUE,
-        '11' => ColorHelper::SYSTEM_ORANGE,
-        '12' => ColorHelper::SYSTEM_PINK,
+        '98' => Color::SYSTEM_MINT->value,
+        '2000' => Color::SYSTEM_PINK->value,
+        'ME' => Color::SYSTEM_INDIGO->value,
+        'XP' => Color::WINDOWS_XP->value,
+        '2003' => Color::SYSTEM_GRAY->value,
+        'Vista' => Color::SYSTEM_YELLOW->value,
+        '7' => Color::SYSTEM_GREEN->value,
+        '8' => Color::SYSTEM_RED->value,
+        '8.1' => Color::SYSTEM_PURPLE->value,
+        '8.1 RT' => Color::SYSTEM_PURPLE->value,
+        '10' => Color::SYSTEM_BLUE->value,
+        '11' => Color::SYSTEM_ORANGE->value,
+        '12' => Color::SYSTEM_PINK->value,
     ];
 }

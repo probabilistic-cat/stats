@@ -17,13 +17,14 @@ readonly class DataFileDecoder
 
     public function __construct(
         private SerializerInterface $serializer,
+        private ColorService $colorService,
     ) {}
 
     public function decode(BaseProfile $profile, string $filepath): Data {
         /** @var array<array<string, string|array<string, string>>> $rawData */
         $rawData = $this->getRawData(profile: $profile, filepath: $filepath);
 
-        $data = self::getData(rawData: $rawData, profile: $profile);
+        $data = $this->getData(rawData: $rawData, profile: $profile);
         $data->setMinor();
 
         return $data;
@@ -41,13 +42,13 @@ readonly class DataFileDecoder
     }
 
     /** @param array<array<string, string|array<string, string>>> $rawData */
-    private static function getData(array $rawData, BaseProfile $profile): Data {
-        $data = new Data(profile: $profile);
+    private function getData(array $rawData, BaseProfile $profile): Data {
+        $data = new Data(profile: $profile, colorService: $this->colorService);
         foreach ($rawData as $rawMonthData) {
             $date = $rawMonthData[self::COLUMN_DATE];
             unset($rawMonthData[self::COLUMN_DATE]);
 
-            $monthData = self::getMonthData(rawMonthData: $rawMonthData, date: $date, profile: $profile);
+            $monthData = $this->getMonthData(rawMonthData: $rawMonthData, date: $date, profile: $profile);
             $data->monthDatas[] = $monthData;
         }
 
@@ -55,7 +56,7 @@ readonly class DataFileDecoder
     }
 
     /** @param array<string, string|array<string, string>> $rawMonthData */
-    private static function getMonthData(array $rawMonthData, string $date, BaseProfile $profile): MonthData {
+    private function getMonthData(array $rawMonthData, string $date, BaseProfile $profile): MonthData {
         $versionsOther = [];
         foreach (BaseProfile::NAMES_OTHER as $name) {
             if (array_key_exists($name, $rawMonthData)) {
@@ -68,7 +69,7 @@ readonly class DataFileDecoder
         }
 
         $monthData = new MonthData(date: \DateTime::createFromFormat('Y-m-d H:i', $date . '-15 00:00'));
-        $monthData->versions = [...$versionsOther, ...self::getVersions($rawMonthData, $profile)];
+        $monthData->versions = [...$versionsOther, ...$this->getVersions($rawMonthData, $profile)];
 
         return $monthData;
     }
@@ -77,7 +78,7 @@ readonly class DataFileDecoder
      * @param array<string, string|array<string, string>> $rawMonthData
      * @return array<Version>
      */
-    private static function getVersions(array $rawMonthData, BaseProfile $profile): array {
+    private function getVersions(array $rawMonthData, BaseProfile $profile): array {
         $versions = [];
         foreach ($rawMonthData as $nameWithPrefix => $percentOrMinorVersionsData) {
             $name = str_replace($profile->prefix, '', (string)$nameWithPrefix);
@@ -90,7 +91,7 @@ readonly class DataFileDecoder
                 }
                 $versions[] = $version;
             } else {
-                $version = self::getVersionsWithMinorVersions(
+                $version = $this->getVersionsWithMinorVersions(
                     minorVersionsData: $percentOrMinorVersionsData,
                     name: $name,
                     profile: $profile,
@@ -103,7 +104,7 @@ readonly class DataFileDecoder
     }
 
     /** @param array<string, string> $minorVersionsData */
-    private static function getVersionsWithMinorVersions(
+    private function getVersionsWithMinorVersions(
         array $minorVersionsData,
         string $name,
         BaseProfile $profile,

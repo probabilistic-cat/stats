@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Profile;
 
-use App\Helper\ColorHelper;
+use App\Enum\Color;
 
 class BrowserProfile extends BaseProfile
 {
@@ -44,38 +44,38 @@ class BrowserProfile extends BaseProfile
 
     #[\Override]
     public array $customColorsByName = [
-        '360 Safe Browser' => ColorHelper::SYSTEM_GREEN,
-        'Android' => ColorHelper::SYSTEM_INDIGO,
-        'BlackBerry' => ColorHelper::SYSTEM_GRAY,
-        'Bolt' => ColorHelper::SYSTEM_BLUE,
-        'Chrome' => ColorHelper::SYSTEM_GREEN,
+        '360 Safe Browser' => Color::SYSTEM_GREEN->value,
+        'Android' => Color::SYSTEM_INDIGO->value,
+        'BlackBerry' => Color::SYSTEM_GRAY->value,
+        'Bolt' => Color::SYSTEM_BLUE->value,
+        'Chrome' => Color::SYSTEM_GREEN->value,
         'Coc Coc' => '#a2d34b',
-        'Dolfin' => ColorHelper::SYSTEM_GREEN,
+        'Dolfin' => Color::SYSTEM_GREEN->value,
         'Edge Legacy' => '#5fa3e6',
-        'Edge' => ColorHelper::SYSTEM_BLUE,
-        'Firefox' => ColorHelper::SYSTEM_ORANGE,
-        'IE' => ColorHelper::WINDOWS_98,
+        'Edge' => Color::SYSTEM_BLUE->value,
+        'Firefox' => Color::SYSTEM_ORANGE->value,
+        'IE' => Color::SYSTEM_MINT->value,
         'IEMobile' => '#3f7aff',
         'Instabridge' => '#f7aa6e',
         'Jasmine' => '#c28dbc',
-        'Mozilla' => ColorHelper::SYSTEM_ORANGE,
+        'Mozilla' => Color::SYSTEM_ORANGE->value,
         'NetFront NX' => '#acdc5a',
         'NetFront' => '#acdc5a',
-        'Nokia' => ColorHelper::SYSTEM_TEAL,
-        'Obigo' => ColorHelper::SYSTEM_BLUE,
+        'Nokia' => Color::SYSTEM_TEAL->value,
+        'Obigo' => Color::SYSTEM_BLUE->value,
         'Openwave' => '#ba94c8',
-        'Opera' => ColorHelper::SYSTEM_RED,
-        'QQ Browser' => ColorHelper::SYSTEM_BLUE,
-        'Safari' => ColorHelper::SYSTEM_GRAY,
-        'Samsung Internet' => ColorHelper::SYSTEM_PURPLE,
-        'Samsung' => ColorHelper::SYSTEM_PURPLE,
-        'Silk' => ColorHelper::SYSTEM_ORANGE,
-        'Sony PS3' => ColorHelper::SYSTEM_INDIGO,
-        'Sony PS4' => ColorHelper::SYSTEM_PINK,
-        'Sony PSP Vita' => ColorHelper::SYSTEM_BLUE,
-        'SonyEricsson' => ColorHelper::SYSTEM_GREEN,
-        'UC Browser' => ColorHelper::SYSTEM_YELLOW,
+        'Opera' => Color::SYSTEM_RED->value,
+        'QQ Browser' => Color::SYSTEM_BLUE->value,
+        'Safari' => Color::SYSTEM_GRAY->value,
+        'Samsung Internet' => Color::SYSTEM_PURPLE->value,
+        'Samsung' => Color::SYSTEM_PURPLE->value,
+        'Silk' => Color::SYSTEM_ORANGE->value,
+        'Sony PS3' => Color::SYSTEM_INDIGO->value,
+        'Sony PS4' => Color::SYSTEM_PINK->value,
+        'Sony PSP Vita' => Color::SYSTEM_BLUE->value,
+        'SonyEricsson' => Color::SYSTEM_GREEN->value,
+        'UC Browser' => Color::SYSTEM_YELLOW->value,
         'Whale Browser' => '#01d3ae',
-        'Yandex Browser' => ColorHelper::SYSTEM_YELLOW,
+        'Yandex Browser' => Color::SYSTEM_YELLOW->value,
     ];
 }

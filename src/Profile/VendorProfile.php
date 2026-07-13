@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Profile;
 
-use App\Helper\ColorHelper;
+use App\Enum\Color;
 
 class VendorProfile extends BaseProfile
 {
@@ -36,28 +36,28 @@ class VendorProfile extends BaseProfile
 
     #[\Override]
     public array $customColorsByName = [
-        'Amazon' => ColorHelper::SYSTEM_TEAL,
-        'Apple' => ColorHelper::SYSTEM_GRAY,
-        'Asus' => ColorHelper::SYSTEM_GRAY,
-        'Google' => ColorHelper::SYSTEM_YELLOW,
-        'HTC' => ColorHelper::SYSTEM_GREEN,
-        'Honor' => ColorHelper::SYSTEM_INDIGO,
-        'Huawei' => ColorHelper::SYSTEM_PURPLE,
-        'Infinix' => ColorHelper::SYSTEM_GREEN,
-        'LG' => ColorHelper::SYSTEM_PINK,
-        'Lenovo' => ColorHelper::SYSTEM_RED,
-        'Microsoft' => ColorHelper::SYSTEM_BLUE,
-        'Motorola' => ColorHelper::SYSTEM_MINT,
-        'Nintendo' => ColorHelper::SYSTEM_RED,
-        'Nokia' => ColorHelper::SYSTEM_TEAL,
-        'OnePlus' => ColorHelper::SYSTEM_RED,
-        'Oppo' => ColorHelper::SYSTEM_PURPLE,
-        'Realme' => ColorHelper::SYSTEM_YELLOW,
-        'Sony' => ColorHelper::SYSTEM_GREEN,
-        'Tecno' => ColorHelper::SYSTEM_BLUE,
-        'Vivo' => ColorHelper::SYSTEM_RED,
-        'Xiaomi' => ColorHelper::SYSTEM_ORANGE,
-        'ZTE' => ColorHelper::SYSTEM_BLUE,
-        'Samsung' => ColorHelper::SYSTEM_BLUE,
+        'Amazon' => Color::SYSTEM_TEAL->value,
+        'Apple' => Color::SYSTEM_GRAY->value,
+        'Asus' => Color::SYSTEM_GRAY->value,
+        'Google' => Color::SYSTEM_YELLOW->value,
+        'HTC' => Color::SYSTEM_GREEN->value,
+        'Honor' => Color::SYSTEM_INDIGO->value,
+        'Huawei' => Color::SYSTEM_PURPLE->value,
+        'Infinix' => Color::SYSTEM_GREEN->value,
+        'LG' => Color::SYSTEM_PINK->value,
+        'Lenovo' => Color::SYSTEM_RED->value,
+        'Microsoft' => Color::SYSTEM_BLUE->value,
+        'Motorola' => Color::SYSTEM_MINT->value,
+        'Nintendo' => Color::SYSTEM_RED->value,
+        'Nokia' => Color::SYSTEM_TEAL->value,
+        'OnePlus' => Color::SYSTEM_RED->value,
+        'Oppo' => Color::SYSTEM_PURPLE->value,
+        'Realme' => Color::SYSTEM_YELLOW->value,
+        'Sony' => Color::SYSTEM_GREEN->value,
+        'Tecno' => Color::SYSTEM_BLUE->value,
+        'Vivo' => Color::SYSTEM_RED->value,
+        'Xiaomi' => Color::SYSTEM_ORANGE->value,
+        'ZTE' => Color::SYSTEM_BLUE->value,
+        'Samsung' => Color::SYSTEM_BLUE->value,
     ];
 }
