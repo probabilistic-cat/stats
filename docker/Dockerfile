@@ -1,8 +1,8 @@
-FROM php:8.4-fpm AS base
+FROM php:8.5-fpm AS base
 
 RUN apt-get update \
     && apt-get install -y git unzip curl libzip-dev libpng-dev libonig-dev libxml2-dev libicu-dev \
-    && docker-php-ext-install pdo pdo_mysql zip intl opcache \
+    && docker-php-ext-install pdo pdo_mysql zip intl \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # php config
