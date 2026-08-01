@@ -1,4 +1,4 @@
-# docker compose -f docker/docker-compose.prod.yaml --env-file .env --env-file .env.local -p stats up -d
+# docker compose -f docker/docker-compose.prod.yaml --env-file .env --env-file .env.prod.local -p stats-prod up -d
 
 include:
     - docker-compose.base.yaml
@@ -8,12 +8,12 @@ services:
         build:
             target: prod
         volumes:
-            - app_code:/var/www
+            - app-code:/var/www
 
-    nginx:
+    webserver:
         volumes:
-            - app_code:/var/www
+            - app-code:/var/www
 
 volumes:
-    app_code:
-        name: stats_app_code
+    app-code:
+        name: stats-prod_app-code
