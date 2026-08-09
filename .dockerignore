@@ -1,6 +1,16 @@
 .DS_Store
 /.idea
 
+###> docker ###
+/docker/
+!/docker/config/
+###< docker ###
+
+###> git ###
+/.git/
+.gitignore
+###< git ###
+
 ###> symfony/framework-bundle ###
 /.editorconfig
 /.env.local
@@ -19,14 +29,11 @@
 /.phpunit.cache/
 ###< symfony/phpunit-bridge & phpunit/phpunit ###
 
-###> friendsofphp/php-cs-fixer ###
-/.php-cs-fixer.php
-/.php-cs-fixer.cache
-###< friendsofphp/php-cs-fixer ###
-
 ###> phpstan/phpstan ###
 phpstan.neon
 ###< phpstan/phpstan ###
 
-/files/
-!/files/.gitkeep
+###> friendsofphp/php-cs-fixer ###
+/.php-cs-fixer.php
+/.php-cs-fixer.cache
+###< friendsofphp/php-cs-fixer ###

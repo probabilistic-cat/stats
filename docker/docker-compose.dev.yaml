@@ -1,4 +1,4 @@
-# docker compose -f docker/docker-compose.dev.yaml --env-file .env --env-file .env.dev --env-file .env.local -p stats-dev up -d
+# docker compose -f docker/docker-compose.dev.yaml --env-file .env --env-file .env.local --env-file .env.dev --env-file .env.dev.local -p stats-dev up -d
 
 include:
     - docker-compose.base.yaml
@@ -7,12 +7,12 @@ services:
     app:
         build:
             target: dev
+        environment:
+            - PHP_IDE_CONFIG=serverName=${IDE_SERVER_NAME}
         volumes:
             - ..:/var/www:ro
             - ../files:/var/www/files:rw
             - ../var:/var/www/var:rw
-        environment:
-            - PHP_IDE_CONFIG=serverName=${IDE_SERVER_NAME}
 
     webserver:
         volumes:

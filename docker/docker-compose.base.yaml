@@ -5,12 +5,12 @@ services:
             dockerfile: docker/Dockerfile
 
     webserver:
-        image: nginx:1.30
+        image: nginx:${NGINX_VERSION}
         environment:
             SERVER_NAME: ${SERVER_NAME}
         ports:
             - ${SERVER_PORT}:80
         volumes:
-            - ./nginx/default.conf.template:/etc/nginx/templates/default.conf.template
+            - ./config/nginx/default.conf.template:/etc/nginx/templates/default.conf.template
         depends_on:
             - app
