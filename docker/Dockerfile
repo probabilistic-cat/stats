@@ -12,6 +12,9 @@ COPY ./docker/config/php/php.custom.ini /usr/local/etc/php/conf.d/php.custom.ini
 RUN pecl install apcu && docker-php-ext-enable apcu
 COPY ./docker/config/php/apcu.ini /usr/local/etc/php/conf.d/apcu.ini
 
+# redis
+RUN pecl install redis && docker-php-ext-enable redis
+
 WORKDIR /var/www
 
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer

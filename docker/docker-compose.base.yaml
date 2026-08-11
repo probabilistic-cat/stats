@@ -1,8 +1,19 @@
 services:
+    cache:
+        image: redis:${REDIS_VERSION}
+        volumes:
+            - cache-data:/data
+        ports:
+            - ${REDIS_PORT_EXPOSED}:6379
+
     app:
         build:
             context: ..
             dockerfile: docker/Dockerfile
+        environment:
+            REDIS_URL: redis://cache:6379
+        depends_on:
+            - cache
 
     webserver:
         image: nginx:${NGINX_VERSION}
@@ -14,3 +25,6 @@ services:
             - ./config/nginx/default.conf.template:/etc/nginx/templates/default.conf.template
         depends_on:
             - app
+
+volumes:
+    cache-data:
