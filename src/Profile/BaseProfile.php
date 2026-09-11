@@ -54,7 +54,7 @@ abstract class BaseProfile
         Color::SYSTEM_INDIGO->value,
         Color::SYSTEM_RED->value,
     ];
-    /** @var array<string, string> */
+    /** @var array<int|string, string> */
     public array $customColorsByName = [];
 
     public ProfileSort $sort = ProfileSort::PercentAsc;
@@ -138,7 +138,7 @@ abstract class BaseProfile
         return 'data_' . $this->category . '_' . $subcategory;
     }
 
-    /** @return array<string, string> */
+    /** @return array<int, string> */
     protected function getCustomColorsByNumberName(): array {
         $customColors0to10 = [
             0 => Color::SYSTEM_GRAY->value,
@@ -158,7 +158,7 @@ abstract class BaseProfile
         for ($indexTens = 0; $indexTens < $tens; $indexTens++) {
             foreach ($customColors0to10 as $index0to10 => $color) {
                 $index = $indexTens * 10 + $index0to10;
-                $customColors[(string)$index] = $color;
+                $customColors[$index] = $color;
             }
         }
 

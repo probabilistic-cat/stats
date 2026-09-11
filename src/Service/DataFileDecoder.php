@@ -9,6 +9,7 @@ use App\Data\MonthData;
 use App\Data\Version;
 use App\Profile\BaseProfile;
 use Symfony\Component\Serializer\Encoder\CsvEncoder;
+use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Serializer\SerializerInterface;
 
 readonly class DataFileDecoder
@@ -16,6 +17,7 @@ readonly class DataFileDecoder
     private const string COLUMN_DATE = 'Date';
 
     public function __construct(
+        /** @var Serializer */
         private SerializerInterface $serializer,
         private ColorService $colorService,
     ) {}
@@ -32,9 +34,11 @@ readonly class DataFileDecoder
 
     /** @return array<array<string, string|array<string, string>>> */
     private function getRawData(BaseProfile $profile, string $filepath): array {
+        /** @var string $data */
         $data = file_get_contents($filepath);
         $data = $profile->preDecodeCsvData(data: $data);
 
+        /** @var array<array<string, string|array<string, string>>> */
         return $this->serializer->decode($data, CsvEncoder::FORMAT, [
             CsvEncoder::ENCLOSURE_KEY => $profile->csvEnclosureKey,
             CsvEncoder::KEY_SEPARATOR_KEY => $profile->nameSeparator,
@@ -45,6 +49,7 @@ readonly class DataFileDecoder
     private function getData(array $rawData, BaseProfile $profile): Data {
         $data = new Data(profile: $profile, colorService: $this->colorService);
         foreach ($rawData as $rawMonthData) {
+            /** @var string $date */
             $date = $rawMonthData[self::COLUMN_DATE];
             unset($rawMonthData[self::COLUMN_DATE]);
 
@@ -68,7 +73,9 @@ readonly class DataFileDecoder
             }
         }
 
-        $monthData = new MonthData(date: \DateTime::createFromFormat('Y-m-d H:i', $date . '-15 00:00'));
+        /** @var \DateTime $datetime */
+        $datetime = \DateTime::createFromFormat('Y-m-d H:i', $date . '-15 00:00');
+        $monthData = new MonthData(date: $datetime);
         $monthData->versions = [...$versionsOther, ...$this->getVersions($rawMonthData, $profile)];
 
         return $monthData;

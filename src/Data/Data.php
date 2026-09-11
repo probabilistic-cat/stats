@@ -135,7 +135,7 @@ class Data
         }
     }
 
-    /** @return array<string, string> */
+    /** @return array<int|string, string> */
     private function getColorsByName(): array {
         $minorNamesByName = [];
         foreach ($this->monthDatas as $monthData) {
@@ -161,8 +161,6 @@ class Data
 
         $colorIndex = 0;
         foreach ($colorsByName as $name => $_) {
-            $name = (string)$name;
-
             if ($colorsByName[$name] === null) {
                 $colorsByName[$name] = $this->profile->colors[$colorIndex];
                 $colorIndex++;
@@ -181,6 +179,7 @@ class Data
             }
         }
 
+        /** @var array<int|string, string> */
         return $colorsByName;
     }
 

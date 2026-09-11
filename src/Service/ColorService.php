@@ -63,7 +63,7 @@ readonly class ColorService
         }
         array_shift($matches);
 
-        return array_map(hexdec(...), $matches);
+        return array_map(static fn (string $component): int => (int)hexdec($component), $matches);
     }
 
     /** @param array<int> $colorRgb */
