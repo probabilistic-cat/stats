@@ -179,7 +179,7 @@ class Data
             }
         }
 
-        /** @var array<int|string, string> */
+        /** @var array<int|string, string> $colorsByName */
         return $colorsByName;
     }
 

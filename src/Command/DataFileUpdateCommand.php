@@ -46,8 +46,6 @@ class DataFileUpdateCommand extends Command
         parent::__construct();
     }
 
-    protected function configure(): void {}
-
     protected function execute(InputInterface $input, OutputInterface $output): int {
         $this->io = new SymfonyStyle(input: $input, output: $output);
         $this->cursor = new Cursor($output);

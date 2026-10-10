@@ -30,7 +30,7 @@ readonly class DataFileManager
         private HttpClientInterface $httpClient,
         private CacheInterface $cache,
         private LoggerInterface $logger,
-        #[Autowire('%dir_files%')] private string $filesDir,
+        #[Autowire(param: 'dir_files')] private string $filesDir,
     ) {}
 
     /**
