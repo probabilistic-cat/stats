@@ -52,7 +52,7 @@ class IosVersionProfile extends BaseProfile
         /** @var string */
         return preg_replace(
             '~(' . $this->csvEnclosureKey . $this->prefix . ')(\d+)(' . $this->csvEnclosureKey . ')~',
-            '$1$2' . $this->nameSeparator . static::MINOR_VERSION_UNKNOWN . ' $3',
+            '$1$2' . $this->nameSeparator . static::MINOR_VERSION_UNKNOWN . '$3',
             $data,
         );
     }
