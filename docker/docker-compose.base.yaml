@@ -1,6 +1,6 @@
 services:
     cache:
-        image: redis:${REDIS_VERSION}
+        image: redis:${REDIS_VERSION}-bookworm
         volumes:
             - cache-data:/data
         ports:
@@ -16,7 +16,7 @@ services:
             - cache
 
     webserver:
-        image: nginx:${NGINX_VERSION}
+        image: nginx:${NGINX_VERSION}-trixie
         environment:
             SERVER_NAME: ${SERVER_NAME}
         ports:
